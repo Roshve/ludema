@@ -1,0 +1,81 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { ArrowDown } from "lucide-react";
+import type { SimplifyStepsExercise } from "@/content/types";
+import type { RenderProps } from "../types";
+import { cn } from "@/lib/utils";
+
+export function SimplifySteps({
+  exercise,
+  checked,
+  onAnswer,
+}: RenderProps<SimplifyStepsExercise>) {
+  const [picks, setPicks] = useState<(number | null)[]>(
+    () => exercise.steps.map(() => null),
+  );
+
+  const allPicked = picks.every((p) => p !== null);
+  const correct =
+    allPicked && picks.every((p, i) => p === exercise.steps[i].correctIndex);
+
+  useEffect(() => {
+    onAnswer(allPicked ? { correct } : null);
+  }, [picks, allPicked, correct, onAnswer]);
+
+  function pick(stepIdx: number, optIdx: number) {
+    if (checked) return;
+    setPicks((prev) => {
+      const next = [...prev];
+      next[stepIdx] = optIdx;
+      return next;
+    });
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="rounded-xl bg-slate-800 px-4 py-2 text-lg font-black text-white">
+        {exercise.start}
+      </div>
+
+      {exercise.steps.map((step, si) => (
+        <div key={si} className="flex w-full flex-col items-center gap-2">
+          <ArrowDown className="size-5 text-slate-300" />
+          <div className="flex flex-wrap justify-center gap-2">
+            {step.options.map((opt, oi) => {
+              const isSel = picks[si] === oi;
+              let tone =
+                "border-slate-200 bg-white hover:border-slate-300 text-slate-700";
+              if (checked) {
+                if (oi === step.correctIndex)
+                  tone = "border-emerald-500 bg-emerald-50 text-emerald-800";
+                else if (isSel)
+                  tone = "border-rose-500 bg-rose-50 text-rose-800";
+                else tone = "border-slate-200 bg-white text-slate-400";
+              } else if (isSel) {
+                tone = "border-sky-500 bg-sky-50 ring-2 ring-sky-200";
+              }
+              return (
+                <button
+                  key={oi}
+                  type="button"
+                  onClick={() => pick(si, oi)}
+                  disabled={checked}
+                  className={cn(
+                    "rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition",
+                    tone,
+                  )}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+          <div className="rounded-xl bg-slate-100 px-4 py-1.5 text-base font-black text-slate-700">
+            {step.result}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
