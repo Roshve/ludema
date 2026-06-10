@@ -202,3 +202,43 @@ body {
 .animate-shake {
   animation: shake 0.35s ease-in-out;
 }
+
+/* Pulso suave del nodo de lección actual. */
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Destello que recorre la insignia dorada. */
+@keyframes shimmer {
+  to { transform: translateX(220%); }
+}
+.shimmer-gold {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-gold::after {
+  content: "";
+  position: absolute;
+  inset: 0 60%  0 0;
+  transform: translateX(-110%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 80%
+  );
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-soft,
+  .shimmer-gold::after,
+  .animate-pop-in,
+  .animate-shake {
+    animation: none;
+  }
+}

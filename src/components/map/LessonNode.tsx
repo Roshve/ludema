@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Check, Lock, Star, Play } from "lucide-react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ACCENT, type Accent } from "@/lib/accent";
 
@@ -27,7 +28,15 @@ export function LessonNode({
   const locked = state === "locked";
 
   const circle = (
-    <div className="flex flex-col items-center gap-1.5">
+    // El pop de aparición va en un div interior para no pelear con el
+    // translateX inline del sendero en zigzag.
+    <motion.div
+      initial={{ scale: 0.7, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      className="flex flex-col items-center gap-1.5"
+    >
       <div
         className={cn(
           "grid size-18 place-items-center rounded-full border-b-4 text-white transition active:translate-y-0.5",
@@ -35,7 +44,8 @@ export function LessonNode({
             ? "border-slate-300 bg-slate-200 text-slate-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500"
             : a.node,
           state === "current" &&
-            "ring-4 ring-offset-2 dark:ring-offset-slate-950 " + a.ring,
+            "animate-pulse-soft ring-4 ring-offset-2 dark:ring-offset-slate-950 " +
+              a.ring,
         )}
       >
         {state === "completed" ? (
@@ -59,7 +69,7 @@ export function LessonNode({
           <p className="text-[10px] font-bold text-slate-400">{subtitle}</p>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -86,7 +96,7 @@ export function LessonNode({
 
 export function GoldBadge() {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-extrabold text-amber-600 dark:bg-amber-950/50 dark:text-amber-400">
+    <span className="shimmer-gold inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-extrabold text-amber-600 dark:bg-amber-950/50 dark:text-amber-400">
       <Star className="size-3.5 fill-amber-400 text-amber-400" /> Dorada
     </span>
   );

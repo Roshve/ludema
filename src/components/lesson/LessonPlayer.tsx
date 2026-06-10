@@ -1,15 +1,19 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { X, Heart, Check, Trophy, HeartCrack } from "lucide-react";
+import { X, Heart, Check, HeartCrack } from "lucide-react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import type { Lesson } from "@/content/types";
 import { getLessonContext, lessonXp } from "@/content";
 import { useProgress } from "@/stores/progress";
 import { Button } from "@/components/ui/Button";
+import { Lottie } from "@/components/ui/Lottie";
+import { fireConfetti } from "@/lib/confetti";
 import { cn } from "@/lib/utils";
 import { ExerciseView } from "./ExerciseView";
 import type { AnswerState } from "./types";
+import trophyAnim from "@/assets/lottie/trophy.json";
 
 type Phase = "playing" | "complete" | "failed";
 
@@ -78,6 +82,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     return (
       <EndScreen
         icon={<HeartCrack className="size-16 text-rose-500" />}
+        celebrate={false}
         title="¡Te quedaste sin corazones!"
         subtitle="Espera a que se regeneren o recarga para seguir practicando."
         primary={
@@ -98,7 +103,10 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     const accuracy = Math.round((correctCount / total) * 100);
     return (
       <EndScreen
-        icon={<Trophy className="size-16 text-amber-500" />}
+        icon={
+          <Lottie animationData={trophyAnim} loop={false} className="size-44" />
+        }
+        celebrate
         title="¡Lección completada!"
         subtitle={`Precisión ${accuracy}% · +${xp} XP`}
         primary={
@@ -125,6 +133,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   const progress = (index / total) * 100;
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col px-4">
       {/* Cabecera: cerrar + progreso + corazones */}
       <header className="flex items-center gap-3 py-4">
@@ -136,30 +145,49 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
           <X className="size-7" strokeWidth={3} />
         </Link>
         <div className="h-4 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-          <div
-            className="h-full rounded-full bg-emerald-400 transition-all"
-            style={{ width: `${progress}%` }}
+          <motion.div
+            className="h-full rounded-full bg-emerald-400"
+            initial={false}
+            animate={{ width: `${progress}%` }}
+            transition={{ type: "spring", stiffness: 140, damping: 22 }}
           />
         </div>
         <div className="flex items-center gap-1 font-black text-rose-500">
           <Heart className="size-5 fill-rose-500" />
-          {hearts}
+          <motion.span
+            key={hearts}
+            initial={{ scale: 1.6 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 500, damping: 18 }}
+          >
+            {hearts}
+          </motion.span>
         </div>
       </header>
 
-      {/* Cuerpo del ejercicio */}
-      <main className="flex flex-1 flex-col py-4">
-        <h2 className="mb-6 whitespace-pre-line text-xl font-black text-slate-800 sm:text-2xl dark:text-slate-100">
-          {exercise.prompt}
-        </h2>
-        {/* key por id: reinicia el estado interno del renderer en cada ejercicio */}
-        <ExerciseView
-          key={exercise.id}
-          exercise={exercise}
-          checked={checked}
-          onAnswer={onAnswer}
-          requestCheck={check}
-        />
+      {/* Cuerpo del ejercicio: entra desde la derecha, sale hacia la izquierda */}
+      <main className="flex flex-1 flex-col overflow-x-clip py-4">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={exercise.id}
+            initial={{ x: 56, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -56, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 32 }}
+            className="flex flex-1 flex-col"
+          >
+            <h2 className="mb-6 whitespace-pre-line text-xl font-black text-slate-800 sm:text-2xl dark:text-slate-100">
+              {exercise.prompt}
+            </h2>
+            {/* el key del contenedor reinicia el estado del renderer en cada ejercicio */}
+            <ExerciseView
+              exercise={exercise}
+              checked={checked}
+              onAnswer={onAnswer}
+              requestCheck={check}
+            />
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Pie: feedback + acción */}
@@ -174,7 +202,19 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
         )}
       >
         {checked && (
-          <div
+          <motion.div
+            initial={{ y: 16, opacity: 0 }}
+            animate={{
+              y: 0,
+              opacity: 1,
+              x: lastCorrect ? 0 : [0, -6, 6, -6, 6, 0],
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 28,
+              x: { duration: 0.35, ease: "easeInOut" },
+            }}
             className={cn(
               "mb-3 flex items-start gap-2 font-bold",
               lastCorrect
@@ -202,7 +242,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
                 </span>
               )}
             </span>
-          </div>
+          </motion.div>
         )}
 
         {checked ? (
@@ -224,33 +264,67 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
         )}
       </footer>
     </div>
+    </MotionConfig>
   );
 }
 
+const endItem = {
+  hidden: { y: 20, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+  },
+};
+
 function EndScreen({
   icon,
+  celebrate,
   title,
   subtitle,
   primary,
   secondary,
 }: {
   icon: React.ReactNode;
+  celebrate: boolean;
   title: string;
   subtitle: string;
   primary: React.ReactNode;
   secondary: React.ReactNode;
 }) {
+  useEffect(() => {
+    if (celebrate) fireConfetti();
+  }, [celebrate]);
+
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
-      <div className="animate-pop-in">{icon}</div>
-      <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100">
-        {title}
-      </h1>
-      <p className="font-bold text-slate-500 dark:text-slate-400">{subtitle}</p>
-      <div className="mt-2 flex w-full flex-col gap-3">
-        {primary}
-        {secondary}
-      </div>
-    </div>
+    <MotionConfig reducedMotion="user">
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={{ show: { transition: { staggerChildren: 0.12 } } }}
+        className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center gap-4 px-6 text-center"
+      >
+        <motion.div variants={endItem}>{icon}</motion.div>
+        <motion.h1
+          variants={endItem}
+          className="text-2xl font-black text-slate-800 dark:text-slate-100"
+        >
+          {title}
+        </motion.h1>
+        <motion.p
+          variants={endItem}
+          className="font-bold text-slate-500 dark:text-slate-400"
+        >
+          {subtitle}
+        </motion.p>
+        <motion.div
+          variants={endItem}
+          className="mt-2 flex w-full flex-col gap-3"
+        >
+          {primary}
+          {secondary}
+        </motion.div>
+      </motion.div>
+    </MotionConfig>
   );
 }

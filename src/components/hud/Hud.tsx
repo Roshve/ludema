@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { Heart, Flame, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
+import { motion } from "motion/react";
+import { FlameIcon } from "./FlameIcon";
 import {
   useProgress,
   levelFromXp,
@@ -12,6 +14,21 @@ import {
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
 import { ThemeMenu } from "./ThemeMenu";
+
+// Número que hace "pop" cuando cambia su valor.
+function Counter({ value, prefix = "" }: { value: number; prefix?: string }) {
+  return (
+    <motion.span
+      key={value}
+      initial={{ scale: 1.5 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 500, damping: 18 }}
+    >
+      {prefix}
+      {value}
+    </motion.span>
+  );
+}
 
 function Pill({
   children,
@@ -53,15 +70,15 @@ export function Hud() {
     <div className="flex items-center gap-2 sm:gap-3">
       <Pill className="text-rose-500">
         <Heart className="size-4 fill-rose-500" />
-        <span>{hydrated ? hearts : MAX_HEARTS}</span>
+        <Counter value={hydrated ? hearts : MAX_HEARTS} />
       </Pill>
       <Pill className="text-orange-500">
-        <Flame className="size-4 fill-orange-400" />
-        <span>{hydrated ? streak : 0}</span>
+        <FlameIcon lit={hydrated && streak > 0} className="size-4" />
+        <Counter value={hydrated ? streak : 0} />
       </Pill>
       <Pill className="text-amber-500">
         <Star className="size-4 fill-amber-400" />
-        <span>Nv. {level}</span>
+        <Counter value={level} prefix="Nv. " />
         <span className="hidden text-xs font-bold text-slate-400 sm:inline">
           {into}/{XP_LEVEL_SIZE}
         </span>

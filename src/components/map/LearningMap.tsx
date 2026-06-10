@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Lock, BookOpen } from "lucide-react";
+import { MotionConfig } from "motion/react";
 import { curriculum, allLessons } from "@/content";
 import { useProgress } from "@/stores/progress";
 import { ACCENT } from "@/lib/accent";
@@ -38,6 +39,7 @@ export function LearningMap() {
   );
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="mx-auto min-h-dvh w-full max-w-2xl px-4 pb-24">
       {/* Barra superior */}
       <header className="sticky top-0 z-20 -mx-4 mb-2 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur dark:border-slate-700/70">
@@ -143,5 +145,6 @@ export function LearningMap() {
         </div>
       </section>
     </div>
+    </MotionConfig>
   );
 }
