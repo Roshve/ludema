@@ -32,9 +32,10 @@ export function LessonNode({
         className={cn(
           "grid size-18 place-items-center rounded-full border-b-4 text-white transition active:translate-y-0.5",
           locked
-            ? "border-slate-300 bg-slate-200 text-slate-400"
+            ? "border-slate-300 bg-slate-200 text-slate-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500"
             : a.node,
-          state === "current" && "ring-4 ring-offset-2 " + a.ring,
+          state === "current" &&
+            "ring-4 ring-offset-2 dark:ring-offset-slate-950 " + a.ring,
         )}
       >
         {state === "completed" ? (
@@ -49,7 +50,7 @@ export function LessonNode({
         <p
           className={cn(
             "text-xs font-extrabold leading-tight",
-            locked ? "text-slate-400" : "text-slate-700",
+            locked ? "text-slate-400" : "text-slate-700 dark:text-slate-200",
           )}
         >
           {title}
@@ -85,7 +86,7 @@ export function LessonNode({
 
 export function GoldBadge() {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-extrabold text-amber-600">
+    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-extrabold text-amber-600 dark:bg-amber-950/50 dark:text-amber-400">
       <Star className="size-3.5 fill-amber-400 text-amber-400" /> Dorada
     </span>
   );

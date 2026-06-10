@@ -43,13 +43,13 @@ export function BuildExpression({
           "flex min-h-16 flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed p-3",
           checked
             ? correct
-              ? "border-emerald-400 bg-emerald-50"
-              : "border-rose-400 bg-rose-50"
-            : "border-slate-300 bg-white",
+              ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/40"
+              : "border-rose-400 bg-rose-50 dark:bg-rose-950/40"
+            : "border-slate-300 bg-white dark:border-slate-600 dark:bg-slate-800",
         )}
       >
         {placed.length === 0 && (
-          <span className="px-2 font-bold text-slate-300">
+          <span className="px-2 font-bold text-slate-300 dark:text-slate-500">
             Toca los bloques para construir la expresión…
           </span>
         )}
@@ -79,8 +79,8 @@ export function BuildExpression({
               className={cn(
                 "rounded-xl border-b-4 px-4 py-2 text-lg font-black transition active:translate-y-0.5",
                 used
-                  ? "border-slate-200 bg-slate-100 text-transparent"
-                  : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50",
+                  ? "border-slate-200 bg-slate-100 text-transparent dark:border-slate-700 dark:bg-slate-800"
+                  : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700",
               )}
             >
               {exercise.bank[i]}

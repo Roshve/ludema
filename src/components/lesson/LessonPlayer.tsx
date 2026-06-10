@@ -131,11 +131,11 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
         <Link
           href="/"
           aria-label="Salir de la lección"
-          className="text-slate-400 hover:text-slate-600"
+          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         >
           <X className="size-7" strokeWidth={3} />
         </Link>
-        <div className="h-4 flex-1 overflow-hidden rounded-full bg-slate-200">
+        <div className="h-4 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
           <div
             className="h-full rounded-full bg-emerald-400 transition-all"
             style={{ width: `${progress}%` }}
@@ -149,7 +149,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
 
       {/* Cuerpo del ejercicio */}
       <main className="flex flex-1 flex-col py-4">
-        <h2 className="mb-6 whitespace-pre-line text-xl font-black text-slate-800 sm:text-2xl">
+        <h2 className="mb-6 whitespace-pre-line text-xl font-black text-slate-800 sm:text-2xl dark:text-slate-100">
           {exercise.prompt}
         </h2>
         {/* key por id: reinicia el estado interno del renderer en cada ejercicio */}
@@ -168,16 +168,18 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
           "sticky bottom-0 -mx-4 mt-4 border-t px-4 py-4",
           checked
             ? lastCorrect
-              ? "border-emerald-200 bg-emerald-50"
-              : "border-rose-200 bg-rose-50"
-            : "border-slate-200 bg-background/90 backdrop-blur",
+              ? "border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950"
+              : "border-rose-200 bg-rose-50 dark:border-rose-900 dark:bg-rose-950"
+            : "border-slate-200 bg-background/90 backdrop-blur dark:border-slate-700",
         )}
       >
         {checked && (
           <div
             className={cn(
               "mb-3 flex items-start gap-2 font-bold",
-              lastCorrect ? "text-emerald-700" : "text-rose-700",
+              lastCorrect
+                ? "text-emerald-700 dark:text-emerald-300"
+                : "text-rose-700 dark:text-rose-300",
             )}
           >
             <span
@@ -195,7 +197,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
             <span>
               {lastCorrect ? "¡Correcto!" : "Incorrecto."}
               {exercise.explanation && (
-                <span className="block font-semibold text-slate-600">
+                <span className="block font-semibold text-slate-600 dark:text-slate-300">
                   {exercise.explanation}
                 </span>
               )}
@@ -241,8 +243,10 @@ function EndScreen({
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
       <div className="animate-pop-in">{icon}</div>
-      <h1 className="text-2xl font-black text-slate-800">{title}</h1>
-      <p className="font-bold text-slate-500">{subtitle}</p>
+      <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100">
+        {title}
+      </h1>
+      <p className="font-bold text-slate-500 dark:text-slate-400">{subtitle}</p>
       <div className="mt-2 flex w-full flex-col gap-3">
         {primary}
         {secondary}

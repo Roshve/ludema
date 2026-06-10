@@ -1,8 +1,86 @@
 @import "tailwindcss";
 
+/* Modo oscuro por clase (.dark en <html>), no por prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f7fbff;
   --foreground: #16324f;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #dbe7f4;
+}
+
+/* Tema arcade: coexiste con .dark y re-skinea la paleta vía variables.
+   Las utilidades de Tailwind v4 compilan a var(--color-*), así que basta
+   sobreescribir los stops usados; ningún componente cambia. */
+.theme-arcade {
+  --background: #07020f;
+  --foreground: #e8e3ff;
+
+  /* base púrpura-oscura en lugar de slate */
+  --color-slate-100: #efeaff;
+  --color-slate-200: #d9ccf5;
+  --color-slate-300: #b7a6e0;
+  --color-slate-400: #8d7ab8;
+  --color-slate-500: #6f5e99;
+  --color-slate-600: #564878;
+  --color-slate-700: #3a2a5e;
+  --color-slate-800: #221440;
+  --color-slate-950: #0d0521;
+
+  /* verde neón */
+  --color-emerald-200: #b7ffd8;
+  --color-emerald-300: #7dffb8;
+  --color-emerald-400: #39ffa0;
+  --color-emerald-500: #00f08b;
+  --color-emerald-600: #00c46f;
+  --color-emerald-700: #008f52;
+  --color-emerald-900: #003d24;
+  --color-emerald-950: #001a0f;
+
+  /* cian */
+  --color-sky-200: #b3f4ff;
+  --color-sky-300: #7deaff;
+  --color-sky-400: #3ddcff;
+  --color-sky-500: #00cfff;
+  --color-sky-600: #00a5d6;
+  --color-sky-700: #007aa3;
+  --color-sky-800: #00475e;
+  --color-sky-950: #001a24;
+
+  /* magenta */
+  --color-rose-200: #ffc2ef;
+  --color-rose-300: #ff8fe0;
+  --color-rose-400: #ff5cd2;
+  --color-rose-500: #ff2bd6;
+  --color-rose-600: #d617ae;
+  --color-rose-700: #a30f85;
+  --color-rose-900: #4a0540;
+  --color-rose-950: #20021c;
+
+  /* amarillo neón */
+  --color-amber-200: #fff3a8;
+  --color-amber-300: #ffe96e;
+  --color-amber-400: #ffdf2b;
+  --color-amber-500: #ffce00;
+  --color-amber-600: #d6a400;
+  --color-amber-700: #a37c00;
+  --color-amber-900: #4a3800;
+  --color-amber-950: #201800;
+
+  /* púrpura eléctrico */
+  --color-violet-400: #c08bff;
+  --color-violet-500: #a44dff;
+  --color-violet-600: #8a2bf0;
+  --color-violet-700: #6b14c4;
+  --color-violet-950: #1d0536;
+
+  /* naranja neón */
+  --color-orange-400: #ffb02b;
+  --color-orange-500: #ff8a00;
 }
 
 @theme inline {
@@ -21,12 +99,85 @@ body {
   min-height: 100dvh;
 }
 
+.dark body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #0c2018 0%, transparent 55%),
+    radial-gradient(1000px 500px at 110% 10%, #141433 0%, transparent 50%),
+    var(--background);
+}
+
+/* Fondo arcade: grid synthwave + horizonte de glow. */
+.theme-arcade body {
+  background:
+    linear-gradient(rgb(255 43 214 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 207 255 / 0.06) 1px, transparent 1px),
+    radial-gradient(900px 500px at 50% -10%, #2a0a4a 0%, transparent 60%),
+    var(--background);
+  background-size:
+    44px 44px,
+    44px 44px,
+    auto,
+    auto;
+}
+
+/* Scanlines CRT: overlay fijo que no bloquea la interacción. */
+.theme-arcade body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0.12) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* Tipografía pixel solo en títulos; el cuerpo sigue en Nunito.
+   Press Start 2P solo tiene peso 400 y es ~40% más ancha: tamaños fijos. */
+.theme-arcade :is(h1, h2) {
+  font-family: var(--font-arcade), monospace;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.theme-arcade h1 {
+  font-size: 1.05rem;
+}
+.theme-arcade h2 {
+  font-size: 0.85rem;
+}
+.theme-arcade .font-arcade {
+  font-family: var(--font-arcade), monospace;
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
 /* Acento inferior estilo Duolingo en botones/tarjetas. */
 .shadow-pop {
   box-shadow: 0 4px 0 0 rgb(0 0 0 / 0.12);
 }
 .shadow-pop-sm {
   box-shadow: 0 3px 0 0 rgb(0 0 0 / 0.1);
+}
+.dark .shadow-pop {
+  box-shadow: 0 4px 0 0 rgb(0 0 0 / 0.5);
+}
+.dark .shadow-pop-sm {
+  box-shadow: 0 3px 0 0 rgb(0 0 0 / 0.45);
+}
+.theme-arcade .shadow-pop {
+  box-shadow:
+    0 4px 0 0 rgb(0 0 0 / 0.6),
+    0 0 18px rgb(255 43 214 / 0.3),
+    0 0 6px rgb(0 207 255 / 0.2);
+}
+.theme-arcade .shadow-pop-sm {
+  box-shadow:
+    0 3px 0 0 rgb(0 0 0 / 0.55),
+    0 0 12px rgb(255 43 214 / 0.25),
+    0 0 4px rgb(0 207 255 / 0.18);
 }
 
 @keyframes pop-in {

@@ -40,10 +40,10 @@ export function LearningMap() {
   return (
     <div className="mx-auto min-h-dvh w-full max-w-2xl px-4 pb-24">
       {/* Barra superior */}
-      <header className="sticky top-0 z-10 -mx-4 mb-2 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur">
+      <header className="sticky top-0 z-20 -mx-4 mb-2 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur dark:border-slate-700/70">
         <div className="flex items-center gap-2">
           <span className="text-2xl">🧩</span>
-          <span className="text-xl font-black tracking-tight text-slate-800">
+          <span className="font-arcade text-xl font-black tracking-tight text-slate-800 dark:text-slate-100">
             Ludema
           </span>
         </div>
@@ -52,8 +52,12 @@ export function LearningMap() {
 
       {/* Unidad 1 */}
       <div className="mb-2 mt-4 text-center">
-        <h1 className="text-2xl font-black text-slate-800">{unit1.title}</h1>
-        <p className="text-sm font-bold text-slate-500">{unit1.subtitle}</p>
+        <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100">
+          {unit1.title}
+        </h1>
+        <p className="text-sm font-bold text-slate-500 dark:text-slate-400">
+          {unit1.subtitle}
+        </p>
       </div>
 
       {(() => {
@@ -65,7 +69,7 @@ export function LearningMap() {
             <section key={section.id} className="mb-6">
               <div
                 className={cn(
-                  "sticky top-16 z-0 mb-4 flex items-center justify-between rounded-2xl border-b-4 px-4 py-3 text-white shadow-pop",
+                  "sticky top-16 z-10 mb-4 flex items-center justify-between rounded-2xl border-b-4 px-4 py-3 text-white shadow-pop",
                   a.bg,
                   a.border,
                 )}
@@ -118,7 +122,7 @@ export function LearningMap() {
       <section className="mt-8">
         <div
           className={cn(
-            "rounded-2xl border-2 border-dashed border-slate-300 bg-white/60 px-5 py-6 text-center",
+            "rounded-2xl border-2 border-dashed border-slate-300 bg-white/60 px-5 py-6 text-center dark:border-slate-600 dark:bg-slate-800/60",
             !unit1Done && "opacity-80",
           )}
         >
@@ -128,7 +132,7 @@ export function LearningMap() {
               {unit1Done ? "¡Desbloqueada!" : "Bloqueada"}
             </span>
           </div>
-          <h2 className="text-lg font-black text-slate-700">
+          <h2 className="text-lg font-black text-slate-700 dark:text-slate-200">
             Unidad 2 · Conjuntos
           </h2>
           <p className="text-sm font-bold text-slate-400">

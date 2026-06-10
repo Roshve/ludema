@@ -50,8 +50,8 @@ export function Classify({
           className={cn(
             "mx-auto flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-black",
             timeLeft <= 5
-              ? "bg-rose-100 text-rose-600"
-              : "bg-slate-100 text-slate-500",
+              ? "bg-rose-100 text-rose-600 dark:bg-rose-950/50 dark:text-rose-400"
+              : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
           )}
         >
           <Timer className="size-4" /> {timeLeft}s
@@ -62,14 +62,20 @@ export function Classify({
         {ORDER.map((c) => {
           const isSel = choice === c;
           let tone =
-            "border-slate-200 bg-white hover:border-slate-300 text-slate-700";
+            "border-slate-200 bg-white hover:border-slate-300 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-500 dark:text-slate-200";
           if (checked) {
             if (c === answer)
-              tone = "border-emerald-500 bg-emerald-50 text-emerald-800";
-            else if (isSel) tone = "border-rose-500 bg-rose-50 text-rose-800";
-            else tone = "border-slate-200 bg-white text-slate-400";
+              tone =
+                "border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200";
+            else if (isSel)
+              tone =
+                "border-rose-500 bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-200";
+            else
+              tone =
+                "border-slate-200 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-800";
           } else if (isSel) {
-            tone = "border-sky-500 bg-sky-50 ring-2 ring-sky-200 text-slate-800";
+            tone =
+              "border-sky-500 bg-sky-50 ring-2 ring-sky-200 text-slate-800 dark:bg-sky-950/40 dark:ring-sky-800 dark:text-slate-100";
           }
           return (
             <button

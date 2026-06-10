@@ -12,11 +12,11 @@ export function SectionGuideView({ section }: { section: Section }) {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col px-4 pb-28">
       {/* Cabecera */}
-      <header className="sticky top-0 z-10 -mx-4 flex items-center gap-3 border-b border-slate-200/70 bg-background/85 px-4 py-4 backdrop-blur">
+      <header className="sticky top-0 z-10 -mx-4 flex items-center gap-3 border-b border-slate-200/70 bg-background/85 px-4 py-4 backdrop-blur dark:border-slate-700/70">
         <Link
           href="/"
           aria-label="Cerrar guía"
-          className="text-slate-400 hover:text-slate-600"
+          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         >
           <X className="size-7" strokeWidth={3} />
         </Link>
@@ -24,7 +24,7 @@ export function SectionGuideView({ section }: { section: Section }) {
           <p className={cn("text-xs font-black uppercase tracking-wide", a.text)}>
             Guía de la sección
           </p>
-          <h1 className="text-xl font-black leading-tight text-slate-800">
+          <h1 className="text-xl font-black leading-tight text-slate-800 dark:text-slate-100">
             {section.title}
           </h1>
         </div>
@@ -35,14 +35,18 @@ export function SectionGuideView({ section }: { section: Section }) {
         {guide.levels.map((level, i) => (
           <section
             key={i}
-            className="rounded-3xl border-2 border-slate-100 bg-white p-5 shadow-pop-sm"
+            className="rounded-3xl border-2 border-slate-100 bg-white p-5 shadow-pop-sm dark:border-slate-700 dark:bg-slate-800"
           >
             <div className="mb-1 flex items-center gap-2">
               <span className="text-2xl">{level.emoji}</span>
-              <h2 className="text-lg font-black text-slate-800">{level.title}</h2>
+              <h2 className="text-lg font-black text-slate-800 dark:text-slate-100">
+                {level.title}
+              </h2>
             </div>
             {level.intro && (
-              <p className="mb-4 font-bold text-slate-500">{level.intro}</p>
+              <p className="mb-4 font-bold text-slate-500 dark:text-slate-400">
+                {level.intro}
+              </p>
             )}
             <ul className="flex flex-col gap-2.5">
               {level.entries.map((entry, j) => (
@@ -54,9 +58,9 @@ export function SectionGuideView({ section }: { section: Section }) {
 
         {/* Tip */}
         {guide.tip && (
-          <div className="flex items-start gap-3 rounded-3xl border-2 border-amber-200 bg-amber-50 p-5">
+          <div className="flex items-start gap-3 rounded-3xl border-2 border-amber-200 bg-amber-50 p-5 dark:border-amber-900 dark:bg-amber-950/40">
             <Lightbulb className="mt-0.5 size-6 shrink-0 fill-amber-300 text-amber-500" />
-            <p className="font-bold text-amber-900">
+            <p className="font-bold text-amber-900 dark:text-amber-200">
               <span className="font-black">Tip de Ludema: </span>
               {guide.tip}
             </p>
@@ -66,7 +70,7 @@ export function SectionGuideView({ section }: { section: Section }) {
 
       {/* Acción inferior */}
       {firstLessonId && (
-        <footer className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-background/90 backdrop-blur">
+        <footer className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-background/90 backdrop-blur dark:border-slate-700">
           <div className="mx-auto max-w-2xl px-4 py-4">
             <Link href={`/lesson/${firstLessonId}`} className="block">
               <span
@@ -97,7 +101,7 @@ function Entry({
   // Viñeta simple (solo texto).
   if (!entry.term && !entry.symbol) {
     return (
-      <li className="flex gap-2 font-semibold text-slate-600">
+      <li className="flex gap-2 font-semibold text-slate-600 dark:text-slate-300">
         <span className={cn("mt-2 size-1.5 shrink-0 rounded-full", a.bg)} />
         <span>{entry.text}</span>
       </li>
@@ -116,9 +120,11 @@ function Entry({
           {entry.symbol}
         </span>
       )}
-      <span className="font-semibold text-slate-600">
+      <span className="font-semibold text-slate-600 dark:text-slate-300">
         {entry.term && (
-          <span className="font-black text-slate-800">{entry.term}: </span>
+          <span className="font-black text-slate-800 dark:text-slate-100">
+            {entry.term}:{" "}
+          </span>
         )}
         {entry.text}
       </span>

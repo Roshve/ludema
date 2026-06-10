@@ -11,6 +11,7 @@ import {
 } from "@/stores/progress";
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
+import { ThemeMenu } from "./ThemeMenu";
 
 function Pill({
   children,
@@ -22,7 +23,7 @@ function Pill({
   return (
     <div
       className={cn(
-        "flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-extrabold text-sm shadow-pop-sm",
+        "flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-extrabold text-sm shadow-pop-sm dark:bg-slate-800",
         className,
       )}
     >
@@ -65,6 +66,7 @@ export function Hud() {
           {into}/{XP_LEVEL_SIZE}
         </span>
       </Pill>
+      <ThemeMenu />
     </div>
   );
 }

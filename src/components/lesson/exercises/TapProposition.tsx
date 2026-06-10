@@ -39,16 +39,18 @@ export function TapProposition({
         let tone = "";
         if (checked) {
           if (it.isProposition && isSel)
-            tone = "border-emerald-500 bg-emerald-50";
+            tone = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40";
           else if (it.isProposition && !isSel)
-            tone = "border-amber-400 bg-amber-50";
+            tone = "border-amber-400 bg-amber-50 dark:bg-amber-950/40";
           else if (!it.isProposition && isSel)
-            tone = "border-rose-500 bg-rose-50";
-          else tone = "border-slate-200 bg-white";
+            tone = "border-rose-500 bg-rose-50 dark:bg-rose-950/40";
+          else
+            tone =
+              "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800";
         } else {
           tone = isSel
-            ? "border-sky-500 bg-sky-50 ring-2 ring-sky-200"
-            : "border-slate-200 bg-white hover:border-slate-300";
+            ? "border-sky-500 bg-sky-50 ring-2 ring-sky-200 dark:bg-sky-950/40 dark:ring-sky-800"
+            : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-500";
         }
         return (
           <li key={i}>
@@ -57,7 +59,7 @@ export function TapProposition({
               onClick={() => toggle(i)}
               disabled={checked}
               className={cn(
-                "flex w-full items-center justify-between gap-3 rounded-2xl border-2 px-4 py-3 text-left font-bold text-slate-700 transition",
+                "flex w-full items-center justify-between gap-3 rounded-2xl border-2 px-4 py-3 text-left font-bold text-slate-700 transition dark:text-slate-200",
                 tone,
               )}
             >
