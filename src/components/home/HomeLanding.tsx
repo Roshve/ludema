@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { MotionConfig } from "motion/react";
-import logo from "@/../public/logo.png";
 import { SUBJECTS } from "@/content/subjects";
 import { ThemeMenu } from "@/components/hud/ThemeMenu";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SubjectCard } from "./SubjectCard";
 
 // Portada: elige la materia ("juego") que quieres aprender. El Hud completo
@@ -16,7 +15,7 @@ export function HomeLanding() {
         {/* Barra superior mínima */}
         <header className="sticky top-0 z-20 -mx-4 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur dark:border-slate-700/70">
           <div className="flex items-center gap-2">
-            <Image src={logo} alt="" priority className="size-9" />
+            <BrandLogo priority className="size-9" />
             <span className="font-arcade text-xl font-black tracking-tight text-slate-800 dark:text-slate-100">
               Ludema
             </span>
@@ -26,7 +25,7 @@ export function HomeLanding() {
 
         {/* Héroe */}
         <div className="mb-8 mt-10 text-center">
-          <Image src={logo} alt="" className="mx-auto mb-3 size-20" />
+          <BrandLogo className="mx-auto mb-3 size-20" />
           <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100">
             Aprende jugando
           </h1>
