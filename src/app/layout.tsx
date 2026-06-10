@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · Ludema",
   },
   description:
-    "Ludema es un juego estilo Duolingo para aprender materias universitarias: lógica, sistemas e información, álgebra y geometría analítica, y algoritmos y programación.",
+    "Ludema es un juego estilo Duolingo para aprender materias universitarias: lógica y estructuras discretas, algoritmos y estructura de datos, sistemas y procesos de negocio, y álgebra y geometría analítica.",
   icons: {
     icon: [
       { url: `${base}/favicon-16x16.png`, sizes: "16x16", type: "image/png" },
