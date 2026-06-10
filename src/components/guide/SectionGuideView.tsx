@@ -14,7 +14,7 @@ export function SectionGuideView({ section }: { section: Section }) {
       {/* Cabecera */}
       <header className="sticky top-0 z-10 -mx-4 flex items-center gap-3 border-b border-slate-200/70 bg-background/85 px-4 py-4 backdrop-blur dark:border-slate-700/70">
         <Link
-          href="/"
+          href="/logica"
           aria-label="Cerrar guía"
           className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         >

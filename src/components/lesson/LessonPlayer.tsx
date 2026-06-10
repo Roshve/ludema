@@ -95,7 +95,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
           <Button onClick={restart}>Recargar y reintentar</Button>
         }
         secondary={
-          <Link href="/">
+          <Link href="/logica">
             <Button variant="neutral">Volver al mapa</Button>
           </Link>
         }
@@ -121,13 +121,13 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
               <Button>Siguiente lección</Button>
             </Link>
           ) : (
-            <Link href="/">
+            <Link href="/logica">
               <Button>Volver al mapa</Button>
             </Link>
           )
         }
         secondary={
-          <Link href="/">
+          <Link href="/logica">
             <Button variant="neutral">Ir al mapa</Button>
           </Link>
         }
@@ -144,7 +144,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
       {/* Cabecera: cerrar + progreso + corazones */}
       <header className="flex items-center gap-3 py-4">
         <Link
-          href="/"
+          href="/logica"
           aria-label="Salir de la lección"
           className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         >

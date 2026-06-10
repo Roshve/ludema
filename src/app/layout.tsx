@@ -21,9 +21,12 @@ const pressStart = Press_Start_2P({
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Ludema · Aprende lógica jugando",
+  title: {
+    default: "Ludema · Aprende jugando",
+    template: "%s · Ludema",
+  },
   description:
-    "Ludema es un juego estilo Duolingo para dominar la lógica: proposiciones, tablas de verdad, leyes, cuantificadores y razonamientos.",
+    "Ludema es un juego estilo Duolingo para aprender materias universitarias: lógica, sistemas e información, álgebra y geometría analítica, y algoritmos y programación.",
   icons: {
     icon: [
       { url: `${base}/favicon-16x16.png`, sizes: "16x16", type: "image/png" },

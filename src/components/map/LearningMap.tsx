@@ -45,12 +45,12 @@ export function LearningMap() {
     <div className="mx-auto min-h-dvh w-full max-w-2xl px-4 pb-24">
       {/* Barra superior */}
       <header className="sticky top-0 z-20 -mx-4 mb-2 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur dark:border-slate-700/70">
-        <div className="flex items-center gap-2">
+        <Link href="/" aria-label="Volver al inicio" className="flex items-center gap-2">
           <Image src={logo} alt="" priority className="size-9" />
           <span className="font-arcade text-xl font-black tracking-tight text-slate-800 dark:text-slate-100">
             Ludema
           </span>
-        </div>
+        </Link>
         <Hud />
       </header>
 

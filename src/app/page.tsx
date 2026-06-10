@@ -1,5 +1,5 @@
-import { LearningMap } from "@/components/map/LearningMap";
+import { HomeLanding } from "@/components/home/HomeLanding";
 
 export default function Home() {
-  return <LearningMap />;
+  return <HomeLanding />;
 }
