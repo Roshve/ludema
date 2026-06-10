@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito, Press_Start_2P } from "next/font/google";
+import { UiSounds } from "@/components/ui/UiSounds";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -56,6 +57,7 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("ludema-theme");var c=document.documentElement.classList;if(t==="arcade")c.add("dark","theme-arcade");else if(t==="dark"||((t===null||t==="system")&&matchMedia("(prefers-color-scheme: dark)").matches))c.add("dark")}catch(e){}})();`,
           }}
         />
+        <UiSounds />
         {children}
       </body>
     </html>

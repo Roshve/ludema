@@ -10,6 +10,7 @@ import { useProgress } from "@/stores/progress";
 import { Button } from "@/components/ui/Button";
 import { Lottie } from "@/components/ui/Lottie";
 import { fireConfetti } from "@/lib/confetti";
+import { sfxCorrect, sfxWrong, sfxComplete, sfxFail } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 import { ExerciseView } from "./ExerciseView";
 import type { AnswerState } from "./types";
@@ -47,8 +48,13 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     const correct = pending?.correct ?? false;
     setChecked(true);
     setLastCorrect(correct);
-    if (correct) setCorrectCount((c) => c + 1);
-    else loseHeart();
+    if (correct) {
+      sfxCorrect();
+      setCorrectCount((c) => c + 1);
+    } else {
+      sfxWrong();
+      loseHeart();
+    }
   }, [pending, loseHeart]);
 
   function next() {
@@ -293,7 +299,12 @@ function EndScreen({
   secondary: React.ReactNode;
 }) {
   useEffect(() => {
-    if (celebrate) fireConfetti();
+    if (celebrate) {
+      fireConfetti();
+      sfxComplete();
+    } else {
+      sfxFail();
+    }
   }, [celebrate]);
 
   return (

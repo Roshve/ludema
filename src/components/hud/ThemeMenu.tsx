@@ -1,8 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Settings, Sun, Moon, Monitor, Gamepad2, Check } from "lucide-react";
+import {
+  Settings,
+  Sun,
+  Moon,
+  Monitor,
+  Gamepad2,
+  Check,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { useTheme, type ThemePref } from "@/hooks/useTheme";
+import { useSoundEnabled } from "@/hooks/useSoundEnabled";
+import { sfxClick } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 
 const OPTIONS: { pref: ThemePref; label: string; Icon: typeof Sun }[] = [
@@ -14,6 +25,7 @@ const OPTIONS: { pref: ThemePref; label: string; Icon: typeof Sun }[] = [
 
 export function ThemeMenu() {
   const { theme, setTheme } = useTheme();
+  const { enabled: soundOn, setEnabled: setSoundOn } = useSoundEnabled();
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,7 +33,7 @@ export function ThemeMenu() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Configuración de tema"
+        aria-label="Configuración"
         aria-haspopup="menu"
         aria-expanded={open}
         className="flex items-center rounded-full bg-white p-2 text-slate-500 shadow-pop-sm transition active:translate-y-0.5 dark:bg-slate-800 dark:text-slate-300"
@@ -68,6 +80,28 @@ export function ThemeMenu() {
                 </button>
               );
             })}
+
+            <div className="mx-2 my-1.5 border-t-2 border-slate-100 dark:border-slate-700" />
+
+            <button
+              type="button"
+              role="menuitemcheckbox"
+              aria-checked={soundOn}
+              onClick={() => {
+                setSoundOn(!soundOn);
+                // Confirmación audible solo al activar (al silenciar ya no suena).
+                if (!soundOn) sfxClick();
+              }}
+              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-extrabold text-slate-600 transition hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700"
+            >
+              {soundOn ? (
+                <Volume2 className="size-4" />
+              ) : (
+                <VolumeX className="size-4" />
+              )}
+              <span className="flex-1 text-left">Sonido</span>
+              {soundOn && <Check className="size-4" strokeWidth={3} />}
+            </button>
           </div>
         </>
       )}
