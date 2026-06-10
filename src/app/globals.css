@@ -103,6 +103,22 @@
   /* naranja neón */
   --color-orange-400: #ffb02b;
   --color-orange-500: #ff8a00;
+
+  /* Esquinas pixel: las utilidades rounded-* compilan a var(--radius-*),
+     así que anularlas aquí endereza tarjetas, botones y menús en cascada. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+/* rounded-full compila a 9999px fijo (sin variable): pills, badges, barras
+   de progreso y nodos circulares pasan a fichas/botones cuadrados de fichín. */
+.theme-arcade [class*="rounded-full"] {
+  border-radius: 0;
 }
 
 @theme inline {
@@ -189,15 +205,16 @@ body {
 .dark .shadow-pop-sm {
   box-shadow: 0 3px 0 0 rgb(0 0 0 / 0.45);
 }
+/* En arcade el drop shadow es diagonal y duro, estilo UI 8-bit. */
 .theme-arcade .shadow-pop {
   box-shadow:
-    0 4px 0 0 rgb(0 0 0 / 0.6),
+    4px 4px 0 0 rgb(0 0 0 / 0.6),
     0 0 18px rgb(255 43 214 / 0.3),
     0 0 6px rgb(0 207 255 / 0.2);
 }
 .theme-arcade .shadow-pop-sm {
   box-shadow:
-    0 3px 0 0 rgb(0 0 0 / 0.55),
+    3px 3px 0 0 rgb(0 0 0 / 0.55),
     0 0 12px rgb(255 43 214 / 0.25),
     0 0 4px rgb(0 207 255 / 0.18);
 }
