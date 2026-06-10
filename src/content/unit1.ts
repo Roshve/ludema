@@ -14,7 +14,7 @@ export const unit1: Unit = {
       id: "u1-a",
       title: "Proposiciones y conectivos",
       description: "Qué es una proposición y cómo se conectan las ideas.",
-      accent: "green",
+      accent: "blue",
       guide: {
         levels: [
           {
@@ -236,7 +236,7 @@ export const unit1: Unit = {
       id: "u1-b",
       title: "Tablas de verdad y clasificación",
       description: "Calcula valores de verdad y clasifica proposiciones.",
-      accent: "sky",
+      accent: "cyan",
       guide: {
         levels: [
           {
@@ -398,7 +398,7 @@ export const unit1: Unit = {
       id: "u1-c",
       title: "Leyes lógicas y simplificación",
       description: "Equivalencias y leyes para simplificar sin hacer toda la tabla.",
-      accent: "rose",
+      accent: "violet",
       guide: {
         levels: [
           {
@@ -648,7 +648,7 @@ export const unit1: Unit = {
       id: "u1-d",
       title: "Predicados y Cuantificadores",
       description: "Cuantificadores universal y existencial, y sus negaciones.",
-      accent: "purple",
+      accent: "indigo",
       guide: {
         levels: [
           {
@@ -748,7 +748,7 @@ export const unit1: Unit = {
       id: "u1-e",
       title: "Razonamientos",
       description: "Reglas de inferencia y detección de falacias. ¡Jefe final!",
-      accent: "amber",
+      accent: "fuchsia",
       guide: {
         levels: [
           {

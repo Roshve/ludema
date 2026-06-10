@@ -59,7 +59,7 @@ export function BuildExpression({
             type="button"
             onClick={() => remove(i)}
             disabled={checked}
-            className="rounded-xl border-b-4 border-sky-700 bg-sky-500 px-4 py-2 text-lg font-black text-white shadow-pop-sm active:translate-y-0.5"
+            className="rounded-xl border-b-4 border-cyan-700 bg-cyan-500 px-4 py-2 text-lg font-black text-white shadow-pop-sm active:translate-y-0.5"
           >
             {exercise.bank[i]}
           </button>

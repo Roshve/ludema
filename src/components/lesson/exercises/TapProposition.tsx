@@ -49,7 +49,7 @@ export function TapProposition({
               "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800";
         } else {
           tone = isSel
-            ? "border-sky-500 bg-sky-50 ring-2 ring-sky-200 dark:bg-sky-950/40 dark:ring-sky-800"
+            ? "border-cyan-500 bg-cyan-50 ring-2 ring-cyan-200 dark:bg-cyan-950/40 dark:ring-cyan-800"
             : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-500";
         }
         return (

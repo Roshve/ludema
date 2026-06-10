@@ -111,7 +111,7 @@ export type Section = {
   title: string;
   description: string;
   /** Clase de color base (define el acento visual de la sección). */
-  accent: "green" | "purple" | "amber" | "sky" | "rose";
+  accent: "blue" | "cyan" | "violet" | "indigo" | "fuchsia";
   /** Mini-guía teórica opcional de la sección. */
   guide?: SectionGuide;
   lessons: Lesson[];

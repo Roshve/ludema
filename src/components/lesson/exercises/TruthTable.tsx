@@ -78,7 +78,7 @@ export function TruthTable({
                         : "border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300"
                       : cells[i] === null
                         ? "border-dashed border-slate-300 bg-white text-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-500"
-                        : "border-sky-400 bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300",
+                        : "border-cyan-400 bg-cyan-50 text-cyan-700 dark:bg-cyan-950/40 dark:text-cyan-300",
                   )}
                 >
                   {cells[i] === null ? "·" : vstr(cells[i]!)}

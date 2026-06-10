@@ -146,7 +146,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
         </Link>
         <div className="h-4 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
           <motion.div
-            className="h-full rounded-full bg-emerald-400"
+            className="h-full rounded-full bg-blue-500"
             initial={false}
             animate={{ width: `${progress}%` }}
             transition={{ type: "spring", stiffness: 140, damping: 22 }}

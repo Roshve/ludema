@@ -42,14 +42,36 @@
   --color-emerald-950: #001a0f;
 
   /* cian */
-  --color-sky-200: #b3f4ff;
-  --color-sky-300: #7deaff;
-  --color-sky-400: #3ddcff;
-  --color-sky-500: #00cfff;
-  --color-sky-600: #00a5d6;
-  --color-sky-700: #007aa3;
-  --color-sky-800: #00475e;
-  --color-sky-950: #001a24;
+  --color-cyan-200: #b3f4ff;
+  --color-cyan-300: #7deaff;
+  --color-cyan-400: #3ddcff;
+  --color-cyan-500: #00cfff;
+  --color-cyan-600: #00a5d6;
+  --color-cyan-700: #007aa3;
+  --color-cyan-800: #00475e;
+  --color-cyan-950: #001a24;
+
+  /* azul eléctrico (marca) */
+  --color-blue-400: #5a9aff;
+  --color-blue-500: #2b7fff;
+  --color-blue-600: #1f6fff;
+  --color-blue-700: #1746a3;
+  --color-blue-800: #0e2c66;
+  --color-blue-950: #07173d;
+
+  /* índigo */
+  --color-indigo-400: #94a0ff;
+  --color-indigo-500: #6c5bff;
+  --color-indigo-600: #5640e0;
+  --color-indigo-700: #3f2bb0;
+  --color-indigo-950: #150a3d;
+
+  /* fucsia */
+  --color-fuchsia-400: #f06bff;
+  --color-fuchsia-500: #e93bff;
+  --color-fuchsia-600: #c318dd;
+  --color-fuchsia-700: #9410a8;
+  --color-fuchsia-950: #29032e;
 
   /* magenta */
   --color-rose-200: #ffc2ef;
@@ -91,7 +113,7 @@
 
 body {
   background:
-    radial-gradient(1200px 600px at 10% -10%, #e8f7ee 0%, transparent 55%),
+    radial-gradient(1200px 600px at 10% -10%, #e8f0fe 0%, transparent 55%),
     radial-gradient(1000px 500px at 110% 10%, #eef0ff 0%, transparent 50%),
     var(--background);
   color: var(--foreground);
@@ -101,7 +123,7 @@ body {
 
 .dark body {
   background:
-    radial-gradient(1200px 600px at 10% -10%, #0c2018 0%, transparent 55%),
+    radial-gradient(1200px 600px at 10% -10%, #0d1733 0%, transparent 55%),
     radial-gradient(1000px 500px at 110% 10%, #141433 0%, transparent 50%),
     var(--background);
 }

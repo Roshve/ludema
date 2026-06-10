@@ -58,7 +58,7 @@ export function SimplifySteps({
                     "border-slate-200 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-800";
               } else if (isSel) {
                 tone =
-                  "border-sky-500 bg-sky-50 ring-2 ring-sky-200 dark:bg-sky-950/40 dark:ring-sky-800";
+                  "border-cyan-500 bg-cyan-50 ring-2 ring-cyan-200 dark:bg-cyan-950/40 dark:ring-cyan-800";
               }
               return (
                 <button

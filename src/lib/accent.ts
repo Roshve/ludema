@@ -2,7 +2,8 @@ import type { Section } from "@/content/types";
 
 export type Accent = Section["accent"];
 
-// Clases de Tailwind por acento de sección.
+// Clases de Tailwind por acento de sección. Paleta de marca: familia fría
+// azul (#2563EB) · cian (#06B6D4) · violeta (#7C3AED) + índigo y fucsia.
 export const ACCENT: Record<
   Accent,
   {
@@ -14,15 +15,23 @@ export const ACCENT: Record<
     node: string;
   }
 > = {
-  green: {
-    bg: "bg-emerald-500",
-    bgSoft: "bg-emerald-50 dark:bg-emerald-950/40",
-    text: "text-emerald-600 dark:text-emerald-400",
-    ring: "ring-emerald-600",
-    border: "border-emerald-600",
-    node: "bg-emerald-500 border-emerald-700",
+  blue: {
+    bg: "bg-blue-600",
+    bgSoft: "bg-blue-50 dark:bg-blue-950/40",
+    text: "text-blue-600 dark:text-blue-400",
+    ring: "ring-blue-600",
+    border: "border-blue-700",
+    node: "bg-blue-600 border-blue-800",
   },
-  purple: {
+  cyan: {
+    bg: "bg-cyan-500",
+    bgSoft: "bg-cyan-50 dark:bg-cyan-950/40",
+    text: "text-cyan-600 dark:text-cyan-400",
+    ring: "ring-cyan-600",
+    border: "border-cyan-600",
+    node: "bg-cyan-500 border-cyan-700",
+  },
+  violet: {
     bg: "bg-violet-500",
     bgSoft: "bg-violet-50 dark:bg-violet-950/40",
     text: "text-violet-600 dark:text-violet-400",
@@ -30,28 +39,20 @@ export const ACCENT: Record<
     border: "border-violet-600",
     node: "bg-violet-500 border-violet-700",
   },
-  amber: {
-    bg: "bg-amber-500",
-    bgSoft: "bg-amber-50 dark:bg-amber-950/40",
-    text: "text-amber-600 dark:text-amber-400",
-    ring: "ring-amber-600",
-    border: "border-amber-600",
-    node: "bg-amber-500 border-amber-700",
+  indigo: {
+    bg: "bg-indigo-500",
+    bgSoft: "bg-indigo-50 dark:bg-indigo-950/40",
+    text: "text-indigo-600 dark:text-indigo-400",
+    ring: "ring-indigo-600",
+    border: "border-indigo-600",
+    node: "bg-indigo-500 border-indigo-700",
   },
-  sky: {
-    bg: "bg-sky-500",
-    bgSoft: "bg-sky-50 dark:bg-sky-950/40",
-    text: "text-sky-600 dark:text-sky-400",
-    ring: "ring-sky-600",
-    border: "border-sky-600",
-    node: "bg-sky-500 border-sky-700",
-  },
-  rose: {
-    bg: "bg-rose-500",
-    bgSoft: "bg-rose-50 dark:bg-rose-950/40",
-    text: "text-rose-600 dark:text-rose-400",
-    ring: "ring-rose-600",
-    border: "border-rose-600",
-    node: "bg-rose-500 border-rose-700",
+  fuchsia: {
+    bg: "bg-fuchsia-500",
+    bgSoft: "bg-fuchsia-50 dark:bg-fuchsia-950/40",
+    text: "text-fuchsia-600 dark:text-fuchsia-400",
+    ring: "ring-fuchsia-600",
+    border: "border-fuchsia-600",
+    node: "bg-fuchsia-500 border-fuchsia-700",
   },
 };

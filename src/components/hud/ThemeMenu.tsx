@@ -58,7 +58,7 @@ export function ThemeMenu() {
                   className={cn(
                     "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-extrabold transition",
                     active
-                      ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400"
+                      ? "bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400"
                       : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700",
                   )}
                 >
