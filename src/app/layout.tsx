@@ -15,10 +15,27 @@ const pressStart = Press_Start_2P({
   weight: "400",
 });
 
+// Los URLs de metadata.icons no reciben el basePath automáticamente:
+// prefijar a mano (mismo env var que usa next.config.ts para GH Pages).
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: "Ludema · Aprende lógica jugando",
   description:
     "Ludema es un juego estilo Duolingo para dominar la lógica: proposiciones, tablas de verdad, leyes, cuantificadores y razonamientos.",
+  icons: {
+    icon: [
+      { url: `${base}/favicon-16x16.png`, sizes: "16x16", type: "image/png" },
+      { url: `${base}/favicon-32x32.png`, sizes: "32x32", type: "image/png" },
+      {
+        url: `${base}/favicon-192x192.png`,
+        sizes: "192x192",
+        type: "image/png",
+      },
+    ],
+    apple: `${base}/apple-touch-icon.png`,
+  },
+  manifest: `${base}/site.webmanifest`,
 };
 
 export default function RootLayout({
