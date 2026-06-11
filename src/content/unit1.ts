@@ -229,6 +229,95 @@ export const unit1: Unit = {
             },
           ],
         },
+        {
+          id: "u1-a-l4",
+          title: "Guía · Proposiciones y condicionales",
+          subtitle: "Nivel 1 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-a-l4-e1",
+              type: "tap-proposition",
+              prompt: "De la guía: toca los enunciados que son proposiciones lógicas.",
+              items: [
+                { text: "El año 2004 tuvo 366 días.", isProposition: true },
+                { text: "Los divisores positivos de 135.", isProposition: false },
+                { text: "No pisar el césped.", isProposition: false },
+                {
+                  text: "Los divisores positivos de 135 son 8 en total.",
+                  isProposition: true,
+                },
+              ],
+              explanation:
+                "Una descripción («los divisores positivos de 135») y una orden no afirman nada. Las otras dos sí tienen valor de verdad: 2004 fue bisiesto (V) y 135 tiene exactamente 8 divisores (V).",
+            },
+            {
+              id: "u1-a-l4-e2",
+              type: "tap-proposition",
+              prompt: "Segunda parte: toca las que son proposiciones lógicas.",
+              items: [
+                { text: "2x + 5 = 8", isProposition: false },
+                {
+                  text: "La frase «No pisar el césped» es una proposición lógica.",
+                  isProposition: true,
+                },
+                {
+                  text: "Existe un x entero que cumple 2x + 5 = 8.",
+                  isProposition: true,
+                },
+                {
+                  text: "La ecuación 2x + 5 = 8 tiene solución en ℝ.",
+                  isProposition: true,
+                },
+              ],
+              explanation:
+                "2x + 5 = 8 sola tiene una variable libre: no es proposición. Pero al cuantificarla («existe un x entero…», que es F porque x = 3/2) o al afirmar algo SOBRE otra frase, sí hay valor de verdad.",
+            },
+            {
+              id: "u1-a-l4-e3",
+              type: "multiple-choice",
+              prompt: "¿Cuál de estas proposiciones es un condicional encubierto?",
+              options: [
+                "Algunos números pares son divisibles por 3.",
+                "El cuadrado de todo número par es también par.",
+                "El resto de dividir 23456 por 4 es cero.",
+                "Ninguna puede escribirse como condicional.",
+              ],
+              correctIndex: 1,
+              explanation:
+                "«El cuadrado de todo par es par» equivale a «SI un número es par, ENTONCES su cuadrado es par». Las otras solo afirman hechos puntuales.",
+            },
+            {
+              id: "u1-a-l4-e4",
+              type: "multiple-choice",
+              prompt:
+                "«Para cursar Análisis II es necesario tener aprobada Análisis I». ¿Cuál es su forma Si… entonces…?",
+              options: [
+                "Si apruebo Análisis I, entonces curso Análisis II.",
+                "Si no curso Análisis II, entonces no aprobé Análisis I.",
+                "Si curso Análisis II, entonces aprobé Análisis I.",
+                "No es un condicional.",
+              ],
+              correctIndex: 2,
+              explanation:
+                "La condición NECESARIA va en el consecuente: cursar Análisis II ⇒ Análisis I aprobada.",
+            },
+            {
+              id: "u1-a-l4-e5",
+              type: "multiple-choice",
+              prompt:
+                "«Es suficiente tener 3 ejercicios correctos para aprobar el examen». Indica antecedente y consecuente.",
+              options: [
+                "Antecedente: aprobar el examen · Consecuente: tener 3 correctos",
+                "Antecedente: tener 3 correctos · Consecuente: aprobar el examen",
+                "No tiene antecedente: no es un condicional",
+                "Antecedente y consecuente son intercambiables",
+              ],
+              correctIndex: 1,
+              explanation:
+                "La condición SUFICIENTE va en el antecedente: tener 3 correctos ⇒ aprobar.",
+            },
+          ],
+        },
       ],
     },
     // ── Sección B · Tablas de verdad y clasificación ─────────────────────────
@@ -388,6 +477,97 @@ export const unit1: Unit = {
               prompt: "Clasifica: (p ∨ q) ⇒ p",
               formula: "(p ∨ q) ⇒ p",
               explanation: "Falla cuando p es F y q es V: contingencia.",
+            },
+          ],
+        },
+        {
+          id: "u1-b-l4",
+          title: "Guía · Valores ocultos",
+          subtitle: "Nivel 2 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-b-l4-e1",
+              type: "multiple-choice",
+              prompt:
+                "Sea t: (p ∧ q ⇒ ¬r) ∧ ¬p  y se sabe que v(t) = V. ¿Se puede conocer el valor de r?",
+              options: [
+                "Sí: r es V",
+                "Sí: r es F",
+                "No: r puede ser V o F",
+                "Imposible: t nunca puede ser V",
+              ],
+              correctIndex: 2,
+              explanation:
+                "v(t) = V exige ¬p V, o sea p = F. Entonces p ∧ q es F y el condicional p ∧ q ⇒ ¬r es V sin importar r: r queda indeterminada.",
+            },
+            {
+              id: "u1-b-l4-e2",
+              type: "multiple-choice",
+              prompt:
+                "Sea t: (¬p ∨ q ⇒ ¬r) ∨ p  con v(t) = F. ¿Se puede conocer el valor de r?",
+              options: [
+                "Sí: r es V",
+                "Sí: r es F",
+                "No se puede determinar",
+                "Imposible: t nunca puede ser F",
+              ],
+              correctIndex: 0,
+              explanation:
+                "La disyunción es F solo si p = F y el condicional es F. Un condicional falso exige consecuente F: ¬r = F, es decir r = V.",
+            },
+            {
+              id: "u1-b-l4-e3",
+              type: "multiple-choice",
+              prompt: "En el mismo caso (v(t) = F), ¿se puede conocer q?",
+              options: [
+                "Sí: q es V",
+                "Sí: q es F",
+                "Sí: q vale lo mismo que r",
+                "No: con p = F el antecedente ¬p ∨ q ya es V sin importar q",
+              ],
+              correctIndex: 3,
+              explanation:
+                "El condicional falso exige antecedente V, pero ¬p ∨ q ya es V porque ¬p es V. q queda libre.",
+            },
+            {
+              id: "u1-b-l4-e4",
+              type: "classify",
+              prompt: "De la guía: clasifica  q ∨ (q ∧ ¬p ⇒ p)",
+              formula: "q ∨ (q ∧ ¬p ⇒ p)",
+              explanation:
+                "Si q es V, la disyunción es V; si q es F, q ∧ ¬p es F y el condicional es V. Siempre V: tautología.",
+            },
+            {
+              id: "u1-b-l4-e5",
+              type: "classify",
+              prompt: "Clasifica:  (p ⇒ q ∨ r) ∧ ¬q ⇒ ¬p ∨ r",
+              formula: "(p ⇒ q ∨ r) ∧ ¬q ⇒ ¬p ∨ r",
+              explanation:
+                "Si las premisas del antecedente se cumplen y p es V, de q ∨ r con ¬q queda r. Las 8 filas dan V: tautología.",
+            },
+            {
+              id: "u1-b-l4-e6",
+              type: "classify",
+              prompt: "Clasifica:  ¬(p ∧ q ⇒ r) ∧ (r ∨ ¬p)",
+              formula: "¬(p ∧ q ⇒ r) ∧ (r ∨ ¬p)",
+              explanation:
+                "¬(p ∧ q ⇒ r) exige p y q V con r F, pero entonces r ∨ ¬p queda F. Nunca es V: contradicción.",
+            },
+            {
+              id: "u1-b-l4-e7",
+              type: "classify",
+              prompt: "Clasifica:  (p ⇒ q) ⇔ (q ⇒ p)",
+              formula: "(p ⇒ q) ⇔ (q ⇒ p)",
+              explanation:
+                "Un condicional y su recíproco NO son equivalentes: con p V y q F da F; con p y q iguales da V. Contingencia.",
+            },
+            {
+              id: "u1-b-l4-e8",
+              type: "classify",
+              prompt: "Clasifica:  (p ∨ q) ∧ ¬(p ∧ q) ∧ (p ⇔ q)",
+              formula: "(p ∨ q) ∧ ¬(p ∧ q) ∧ (p ⇔ q)",
+              explanation:
+                "(p ∨ q) ∧ ¬(p ∧ q) pide valores distintos y p ⇔ q pide valores iguales: imposible. Contradicción.",
             },
           ],
         },
@@ -641,6 +821,145 @@ export const unit1: Unit = {
             },
           ],
         },
+        {
+          id: "u1-c-l4",
+          title: "Guía · Simplificación con leyes",
+          subtitle: "Nivel 3 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-c-l4-e1",
+              type: "simplify-steps",
+              prompt:
+                "De la guía: simplifica  (p ∨ q) ⇒ (p ∨ (p ⇔ q))  eligiendo la ley de cada paso.",
+              start: "(p ∨ q) ⇒ (p ∨ (p ⇔ q))",
+              steps: [
+                {
+                  options: ["De Morgan", "Definición de bicondicional", "Absorción"],
+                  correctIndex: 1,
+                  result: "(p ∨ q) ⇒ (p ∨ ((p ∧ q) ∨ (¬p ∧ ¬q)))",
+                },
+                {
+                  options: ["Ley de Absorción", "Doble negación", "Tercero excluido"],
+                  correctIndex: 0,
+                  result: "(p ∨ q) ⇒ (p ∨ (¬p ∧ ¬q))",
+                },
+                {
+                  options: ["De Morgan", "Conmutativa", "Distributiva"],
+                  correctIndex: 2,
+                  result: "(p ∨ q) ⇒ ((p ∨ ¬p) ∧ (p ∨ ¬q))",
+                },
+                {
+                  options: ["Tercero excluido y neutro", "Idempotencia", "Absorción"],
+                  correctIndex: 0,
+                  result: "(p ∨ q) ⇒ (p ∨ ¬q)",
+                },
+                {
+                  options: ["De Morgan", "Definición de condicional", "Distributiva"],
+                  correctIndex: 1,
+                  result: "¬(p ∨ q) ∨ (p ∨ ¬q)",
+                },
+                {
+                  options: ["De Morgan", "Doble negación", "Idempotencia"],
+                  correctIndex: 0,
+                  result: "(¬p ∧ ¬q) ∨ (p ∨ ¬q)",
+                },
+                {
+                  options: ["Distributiva", "Ley de Absorción", "Tercero excluido"],
+                  correctIndex: 1,
+                  result: "p ∨ ¬q",
+                },
+              ],
+              explanation:
+                "Resultado: p ∨ ¬q (es decir, q ⇒ p). La clave fue expandir el bicondicional y absorber.",
+            },
+            {
+              id: "u1-c-l4-e2",
+              type: "simplify-steps",
+              prompt: "Simplifica  ¬(p ∨ (q ⇒ r)) ∨ ¬q  paso a paso.",
+              start: "¬(p ∨ (q ⇒ r)) ∨ ¬q",
+              steps: [
+                {
+                  options: ["Definición de condicional", "De Morgan", "Absorción"],
+                  correctIndex: 0,
+                  result: "¬(p ∨ (¬q ∨ r)) ∨ ¬q",
+                },
+                {
+                  options: ["Distributiva", "De Morgan", "Doble negación"],
+                  correctIndex: 1,
+                  result: "(¬p ∧ ¬(¬q ∨ r)) ∨ ¬q",
+                },
+                {
+                  options: ["De Morgan y doble negación", "Tercero excluido", "Conmutativa"],
+                  correctIndex: 0,
+                  result: "(¬p ∧ (q ∧ ¬r)) ∨ ¬q",
+                },
+                {
+                  options: ["Idempotencia", "De Morgan", "Absorción generalizada"],
+                  correctIndex: 2,
+                  result: "¬q ∨ (¬p ∧ ¬r)",
+                },
+              ],
+              explanation:
+                "El q interno se absorbe contra ¬q: (A ∧ q) ∨ ¬q ≡ A ∨ ¬q. Resultado: ¬q ∨ (¬p ∧ ¬r).",
+            },
+            {
+              id: "u1-c-l4-e3",
+              type: "simplify-steps",
+              prompt: "Simplifica  (p ⇒ r ∨ q) ∧ (¬q ∨ r)  paso a paso.",
+              start: "(p ⇒ r ∨ q) ∧ (¬q ∨ r)",
+              steps: [
+                {
+                  options: ["De Morgan", "Absorción", "Definición de condicional"],
+                  correctIndex: 2,
+                  result: "(¬p ∨ (r ∨ q)) ∧ (¬q ∨ r)",
+                },
+                {
+                  options: ["Conmutativa y asociativa", "Doble negación", "Distributiva"],
+                  correctIndex: 0,
+                  result: "((¬p ∨ q) ∨ r) ∧ (¬q ∨ r)",
+                },
+                {
+                  options: ["De Morgan", "Distributiva (factor común r)", "Idempotencia"],
+                  correctIndex: 1,
+                  result: "((¬p ∨ q) ∧ ¬q) ∨ r",
+                },
+                {
+                  options: ["Distributiva y contradicción", "Absorción", "Tercero excluido"],
+                  correctIndex: 0,
+                  result: "(¬p ∧ ¬q) ∨ r",
+                },
+              ],
+              explanation:
+                "(¬p ∨ q) ∧ ¬q ≡ (¬p ∧ ¬q) ∨ (q ∧ ¬q) ≡ ¬p ∧ ¬q. Resultado: (¬p ∧ ¬q) ∨ r.",
+            },
+            {
+              id: "u1-c-l4-e4",
+              type: "classify",
+              prompt:
+                "La guía pide probar por leyes que es tautología. Verifícalo: clasifica  (p ⇒ q) ∧ t ⇔ ¬(t ⇒ p) ∨ (q ∧ t)",
+              formula: "(p ⇒ q) ∧ t ⇔ ¬(t ⇒ p) ∨ (q ∧ t)",
+              explanation:
+                "¬(t ⇒ p) ≡ t ∧ ¬p; el lado derecho queda (t ∧ ¬p) ∨ (q ∧ t) ≡ t ∧ (¬p ∨ q) ≡ t ∧ (p ⇒ q). Ambos lados son equivalentes: tautología.",
+            },
+            {
+              id: "u1-c-l4-e5",
+              type: "classify",
+              prompt: "Clasifica:  ¬(t ⇒ b) ∨ (a ∧ t) ⇔ t ∧ (b ⇒ a)",
+              formula: "¬(t ⇒ b) ∨ (a ∧ t) ⇔ t ∧ (b ⇒ a)",
+              explanation:
+                "¬(t ⇒ b) ≡ t ∧ ¬b; entonces (t ∧ ¬b) ∨ (a ∧ t) ≡ t ∧ (¬b ∨ a) ≡ t ∧ (b ⇒ a). Tautología.",
+            },
+            {
+              id: "u1-c-l4-e6",
+              type: "classify",
+              prompt:
+                "El jefe de la guía: clasifica  [¬(p ⇒ q) ∨ (p ∧ q) ⇔ q] ⇒ (¬q ∨ p)",
+              formula: "[¬(p ⇒ q) ∨ (p ∧ q) ⇔ q] ⇒ (¬q ∨ p)",
+              explanation:
+                "¬(p ⇒ q) ∨ (p ∧ q) ≡ (p ∧ ¬q) ∨ (p ∧ q) ≡ p. Queda (p ⇔ q) ⇒ (q ⇒ p), que nunca falla: tautología.",
+            },
+          ],
+        },
       ],
     },
     // ── Sección D · Predicados y Cuantificadores ─────────────────────────────
@@ -686,6 +1005,25 @@ export const unit1: Unit = {
               {
                 term: "El orden importa",
                 text: "Con cuantificadores anidados, ∀x∃y no significa lo mismo que ∃y∀x.",
+              },
+            ],
+          },
+          {
+            emoji: "🪆",
+            title: "Dobles cuantificadores",
+            intro: "Cuando hay dos cuantificadores, el orden cambia el significado.",
+            entries: [
+              {
+                term: "∀x ∃y",
+                text: "Para cada x hay un y, que puede cambiar con cada x. Con p(x,y): x + y = 8 en ℤ es V: sirve y = 8 − x.",
+              },
+              {
+                term: "∃y ∀x",
+                text: "Hay UN y fijo que sirve para todos los x a la vez. Con x + y = 8 es F: ningún y suma 8 con todos.",
+              },
+              {
+                term: "Distribución",
+                text: "∃ distribuye en ∨ y ∀ distribuye en ∧. Las otras dos combinaciones NO son equivalencias.",
               },
             ],
           },
@@ -738,6 +1076,310 @@ export const unit1: Unit = {
               correctIndex: 1,
               explanation:
                 "Para un y fijo, la igualdad solo se cumple para un x; no para todos. Es falso.",
+            },
+          ],
+        },
+        {
+          id: "u1-d-l2",
+          title: "Guía · Predicados",
+          subtitle: "Nivel 4 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-d-l2-e1",
+              type: "tap-proposition",
+              prompt:
+                "Toca las frases que son funciones proposicionales (predicados): las que afirman algo y se vuelven proposiciones al fijar sus variables.",
+              items: [
+                { text: "x es un número positivo.", isProposition: true },
+                { text: "2x + 5 = y", isProposition: true },
+                { text: "La suma de x más el cuadrado de y.", isProposition: false },
+                { text: "x es de color blanco.", isProposition: true },
+                { text: "3(x + 4) − x² + 9", isProposition: false },
+              ],
+              explanation:
+                "Un predicado AFIRMA algo de sus variables. «La suma de x más el cuadrado de y» y «3(x + 4) − x² + 9» son solo expresiones: no afirman nada ni al fijar x e y.",
+            },
+            {
+              id: "u1-d-l2-e2",
+              type: "multiple-choice",
+              prompt:
+                "«x es hijo de y». ¿Cuántas variables tiene este predicado y qué universo le conviene?",
+              options: [
+                "Una variable; U = el conjunto de los hijos",
+                "Dos variables; U = el conjunto de las personas",
+                "Dos variables; U = los números enteros",
+                "No es una función proposicional",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Depende de x y de y: es un predicado de dos variables sobre el universo de las personas.",
+            },
+            {
+              id: "u1-d-l2-e3",
+              type: "multiple-choice",
+              prompt:
+                "p(x): «x es un número primo». ¿Qué valores de verdad tienen las particularizaciones p(8), p(13) y p(1)?",
+              options: [
+                "p(8) F, p(13) V, p(1) V",
+                "p(8) V, p(13) V, p(1) F",
+                "p(8) F, p(13) V, p(1) F",
+                "p(8) F, p(13) F, p(1) F",
+              ],
+              correctIndex: 2,
+              explanation:
+                "8 = 2³ no es primo; 13 sí lo es; y el 1 NO se considera primo (tiene un solo divisor).",
+            },
+            {
+              id: "u1-d-l2-e4",
+              type: "multiple-choice",
+              prompt:
+                "¿Con cuál universo U de 4 elementos resulta VERDADERA  ∀x: p(x), con p(x): «x es primo»?",
+              options: [
+                "U = {1, 2, 3, 5}",
+                "U = {2, 3, 5, 7}",
+                "U = {2, 4, 6, 8}",
+                "U = {3, 5, 7, 9}",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Para el universal TODOS deben ser primos: el 1 no es primo, y 4, 6, 8 y 9 tampoco.",
+            },
+            {
+              id: "u1-d-l2-e5",
+              type: "multiple-choice",
+              prompt:
+                "¿Con cuál universo U resulta FALSA  ∃x: p(x)  (ningún elemento es primo)?",
+              options: [
+                "U = {2, 3, 5, 7}",
+                "U = {1, 2, 4, 6}",
+                "U = {4, 6, 8, 11}",
+                "U = {1, 4, 6, 8}",
+              ],
+              correctIndex: 3,
+              explanation:
+                "Para que el existencial sea F, NINGUNO puede ser primo: 1, 4, 6 y 8 no lo son. (El 11 sí es primo, descarta esa opción.)",
+            },
+            {
+              id: "u1-d-l2-e6",
+              type: "build-expression",
+              prompt:
+                "Simboliza: «Todos los alumnos del curso K-10 trabajan por la mañana».  (U = alumnos del K-10; t(x): x trabaja por la mañana)",
+              bank: ["∀x", "∃x", ":", "t(x)", "¬"],
+              answer: ["∀x", ":", "t(x)"],
+              explanation:
+                "«Todos los…» es el cuantificador universal sobre el universo elegido: ∀x: t(x).",
+            },
+            {
+              id: "u1-d-l2-e7",
+              type: "build-expression",
+              prompt:
+                "Simboliza: «Algunos datos de los clientes están incompletos o desactualizados».  (U = datos de los clientes; i(x): incompleto; d(x): desactualizado)",
+              bank: ["∃x", "∀x", ":", "i(x)", "d(x)", "∨", "∧"],
+              answer: ["∃x", ":", "i(x)", "∨", "d(x)"],
+              explanation: "«Algunos» es el existencial y el «o» es la disyunción: ∃x: i(x) ∨ d(x).",
+            },
+            {
+              id: "u1-d-l2-e8",
+              type: "build-expression",
+              prompt:
+                "Simboliza: «Existen grafos bipartitos que no son eulerianos».  (U = grafos; b(x): bipartito; e(x): euleriano)",
+              bank: ["∃x", "∀x", ":", "b(x)", "e(x)", "∧", "⇒", "¬"],
+              answer: ["∃x", ":", "b(x)", "∧", "¬", "e(x)"],
+              explanation:
+                "«Existen A que no son B»: ∃x: b(x) ∧ ¬e(x). Ojo: con ∃ se usa ∧, no ⇒.",
+            },
+          ],
+        },
+        {
+          id: "u1-d-l3",
+          title: "Guía · Verdad y negación",
+          subtitle: "Nivel 4 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-d-l3-e1",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∃x ∈ ℤ :  3x + 11 = 20",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 0,
+              explanation: "x = 3 es entero y cumple 3·3 + 11 = 20.",
+            },
+            {
+              id: "u1-d-l3-e2",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∀x ∈ U :  x² > 2,  con U = {2, 3, −1, 5}",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 1,
+              explanation:
+                "(−1)² = 1, que no es mayor que 2. Un solo contraejemplo tumba al universal.",
+            },
+            {
+              id: "u1-d-l3-e3",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∀x ∈ ℤ :  x + x²  es par",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 0,
+              explanation:
+                "x + x² = x(x + 1) es producto de enteros consecutivos: uno de los dos siempre es par.",
+            },
+            {
+              id: "u1-d-l3-e4",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∃x ∈ ℝ :  x⁴ + 16 = 0",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 1,
+              explanation:
+                "x⁴ ≥ 0 para todo real, así que x⁴ + 16 ≥ 16: ningún x cumple la igualdad.",
+            },
+            {
+              id: "u1-d-l3-e5",
+              type: "build-expression",
+              prompt: "Construye la negación de   ∃x ∈ ℝ :  x² = −9",
+              bank: ["∀x ∈ ℝ", "∃x ∈ ℝ", ":", "x² = −9", "x² ≠ −9"],
+              answer: ["∀x ∈ ℝ", ":", "x² ≠ −9"],
+              explanation:
+                "¬∃ ≡ ∀¬: todo real cumple x² ≠ −9. (La negación resulta verdadera.)",
+            },
+            {
+              id: "u1-d-l3-e6",
+              type: "multiple-choice",
+              prompt: "¿Cuál es la negación de   ∀n ∈ ℕ :  n + 4 < n³ ?",
+              options: [
+                "∃n ∈ ℕ :  n + 4 ≥ n³",
+                "∀n ∈ ℕ :  n + 4 ≥ n³",
+                "∃n ∈ ℕ :  n + 4 < n³",
+                "¬∃n ∈ ℕ :  n + 4 < n³",
+              ],
+              correctIndex: 0,
+              explanation:
+                "∀ pasa a ∃ y el < se niega como ≥. (De hecho n = 1 cumple 5 ≥ 1: la negación es V.)",
+            },
+            {
+              id: "u1-d-l3-e7",
+              type: "build-expression",
+              prompt: "Construye la negación de   ∀x ∈ ℝ :  (x² > 0  ∨  x = 0)",
+              bank: ["∃x ∈ ℝ", "∀x ∈ ℝ", ":", "x² ≤ 0", "∧", "∨", "x ≠ 0"],
+              answer: ["∃x ∈ ℝ", ":", "x² ≤ 0", "∧", "x ≠ 0"],
+              explanation:
+                "∀ pasa a ∃ y De Morgan niega la disyunción: ¬(a ∨ b) ≡ ¬a ∧ ¬b.",
+            },
+            {
+              id: "u1-d-l3-e8",
+              type: "multiple-choice",
+              prompt: "¿Cuál es la negación de   ∃x ∈ ℤ :  (x < 3  ⇒  x + 1 < 0) ?",
+              options: [
+                "∀x ∈ ℤ :  (x < 3 ⇒ x + 1 ≥ 0)",
+                "∃x ∈ ℤ :  (x < 3 ∧ x + 1 ≥ 0)",
+                "∀x ∈ ℤ :  (x ≥ 3 ⇒ x + 1 < 0)",
+                "∀x ∈ ℤ :  (x < 3 ∧ x + 1 ≥ 0)",
+              ],
+              correctIndex: 3,
+              explanation:
+                "∃ pasa a ∀ y el condicional se niega como ¬(a ⇒ b) ≡ a ∧ ¬b. ¡Nunca queda otro condicional!",
+            },
+          ],
+        },
+        {
+          id: "u1-d-l4",
+          title: "Guía · Dobles cuantificadores",
+          subtitle: "Nivel 4 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-d-l4-e1",
+              type: "multiple-choice",
+              prompt:
+                "p(x, y): x + y = 8, con x, y ∈ ℤ. ¿Qué valores tienen   ∀x: ∃y: p(x, y)   y   ∃x: ∀y: p(x, y)?",
+              options: [
+                "Ambas V",
+                "La primera V, la segunda F",
+                "La primera F, la segunda V",
+                "Ambas F",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Para cada x sirve y = 8 − x (el y depende de x). Pero ningún x fijo suma 8 con TODOS los y.",
+            },
+            {
+              id: "u1-d-l4-e2",
+              type: "multiple-choice",
+              prompt:
+                "Con el mismo p(x, y): ¿y   ∀x: ∀y: p(x, y)   y   ∃x: ∃y: p(x, y)?",
+              options: [
+                "La primera F, la segunda V",
+                "Ambas V",
+                "La primera V, la segunda F",
+                "Ambas F",
+              ],
+              correctIndex: 0,
+              explanation:
+                "1 + 1 ≠ 8 tumba al doble universal; 3 + 5 = 8 confirma al doble existencial.",
+            },
+            {
+              id: "u1-d-l4-e3",
+              type: "multiple-choice",
+              prompt:
+                "U = {1, −2, 3, −4, 5, 0}. ¿Verdadero o falso?   ∀x ∈ U: ∃y ∈ U: (x < y ∨ x < y²)",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 0,
+              explanation:
+                "Para x = 5 sirve y = −4, porque 5 < (−4)² = 16. Para cualquier otro x sirve y = 5.",
+            },
+            {
+              id: "u1-d-l4-e4",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∀x ∈ ℝ: ∀y ∈ ℝ: (x > y ⇒ x² > y²)",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 1,
+              explanation:
+                "x = 1, y = −2: 1 > −2 pero 1² = 1 < 4 = (−2)². Con negativos, elevar al cuadrado invierte el orden.",
+            },
+            {
+              id: "u1-d-l4-e5",
+              type: "multiple-choice",
+              prompt: "¿Verdadero o falso?   ∃x ∈ ℝ: ∀y ∈ ℝ: (x² > y² ⇒ x > y)",
+              options: ["Verdadero", "Falso"],
+              correctIndex: 0,
+              explanation:
+                "x = 0 sirve: 0 > y² no se cumple nunca, así que el condicional es V para todo y (antecedente falso).",
+            },
+            {
+              id: "u1-d-l4-e6",
+              type: "multiple-choice",
+              prompt:
+                "Se sabe que   ∀x: ∃y: p(x, y)   es V. ¿Qué pasa con   ∃x: ∃y: p(x, y)   y con   ∃x: ∀y: ¬p(x, y)?",
+              options: [
+                "Ambas quedan indeterminadas",
+                "La primera es V; la segunda es F",
+                "Ambas son V",
+                "La primera es F; la segunda es V",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Si todo x tiene su y, en particular existe un par (V). Y un x donde p falle con TODOS los y contradiría la hipótesis (F).",
+            },
+            {
+              id: "u1-d-l4-e7",
+              type: "multiple-choice",
+              prompt:
+                "Con la misma hipótesis (∀x: ∃y: p(x, y) es V), ¿se puede asegurar   ∃y: ∀x: p(x, y)?",
+              options: [
+                "Sí: es equivalente",
+                "Sí: porque el doble existencial es V",
+                "No: el y puede depender de cada x y no haber uno fijo que sirva para todos",
+                "No: es necesariamente falsa",
+              ],
+              correctIndex: 2,
+              explanation:
+                "∃y ∀x exige UN y fijo. Con x + y = 8 la hipótesis es V y esta es F; con p(x, y): «y = y» ambas son V. Queda indeterminada.",
+            },
+            {
+              id: "u1-d-l4-e8",
+              type: "multiple-choice",
+              prompt:
+                "¿Cuáles distribuciones de cuantificadores son equivalencias válidas?   (1) ∃ sobre ∧   (2) ∃ sobre ∨   (3) ∀ sobre ∨   (4) ∀ sobre ∧",
+              options: ["(1) y (3)", "(2) y (4)", "Las cuatro", "Solo la (2)"],
+              correctIndex: 1,
+              explanation:
+                "∃x:[p ∨ q] ≡ ∃x:p ∨ ∃x:q  y  ∀x:[p ∧ q] ≡ ∀x:p ∧ ∀x:q. Que alguien cumpla p y alguien cumpla q no da alguien que cumpla ambas; y que todos cumplan p ∨ q no fuerza que todos cumplan la misma.",
             },
           ],
         },
@@ -859,6 +1501,244 @@ export const unit1: Unit = {
               variables: ["p", "q"],
               explanation:
                 "Con p = V y q = V las premisas son verdaderas pero ¬q es falsa.",
+            },
+          ],
+        },
+        {
+          id: "u1-e-l3",
+          title: "Guía · Validez de razonamientos",
+          subtitle: "Nivel 5 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-e-l3-e1",
+              type: "multiple-choice",
+              prompt:
+                "«Si me pagan el aguinaldo hoy, pagaré la deuda. Hoy me pagaron el aguinaldo. Por lo tanto, pagaré la deuda.» ¿Es válido?",
+              options: [
+                "Válido: Modus Tollens",
+                "Válido: Modus Ponens",
+                "Inválido: afirma el consecuente",
+                "Inválido: niega el antecedente",
+              ],
+              correctIndex: 1,
+              explanation:
+                "p ⇒ q y p dan q: Modus Ponens. Afirmar el ANTECEDENTE sí es una regla válida.",
+            },
+            {
+              id: "u1-e-l3-e2",
+              type: "counterexample",
+              prompt:
+                "«Si no llueve y no hay viento, vuelo en el avión. Volé en el avión. Por lo tanto, no llovió.» Es INVÁLIDO: encuentra el contraejemplo.  (p: llueve, q: hay viento, r: vuelo)",
+              premises: ["¬p ∧ ¬q ⇒ r", "r"],
+              conclusion: "¬p",
+              variables: ["p", "q", "r"],
+              explanation:
+                "Con p = V y r = V las premisas valen V (el antecedente del condicional es F) pero ¬p es F: pude volar aunque lloviera. Falacia de afirmar el consecuente.",
+            },
+            {
+              id: "u1-e-l3-e3",
+              type: "multiple-choice",
+              prompt:
+                "«Si el planeta Kamino figura en los Archivos Jedi, entonces existe. Kamino no figura en los Archivos. Por lo tanto, Kamino no existe.» ¿Es válido?",
+              options: [
+                "Válido: Modus Tollens",
+                "Inválido: niega el antecedente",
+                "Válido: Modus Ponens",
+                "Inválido: afirma el consecuente",
+              ],
+              correctIndex: 1,
+              explanation:
+                "De f ⇒ e y ¬f no se infiere ¬e. Como descubrió Obi-Wan, Kamino existía: alguien lo había borrado de los Archivos.",
+            },
+            {
+              id: "u1-e-l3-e4",
+              type: "multiple-choice",
+              prompt:
+                "Analiza:   ¬p ;  q ⇒ t ∨ r ;  t ⇒ p     ∴   q ⇒ r",
+              options: ["Inválido", "Válido"],
+              correctIndex: 1,
+              explanation:
+                "De ¬p y t ⇒ p sale ¬t (Modus Tollens). Si vale q, vale t ∨ r; sin t queda r (silogismo disyuntivo). Por eso q ⇒ r.",
+            },
+            {
+              id: "u1-e-l3-e5",
+              type: "counterexample",
+              prompt:
+                "Es INVÁLIDO: halla el contraejemplo.\nPremisas: (p ∧ q) ⇒ r ,  ¬r ∨ t ,  ¬t     Conclusión: ¬p",
+              premises: ["(p ∧ q) ⇒ r", "¬r ∨ t", "¬t"],
+              conclusion: "¬p",
+              variables: ["p", "q", "r", "t"],
+              explanation:
+                "Con p = V, q = F, r = F, t = F todas las premisas son V pero ¬p es F. De ¬r solo se infiere ¬(p ∧ q), no ¬p.",
+            },
+            {
+              id: "u1-e-l3-e6",
+              type: "counterexample",
+              prompt:
+                "Es INVÁLIDO: halla el contraejemplo.\nPremisas: a ⇒ b ,  ¬b ∨ ¬c ,  d ⇒ a ∨ c     Conclusión: ¬d",
+              premises: ["a ⇒ b", "¬b ∨ ¬c", "d ⇒ a ∨ c"],
+              conclusion: "¬d",
+              variables: ["a", "b", "c", "d"],
+              explanation:
+                "Con a = V, b = V, c = F y d = V las tres premisas son V y ¬d es F: d puede sostenerse vía a.",
+            },
+            {
+              id: "u1-e-l3-e7",
+              type: "counterexample",
+              prompt:
+                "El más difícil de la guía: halla el contraejemplo.\nPremisas: p ⇒ q ∨ r ,  p ∨ (¬t ∨ s) ,  ¬q ∧ ¬s ,  s ⇒ ¬t     Conclusión: ¬t",
+              premises: ["p ⇒ q ∨ r", "p ∨ (¬t ∨ s)", "¬q ∧ ¬s", "s ⇒ ¬t"],
+              conclusion: "¬t",
+              variables: ["p", "q", "r", "s", "t"],
+              explanation:
+                "Con p = V, r = V y t = V (q = s = F) las cuatro premisas son V pero ¬t es F.",
+            },
+            {
+              id: "u1-e-l3-e8",
+              type: "multiple-choice",
+              prompt:
+                "«Si iba solo y desarmado, su jefe no lo mataría. Para suplicarle perdón era necesario ir desarmado. Le suplicó perdón, pero su jefe igualmente lo mató.» ¿Qué conclusión es válida?",
+              options: [
+                "No le suplicó perdón",
+                "Fue armado",
+                "No fue solo",
+                "Su jefe no lo mató",
+              ],
+              correctIndex: 2,
+              explanation:
+                "s: iba solo, d: desarmado, m: lo mató. De la súplica sale d (la condición necesaria, Modus Ponens). De m y (s ∧ d) ⇒ ¬m sale ¬(s ∧ d) (Modus Tollens), o sea ¬s ∨ ¬d; como d vale, queda ¬s: no fue solo.",
+            },
+          ],
+        },
+        {
+          id: "u1-e-l4",
+          title: "Guía · Razonamientos categóricos",
+          subtitle: "Nivel 5 · Guía de ejercicios",
+          exercises: [
+            {
+              id: "u1-e-l4-e1",
+              type: "build-expression",
+              prompt:
+                "Simboliza: «Todos los grafos completos son conexos».  (U = grafos; p(x): x es completo; q(x): x es conexo)",
+              bank: ["∀x", "∃x", ":", "p(x)", "q(x)", "⇒", "∧"],
+              answer: ["∀x", ":", "p(x)", "⇒", "q(x)"],
+              explanation:
+                "«Todos los A son B» se simboliza ∀x: A(x) ⇒ B(x). Ojo: con ∀ va ⇒, no ∧.",
+            },
+            {
+              id: "u1-e-l4-e2",
+              type: "multiple-choice",
+              prompt:
+                "«Todos los grafos completos son conexos. K₅ es completo. Por lo tanto, K₅ es conexo.» ¿Es válido?",
+              options: [
+                "Válido: particularización universal y Modus Ponens",
+                "Inválido: K₅ es solo un caso particular",
+                "Inválido: falta la tabla de verdad",
+                "Válido: porque la conclusión es verdadera",
+              ],
+              correctIndex: 0,
+              explanation:
+                "El ∀ permite particularizar en K₅: p(K₅) ⇒ q(K₅); con p(K₅) sale q(K₅) por Modus Ponens.",
+            },
+            {
+              id: "u1-e-l4-e3",
+              type: "multiple-choice",
+              prompt:
+                "«Algunos invitados son ingenieros. Algunos ingenieros saben programar. Por lo tanto, algunos invitados saben programar.» ¿Es válido?",
+              options: [
+                "Válido: se encadenan los dos «algunos»",
+                "Inválido: cada «algunos» puede referirse a personas distintas",
+                "Válido: silogismo hipotético",
+                "Inválido: faltan datos numéricos",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Cada ∃ tiene su propio testigo: el invitado ingeniero puede no ser el ingeniero que sabe programar.",
+            },
+            {
+              id: "u1-e-l4-e4",
+              type: "multiple-choice",
+              prompt:
+                "«Todas las matrices que tienen dos filas iguales no son inversibles. La matriz M es inversible. Por lo tanto, M no tiene dos filas iguales.» ¿Es válido?",
+              options: [
+                "Inválido: niega el antecedente",
+                "Inválido: afirma el consecuente",
+                "Válido: particularización en M y Modus Tollens",
+                "No se puede analizar sin conocer M",
+              ],
+              correctIndex: 2,
+              explanation:
+                "∀x: f(x) ⇒ ¬i(x); particularizando en M y sabiendo i(M), sale ¬f(M) por Modus Tollens.",
+            },
+            {
+              id: "u1-e-l4-e5",
+              type: "multiple-choice",
+              prompt:
+                "Para comprobar que   ∀x:[d(x) ⇒ c(x)] ; ∃x:[¬c(x) ∧ p(x)]   ⟹   ∀x:[c(x) ∨ p(x)]   es INVÁLIDO, ¿qué interpretación sirve?",
+              options: [
+                "U = ∅ (el vacío invalida todo)",
+                "U = {1, 2, 3};  d(x): x > 5;  c(x): x es par;  p(x): x = 1",
+                "U = {2, 4};  d(x): x es par;  c(x): x es par;  p(x): x > 0",
+                "Ninguna: el razonamiento es válido",
+              ],
+              correctIndex: 1,
+              explanation:
+                "Nadie cumple d (premisa 1 V por vacuidad) y el 1 cumple ¬c ∧ p (premisa 2 V), pero el 3 no cumple c ∨ p: premisas V con conclusión F.",
+            },
+            {
+              id: "u1-e-l4-e6",
+              type: "multiple-choice",
+              prompt:
+                "∀x:[p(x) ∨ q(x)] ;  ∀x:[p(x) ⇒ r(x)] ;  ¬r(a).   ¿Qué conclusión   ∃x: …   es válida?",
+              options: [
+                "∃x: [p(x) ∧ r(x)]",
+                "∃x: [q(x) ∧ ¬p(x)]",
+                "∃x: ¬q(x)",
+                "∃x: [p(x) ∧ ¬r(x)]",
+              ],
+              correctIndex: 1,
+              explanation:
+                "De ¬r(a) y p(a) ⇒ r(a) sale ¬p(a) (Modus Tollens); de p(a) ∨ q(a) sale q(a) (silogismo disyuntivo). El elemento a cumple q ∧ ¬p: generalización existencial.",
+            },
+            {
+              id: "u1-e-l4-e7",
+              type: "multiple-choice",
+              prompt:
+                "¿Cuál es válido?   (1) ∃x:[p(x) ∨ q(x)] ; ∃x:[¬q(x) ∧ r(x)]  ∴  ∃x:[p(x) ∧ r(x)]      (2) ∀x:¬[p(x) ∨ q(x)]  ∴  ∃x:¬q(x)",
+              options: ["Solo el (1)", "Ambos", "Solo el (2)", "Ninguno"],
+              correctIndex: 2,
+              explanation:
+                "El (1) es inválido: los testigos de cada ∃ pueden ser elementos distintos. El (2) es válido: ∀x: ¬p ∧ ¬q da ∀x: ¬q y, con universo no vacío, ∃x: ¬q.",
+            },
+            {
+              id: "u1-e-l4-e8",
+              type: "multiple-choice",
+              prompt:
+                "«Todas las frutas que están en la heladera están lavadas. Algunas frutas no están lavadas y son deliciosas.» ¿Qué conclusión es válida?",
+              options: [
+                "c1: Algunas frutas están en la heladera y son deliciosas",
+                "c2: Todas las frutas de la heladera son deliciosas",
+                "c3: Algunas frutas no están en la heladera y son deliciosas",
+                "Ninguna de las tres",
+              ],
+              correctIndex: 2,
+              explanation:
+                "Toma la fruta testigo: no lavada y deliciosa. Si estuviera en la heladera, estaría lavada (Modus Tollens): no está en la heladera. Y es deliciosa: c3.",
+            },
+            {
+              id: "u1-e-l4-e9",
+              type: "multiple-choice",
+              prompt:
+                "Con diagramas de Venn:   (1) ∀x:[p(x) ⇒ q(x)] ; ¬q(a)  ∴  ¬p(a)      (2) ∀x:[a(x) ∨ b(x)] ; ∃x:[c(x) ∧ ¬a(x)]  ∴  ∃x:[c(x) ∧ b(x)].   ¿Qué concluyes?",
+              options: [
+                "Solo el (1) es válido",
+                "Solo el (2) es válido",
+                "Ninguno es válido",
+                "Ambos son válidos",
+              ],
+              correctIndex: 3,
+              explanation:
+                "(1): P ⊆ Q y a fuera de Q implican a fuera de P. (2): el testigo de c ∧ ¬a cae dentro de B porque A ∪ B cubre todo el universo: cumple c ∧ b.",
             },
           ],
         },
