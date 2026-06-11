@@ -3,6 +3,7 @@
 import { MotionConfig } from "motion/react";
 import { SUBJECTS } from "@/content/subjects";
 import { ThemeMenu } from "@/components/hud/ThemeMenu";
+import { GitHubLink } from "@/components/ui/GitHubLink";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SubjectCard } from "./SubjectCard";
 
@@ -20,7 +21,10 @@ export function HomeLanding() {
               Ludema
             </span>
           </div>
-          <ThemeMenu />
+          <div className="flex items-center gap-2">
+            <GitHubLink />
+            <ThemeMenu />
+          </div>
         </header>
 
         {/* Héroe */}

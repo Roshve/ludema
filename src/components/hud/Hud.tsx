@@ -13,6 +13,7 @@ import {
 } from "@/stores/progress";
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
+import { GitHubLink } from "@/components/ui/GitHubLink";
 import { ThemeMenu } from "./ThemeMenu";
 
 // Número que hace "pop" cuando cambia su valor.
@@ -83,6 +84,7 @@ export function Hud() {
           {into}/{XP_LEVEL_SIZE}
         </span>
       </Pill>
+      <GitHubLink />
       <ThemeMenu />
     </div>
   );
