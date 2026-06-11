@@ -594,137 +594,128 @@ export const unit1: Unit = {
                 text: "Niegan paréntesis: ¬(p ∨ q) ≡ ¬p ∧ ¬q  y  ¬(p ∧ q) ≡ ¬p ∨ ¬q.",
               },
               {
-                term: "Absorción",
-                text: "Elimina variables sobrantes: p ∧ (p ∨ q) ≡ p.",
+                term: "Involución (Doble Negación)",
+                text: "Una doble negación se cancela: ¬(¬p) ≡ p.",
               },
               {
                 term: "Definición de condicional",
-                text: "Transforma flechas en disyunciones: (p ⇒ q) ≡ ¬p ∨ q.",
+                text: "Transforma implicaciones en disyunciones: (p ⇒ q) ≡ ¬p ∨ q.",
               },
               {
-                term: "Involución",
-                text: "Una doble negación se cancela: ¬(¬p) ≡ p.",
+                term: "Definición de bicondicional",
+                text: "Expresa equivalencias: (p ⇔ q) ≡ (p ⇒ q) ∧ (q ⇒ p).",
+              },
+              {
+                term: "Absorción",
+                text: "Simplifica variables redundantes: p ∧ (p ∨ q) ≡ p  y  p ∨ (p ∧ q) ≡ p.",
+              },
+              {
+                term: "Distributividad",
+                text: "Distribuye conectivos: p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)  y  p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r).",
+              },
+              {
+                term: "Tercero excluido y contradicción",
+                text: "Leyes sobre opuestos: p ∨ ¬p ≡ V (tautología)  y  p ∧ ¬p ≡ F (contradicción).",
+              },
+              {
+                term: "Identidad (Neutro)",
+                text: "Neutros de conjunción y disyunción: p ∧ V ≡ p  y  p ∨ F ≡ p.",
               },
             ],
           },
         ],
-        tip: "Para ganar este nivel, indica siempre qué ley aplicas en cada paso de tu simplificación, tal como lo piden los ejercicios.",
+        tip: "Para simplificar expresiones largas, el orden recomendado es: 1° bicondicionales, 2° condicionales, 3° leyes de De Morgan e involución, 4° distributiva o absorción.",
       },
       lessons: [
         {
           id: "u1-c-l1",
-          title: "Equivalencias",
-          subtitle: "Nivel 3 · Leyes",
+          title: "Equivalencias elementales",
+          subtitle: "Nivel 3 · De Morgan e Involución",
           exercises: [
             {
               id: "u1-c-l1-e1",
               type: "multiple-choice",
-              prompt: "¿Cuál es la forma equivalente a  ¬(p ∨ q)?",
+              prompt: "¿Cuál es la forma equivalente a  ¬(p ∨ q)  según las Leyes de De Morgan?",
               options: ["¬p ∧ ¬q", "¬p ∨ ¬q", "p ∧ q", "¬p ∧ q"],
               correctIndex: 0,
-              explanation: "Ley de De Morgan: ¬(p ∨ q) ≡ ¬p ∧ ¬q.",
+              explanation: "De Morgan: la negación de una disyunción es la conjunción de las negaciones: ¬(p ∨ q) ≡ ¬p ∧ ¬q.",
             },
             {
               id: "u1-c-l1-e2",
               type: "multiple-choice",
-              prompt: "¿Cuál es la forma equivalente a  ¬(p ∧ q)?",
+              prompt: "¿Cuál es la forma equivalente a  ¬(p ∧ q)  según De Morgan?",
               options: ["¬p ∨ ¬q", "¬p ∧ ¬q", "p ∨ q", "¬(p ∨ q)"],
               correctIndex: 0,
-              explanation: "Ley de De Morgan: ¬(p ∧ q) ≡ ¬p ∨ ¬q.",
+              explanation: "De Morgan: la negación de una conjunción es la disyunción de las negaciones: ¬(p ∧ q) ≡ ¬p ∨ ¬q.",
             },
             {
               id: "u1-c-l1-e3",
               type: "multiple-choice",
-              prompt: "La doble negación  ¬¬p  es equivalente a…",
+              prompt: "Por la Ley de Involución (doble negación), la expresión  ¬¬p  equivale a…",
               options: ["p", "¬p", "Una contradicción", "Una tautología"],
               correctIndex: 0,
-              explanation: "Ley de involución (doble negación): ¬¬p ≡ p.",
+              explanation: "Ley de Involución: negar algo dos veces es equivalente a la proposición original: ¬¬p ≡ p.",
             },
             {
               id: "u1-c-l1-e4",
-              type: "multiple-choice",
-              prompt: "Por la definición de condicional,  p ⇒ q  es equivalente a…",
-              options: ["¬p ∨ q", "p ∧ ¬q", "¬p ∧ q", "p ∨ ¬q"],
-              correctIndex: 0,
-              explanation: "Definición de condicional: (p ⇒ q) ≡ ¬p ∨ q.",
+              type: "simplify-steps",
+              prompt: "Simplifica  ¬¬(p ∧ q)  aplicando la doble negación.",
+              start: "¬¬(p ∧ q)",
+              steps: [
+                {
+                  options: ["Doble negación (Involución)", "De Morgan", "Identidad"],
+                  correctIndex: 0,
+                  result: "p ∧ q",
+                },
+              ],
+              explanation: "Por involución, la doble negación externa se cancela: ¬¬(p ∧ q) ≡ p ∧ q.",
             },
             {
               id: "u1-c-l1-e5",
-              type: "multiple-choice",
-              prompt: "Por la ley de absorción,  p ∧ (p ∨ q)  es equivalente a…",
-              options: ["p", "q", "p ∧ q", "p ∨ q"],
-              correctIndex: 0,
-              explanation: "Absorción: p ∧ (p ∨ q) ≡ p.",
+              type: "simplify-steps",
+              prompt: "Simplifica  ¬(p ∨ ¬q)  aplicando De Morgan e Involución.",
+              start: "¬(p ∨ ¬q)",
+              steps: [
+                {
+                  options: ["De Morgan", "Doble negación", "Conmutativa"],
+                  correctIndex: 0,
+                  result: "¬p ∧ ¬¬q",
+                },
+                {
+                  options: ["Doble negación (Involución)", "De Morgan", "Identidad"],
+                  correctIndex: 0,
+                  result: "¬p ∧ q",
+                },
+              ],
+              explanation: "Primero se aplica De Morgan para meter la negación: ¬p ∧ ¬¬q, y luego Involución en ¬¬q para obtener ¬p ∧ q.",
             },
           ],
         },
         {
           id: "u1-c-l2",
-          title: "Simplificación",
-          subtitle: "Nivel 3 · Paso a paso",
+          title: "Condicional y Absorción",
+          subtitle: "Nivel 3 · Conectivos y Absorción",
           exercises: [
             {
               id: "u1-c-l2-e1",
-              type: "simplify-steps",
-              prompt: "Simplifica paso a paso eligiendo la ley aplicada.",
-              start: "p ∧ (p ∨ q)",
-              steps: [
-                {
-                  options: ["Ley de Absorción", "De Morgan", "Doble negación"],
-                  correctIndex: 0,
-                  result: "p",
-                },
-              ],
-              explanation: "Absorción: p ∧ (p ∨ q) ≡ p.",
+              type: "multiple-choice",
+              prompt: "Según la definición de condicional, la implicación  p ⇒ q  equivale a…",
+              options: ["¬p ∨ q", "p ∧ ¬q", "¬p ∧ q", "p ∨ ¬q"],
+              correctIndex: 0,
+              explanation: "La definición de condicional establece que p ⇒ q ≡ ¬p ∨ q (falla únicamente si p es V y q es F).",
             },
             {
               id: "u1-c-l2-e2",
-              type: "simplify-steps",
-              prompt: "Simplifica  ¬(¬p ∧ q)  paso a paso.",
-              start: "¬(¬p ∧ q)",
-              steps: [
-                {
-                  options: ["De Morgan", "Absorción", "Identidad"],
-                  correctIndex: 0,
-                  result: "¬¬p ∨ ¬q",
-                },
-                {
-                  options: ["Doble negación", "De Morgan", "Conmutativa"],
-                  correctIndex: 0,
-                  result: "p ∨ ¬q",
-                },
-              ],
-              explanation: "De Morgan y luego doble negación: ¬(¬p ∧ q) ≡ p ∨ ¬q.",
+              type: "multiple-choice",
+              prompt: "Por la ley de absorción, la expresión  p ∧ (p ∨ q)  es equivalente a…",
+              options: ["p", "q", "p ∧ q", "p ∨ q"],
+              correctIndex: 0,
+              explanation: "Leyes de absorción: si una variable se repite dentro y fuera del paréntesis con conectivos distintos (∧ y ∨), se absorbe: p ∧ (p ∨ q) ≡ p.",
             },
             {
               id: "u1-c-l2-e3",
               type: "simplify-steps",
-              prompt: "Simplifica  ¬(p ⇒ q)  paso a paso.",
-              start: "¬(p ⇒ q)",
-              steps: [
-                {
-                  options: ["Definición de condicional", "De Morgan", "Absorción"],
-                  correctIndex: 0,
-                  result: "¬(¬p ∨ q)",
-                },
-                {
-                  options: ["De Morgan", "Doble negación", "Conmutativa"],
-                  correctIndex: 0,
-                  result: "¬¬p ∧ ¬q",
-                },
-                {
-                  options: ["Doble negación", "De Morgan", "Identidad"],
-                  correctIndex: 0,
-                  result: "p ∧ ¬q",
-                },
-              ],
-              explanation:
-                "Definición de condicional, De Morgan y doble negación: ¬(p ⇒ q) ≡ p ∧ ¬q.",
-            },
-            {
-              id: "u1-c-l2-e4",
-              type: "simplify-steps",
-              prompt: "Simplifica  p ∨ (p ∧ q)  paso a paso.",
+              prompt: "Simplifica la expresión dual  p ∨ (p ∧ q)  aplicando absorción.",
               start: "p ∨ (p ∧ q)",
               steps: [
                 {
@@ -733,31 +724,34 @@ export const unit1: Unit = {
                   result: "p",
                 },
               ],
-              explanation: "Absorción (forma dual): p ∨ (p ∧ q) ≡ p.",
+              explanation: "La absorción dual establece que p ∨ (p ∧ q) ≡ p sin importar el valor de q.",
+            },
+            {
+              id: "u1-c-l2-e4",
+              type: "simplify-steps",
+              prompt: "Simplifica la negación del condicional  ¬(p ⇒ q)  paso a paso.",
+              start: "¬(p ⇒ q)",
+              steps: [
+                {
+                  options: ["Definición de condicional", "De Morgan", "Absorción"],
+                  correctIndex: 0,
+                  result: "¬(¬p ∨ q)",
+                },
+                {
+                  options: ["De Morgan", "Doble negación (Involución)", "Conmutativa"],
+                  correctIndex: 0,
+                  result: "¬¬p ∧ ¬q",
+                },
+                {
+                  options: ["Doble negación (Involución)", "De Morgan", "Identidad"],
+                  correctIndex: 0,
+                  result: "p ∧ ¬q",
+                },
+              ],
+              explanation: "Definición de condicional: ¬(¬p ∨ q); luego De Morgan: ¬¬p ∧ ¬q; y finalmente involución: p ∧ ¬q.",
             },
             {
               id: "u1-c-l2-e5",
-              type: "simplify-steps",
-              prompt: "Simplifica  ¬¬(p ∧ q)  paso a paso.",
-              start: "¬¬(p ∧ q)",
-              steps: [
-                {
-                  options: ["Doble negación", "De Morgan", "Absorción"],
-                  correctIndex: 0,
-                  result: "p ∧ q",
-                },
-              ],
-              explanation: "Involución: ¬¬(p ∧ q) ≡ p ∧ q.",
-            },
-          ],
-        },
-        {
-          id: "u1-c-l3",
-          title: "El gimnasio",
-          subtitle: "Nivel 3 · Reto final",
-          exercises: [
-            {
-              id: "u1-c-l3-e1",
               type: "simplify-steps",
               prompt: "Simplifica  ¬(p ∧ ¬q)  paso a paso.",
               start: "¬(p ∧ ¬q)",
@@ -768,34 +762,88 @@ export const unit1: Unit = {
                   result: "¬p ∨ ¬¬q",
                 },
                 {
-                  options: ["Doble negación", "De Morgan", "Conmutativa"],
+                  options: ["Doble negación (Involución)", "De Morgan", "Conmutativa"],
                   correctIndex: 0,
                   result: "¬p ∨ q",
                 },
               ],
-              explanation: "De Morgan y doble negación: ¬(p ∧ ¬q) ≡ ¬p ∨ q.",
+              explanation: "De Morgan expande la negación a ¬p ∨ ¬¬q. Luego, por doble negación, queda ¬p ∨ q (que equivale a p ⇒ q).",
+            },
+          ],
+        },
+        {
+          id: "u1-c-l3",
+          title: "Distributividad y Neutros",
+          subtitle: "Nivel 3 · Distribución y simplificación con V/F",
+          exercises: [
+            {
+              id: "u1-c-l3-e1",
+              type: "simplify-steps",
+              prompt: "Simplifica  (p ∧ q) ∨ (p ∧ ¬q)  extrayendo factor común.",
+              start: "(p ∧ q) ∨ (p ∧ ¬q)",
+              steps: [
+                {
+                  options: ["Propiedad Distributiva", "De Morgan", "Asociativa"],
+                  correctIndex: 0,
+                  result: "p ∧ (q ∨ ¬q)",
+                },
+                {
+                  options: ["Tercero excluido", "Identidad (Neutro)", "Doble negación"],
+                  correctIndex: 0,
+                  result: "p ∧ V",
+                },
+                {
+                  options: ["Identidad (Neutro)", "Absorción", "Doble negación"],
+                  correctIndex: 0,
+                  result: "p",
+                },
+              ],
+              explanation: "Por distributiva extraemos p: p ∧ (q ∨ ¬q). Por tercero excluido, q ∨ ¬q es una tautología (V). Por identidad, p ∧ V es p.",
             },
             {
               id: "u1-c-l3-e2",
-              type: "multiple-choice",
-              prompt: "¬(p ⇒ q)  es equivalente a…",
-              options: ["p ∧ ¬q", "¬p ∨ q", "p ∨ ¬q", "¬p ∧ q"],
-              correctIndex: 0,
-              explanation: "Negar un condicional: ¬(p ⇒ q) ≡ p ∧ ¬q.",
+              type: "simplify-steps",
+              prompt: "Simplifica  (p ∨ q) ∧ ¬p  paso a paso.",
+              start: "(p ∨ q) ∧ ¬p",
+              steps: [
+                {
+                  options: ["Propiedad Distributiva", "Conmutativa", "Asociativa"],
+                  correctIndex: 0,
+                  result: "(p ∧ ¬p) ∨ (q ∧ ¬p)",
+                },
+                {
+                  options: ["Ley de contradicción", "Tercero excluido", "Identidad"],
+                  correctIndex: 0,
+                  result: "F ∨ (q ∧ ¬p)",
+                },
+                {
+                  options: ["Identidad (Neutro)", "Absorción", "Idempotencia"],
+                  correctIndex: 0,
+                  result: "q ∧ ¬p",
+                },
+              ],
+              explanation: "Se distribuye ¬p en el paréntesis: (p ∧ ¬p) ∨ (q ∧ ¬p). Como p ∧ ¬p es una contradicción (F), queda F ∨ (q ∧ ¬p), lo cual por neutro se reduce a q ∧ ¬p.",
             },
             {
               id: "u1-c-l3-e3",
-              type: "build-expression",
-              prompt:
-                "Escribe la forma equivalente de  p ⇒ q  usando la definición de condicional.",
-              bank: ["p", "q", "¬", "∨", "∧", "⇒"],
-              answer: ["¬", "p", "∨", "q"],
-              explanation: "Definición de condicional: (p ⇒ q) ≡ ¬p ∨ q.",
+              type: "multiple-choice",
+              prompt: "Por la definición de bicondicional, la equivalencia  p ⇔ q  se expande como…",
+              options: ["(p ⇒ q) ∧ (q ⇒ p)", "(p ∧ q) ∨ (¬p ∧ ¬q)", "(p ⇒ q) ∨ (q ⇒ p)", "p ∨ ¬q"],
+              correctIndex: 0,
+              explanation: "El bicondicional «si y solo si» exige que p implique q, y simultáneamente q implique p: (p ⇒ q) ∧ (q ⇒ p).",
             },
             {
               id: "u1-c-l3-e4",
+              type: "multiple-choice",
+              prompt: "Por la ley de tercero excluido, toda proposición unida a su negación por disyunción  p ∨ ¬p  es siempre…",
+              options: ["Una tautología (V)", "Una contradicción (F)", "Una contingencia", "Indeterminada"],
+              correctIndex: 0,
+              explanation: "El principio del tercero excluido indica que una idea o es verdadera o es falsa: p ∨ ¬p es siempre verdadero (Tautología).",
+            },
+            {
+              id: "u1-c-l3-e5",
               type: "simplify-steps",
-              prompt: "Simplifica  ¬(¬p ∨ ¬q)  paso a paso.",
+              prompt: "Simplifica la negación de la disyunción de negaciones:  ¬(¬p ∨ ¬q)  paso a paso.",
               start: "¬(¬p ∨ ¬q)",
               steps: [
                 {
@@ -804,20 +852,12 @@ export const unit1: Unit = {
                   result: "¬¬p ∧ ¬¬q",
                 },
                 {
-                  options: ["Doble negación", "De Morgan", "Identidad"],
+                  options: ["Doble negación (Involución)", "De Morgan", "Identidad"],
                   correctIndex: 0,
                   result: "p ∧ q",
                 },
               ],
-              explanation: "De Morgan y doble negación: ¬(¬p ∨ ¬q) ≡ p ∧ q.",
-            },
-            {
-              id: "u1-c-l3-e5",
-              type: "multiple-choice",
-              prompt: "Por la ley de absorción,  p ∨ (p ∧ q)  se reduce a…",
-              options: ["p", "q", "p ∨ q", "p ∧ q"],
-              correctIndex: 0,
-              explanation: "Absorción: p ∨ (p ∧ q) ≡ p.",
+              explanation: "De Morgan convierte el exterior en conjunción: ¬¬p ∧ ¬¬q. La doble negación los simplifica a p ∧ q.",
             },
           ],
         },
@@ -1397,116 +1437,190 @@ export const unit1: Unit = {
             emoji: "🧩",
             title: "Validez y reglas de inferencia",
             intro:
-              "Un razonamiento es válido si, siempre que las premisas sean verdaderas, la conclusión también lo es.",
+              "Un razonamiento es válido si, siempre que las premisas sean verdaderas, la conclusión también lo es de forma obligatoria.",
             entries: [
               {
-                term: "Modus Ponens",
-                text: "De p ⇒ q y p se infiere q. (Afirmar el antecedente.)",
+                term: "Modus Ponens (MP)",
+                text: "Si se da el antecedente, se cumple el consecuente: de p ⇒ q y p se infiere q.",
               },
               {
-                term: "Modus Tollens",
-                text: "De p ⇒ q y ¬q se infiere ¬p. (Negar el consecuente.)",
+                term: "Modus Tollens (MT)",
+                text: "Negar el consecuente niega el antecedente: de p ⇒ q y ¬q se infiere ¬p.",
               },
               {
-                term: "Silogismo Hipotético",
-                text: "De p ⇒ q y q ⇒ r se infiere p ⇒ r. (Encadenar condicionales.)",
+                term: "Silogismo Hipotético (SH)",
+                text: "Encadena condicionales transitivos: de p ⇒ q y q ⇒ r se infiere p ⇒ r.",
+              },
+              {
+                term: "Silogismo Disyuntivo (SD)",
+                text: "Descarte en una disyunción: de p ∨ q y ¬p se infiere q (o de p ∨ q y ¬q se infiere p).",
+              },
+              {
+                term: "Simplificación (S) y Conjunción (C)",
+                text: "De p ∧ q se infiere p (o q). Al revés, de p y q por separado se infiere p ∧ q.",
               },
             ],
           },
           {
             emoji: "🚫",
-            title: "Detectar falacias",
-            intro: "Un razonamiento es inválido si existe un contraejemplo.",
+            title: "Detección de falacias",
+            intro: "Un razonamiento es inválido si es posible construir un contraejemplo.",
             entries: [
               {
                 term: "Contraejemplo",
-                text: "Una asignación de valores que hace todas las premisas V y la conclusión F. Si existe, el razonamiento es inválido.",
+                text: "Asignación de valores de verdad que hace VERDADERAS todas las premisas y FALSA la conclusión. Si existe al menos uno, el razonamiento es inválido.",
               },
               {
                 term: "Afirmar el consecuente",
-                text: "Falacia: de p ⇒ q y q NO se infiere p.",
+                text: "Falacia común: de p ⇒ q y q NO se puede deducir p.",
               },
               {
                 term: "Negar el antecedente",
-                text: "Falacia: de p ⇒ q y ¬p NO se infiere ¬q.",
+                text: "Falacia común: de p ⇒ q y ¬p NO se puede deducir ¬q.",
               },
             ],
           },
         ],
-        tip: "Para probar que algo es inválido basta UN contraejemplo. Para probar validez, no debe existir ninguno.",
+        tip: "Para demostrar la validez de forma directa, parte de las premisas dadas y aplica las reglas de inferencia paso a paso hasta llegar a la conclusión. Si dudas de su validez, busca un contraejemplo forzando la conclusión a ser falsa.",
       },
       lessons: [
         {
           id: "u1-e-l1",
           title: "Reglas de inferencia",
-          subtitle: "Nivel 5",
+          subtitle: "Nivel 5 · Reglas elementales",
           exercises: [
             {
               id: "u1-e-l1-e1",
               type: "multiple-choice",
-              prompt: "Identifica la regla:   p ⇒ q ,  p   ∴  q",
+              prompt: "Identifica qué regla de inferencia se aplica en:\n«Si llueve, voy al cine. Llueve. Por lo tanto, voy al cine.»\n(p ⇒ q ,  p   ∴  q)",
               options: [
-                "Modus Ponens",
-                "Modus Tollens",
-                "Silogismo Hipotético",
-                "Silogismo Disyuntivo",
+                "Modus Ponens (MP)",
+                "Modus Tollens (MT)",
+                "Silogismo Hipotético (SH)",
+                "Silogismo Disyuntivo (SD)",
               ],
               correctIndex: 0,
-              explanation: "Afirmar el antecedente: Modus Ponens.",
+              explanation: "Modus Ponens: de una implicación y la afirmación de su antecedente se deduce su consecuente.",
             },
             {
               id: "u1-e-l1-e2",
               type: "multiple-choice",
-              prompt: "Identifica la regla:   p ⇒ q ,  ¬q   ∴  ¬p",
+              prompt: "Identifica la regla aplicada:\n«Si estudio, apruebo. No aprobé. Por lo tanto, no estudié.»\n(p ⇒ q ,  ¬q   ∴  ¬p)",
               options: [
-                "Modus Tollens",
-                "Modus Ponens",
-                "Silogismo Hipotético",
-                "Adición",
+                "Modus Tollens (MT)",
+                "Modus Ponens (MP)",
+                "Silogismo Hipotético (SH)",
+                "Ley de Simplificación",
               ],
               correctIndex: 0,
-              explanation: "Negar el consecuente: Modus Tollens.",
+              explanation: "Modus Tollens: de una implicación y la negación de su consecuente se deduce la negación del antecedente.",
             },
             {
               id: "u1-e-l1-e3",
               type: "multiple-choice",
-              prompt: "Identifica la regla:   p ⇒ q ,  q ⇒ r   ∴  p ⇒ r",
+              prompt: "Identifica la regla aplicada:\n«Si como sano, tengo energía. Si tengo energía, juego mejor. Por lo tanto, si como sano, juego mejor.»\n(p ⇒ q ,  q ⇒ r   ∴  p ⇒ r)",
               options: [
-                "Silogismo Hipotético",
-                "Modus Ponens",
-                "Modus Tollens",
-                "Simplificación",
+                "Silogismo Hipotético (SH)",
+                "Modus Ponens (MP)",
+                "Modus Tollens (MT)",
+                "Silogismo Disyuntivo (SD)",
               ],
               correctIndex: 0,
-              explanation: "Encadenar condicionales: Silogismo Hipotético.",
+              explanation: "Silogismo Hipotético: encadena dos condicionales donde el consecuente del primero es el antecedente del segundo.",
             },
             {
               id: "u1-e-l1-e4",
+              type: "multiple-choice",
+              prompt: "Identifica la regla aplicada:\n«Eric va a pescar o juega al tenis. No fue a pescar. Por lo tanto, juega al tenis.»\n(p ∨ q ,  ¬p   ∴  q)",
+              options: [
+                "Silogismo Disyuntivo (SD)",
+                "Modus Ponens (MP)",
+                "Ley de Adición",
+                "Silogismo Hipotético",
+              ],
+              correctIndex: 0,
+              explanation: "Silogismo Disyuntivo: dada una disyunción, si descartas una opción, la otra debe ser verdadera.",
+            },
+            {
+              id: "u1-e-l1-e5",
+              type: "multiple-choice",
+              prompt: "Dada la premisa  p ∧ q, se infiere  p  por la regla de…",
+              options: [
+                "Simplificación",
+                "Conjunción",
+                "Adición",
+                "Modus Ponens",
+              ],
+              correctIndex: 0,
+              explanation: "La ley de Simplificación permite deducir cualquiera de los componentes de una conjunción verdadera.",
+            },
+          ],
+        },
+        {
+          id: "u1-e-l2",
+          title: "Contraejemplos básicos",
+          subtitle: "Nivel 5 · Razonamientos inválidos",
+          exercises: [
+            {
+              id: "u1-e-l2-e1",
               type: "counterexample",
               prompt:
-                "Este razonamiento es INVÁLIDO. Asigna valores que hagan V las premisas y F la conclusión.\nPremisas: p ⇒ q ,  q     Conclusión: p",
+                "Este razonamiento (Falacia de afirmar el consecuente) es INVÁLIDO. Asigna valores para probarlo.\nPremisas: p ⇒ q ,  q     Conclusión: p",
               premises: ["p ⇒ q", "q"],
               conclusion: "p",
               variables: ["p", "q"],
               explanation:
-                "Con p = F y q = V ambas premisas son verdaderas pero la conclusión es falsa: falacia de afirmar el consecuente.",
+                "Con p = F y q = V, el antecedente de p ⇒ q es F (el condicional es V), la premisa q es V, pero la conclusión p es F: premisas verdaderas y conclusión falsa.",
             },
             {
-              id: "u1-e-l1-e5",
+              id: "u1-e-l2-e2",
               type: "counterexample",
               prompt:
-                "Encuentra el contraejemplo del razonamiento inválido.\nPremisas: p ∨ q ,  p     Conclusión: ¬q",
+                "Este razonamiento (Falacia de negar el antecedente) es INVÁLIDO. Asigna valores para el contraejemplo.\nPremisas: p ⇒ q ,  ¬p     Conclusión: ¬q",
+              premises: ["p ⇒ q", "¬p"],
+              conclusion: "¬q",
+              variables: ["p", "q"],
+              explanation:
+                "Con p = F y q = V, p ⇒ q es V, ¬p es V (porque p es F), pero la conclusión ¬q es F (porque q es V).",
+            },
+            {
+              id: "u1-e-l2-e3",
+              type: "counterexample",
+              prompt:
+                "Halla el contraejemplo para este razonamiento disyuntivo inválido.\nPremisas: p ∨ q ,  p     Conclusión: ¬q",
               premises: ["p ∨ q", "p"],
               conclusion: "¬q",
               variables: ["p", "q"],
               explanation:
-                "Con p = V y q = V las premisas son verdaderas pero ¬q es falsa.",
+                "Con p = V y q = V, ambas premisas son verdaderas, pero la conclusión ¬q es falsa (la disyunción lógica no es excluyente por defecto).",
+            },
+            {
+              id: "u1-e-l2-e4",
+              type: "counterexample",
+              prompt:
+                "Encuentra el contraejemplo de 3 variables.\nPremisas: p ⇒ q ,  q ⇒ r ,  r     Conclusión: p",
+              premises: ["p ⇒ q", "q ⇒ r", "r"],
+              conclusion: "p",
+              variables: ["p", "q", "r"],
+              explanation:
+                "Con p = F, q = F (o V) y r = V, las tres premisas se evalúan a verdadero, pero la conclusión p es falsa.",
+            },
+            {
+              id: "u1-e-l2-e5",
+              type: "counterexample",
+              prompt:
+                "Halla el contraejemplo de 3 variables.\nPremisas: p ⇒ q ,  ¬p ∨ r ,  ¬r     Conclusión: ¬q",
+              premises: ["p ⇒ q", "¬p ∨ r", "¬r"],
+              conclusion: "¬q",
+              variables: ["p", "q", "r"],
+              explanation:
+                "Forzamos conclusión falsa: q = V. Para ¬r = V necesitamos r = F. Como r = F, para que ¬p ∨ r sea V necesitamos ¬p = V (p = F). Con p=F y q=V, p ⇒ q es V. Contraejemplo: p=F, q=V, r=F.",
             },
           ],
         },
         {
           id: "u1-e-l3",
-          title: "Guía · Validez de razonamientos",
+          title: "Validez de razonamientos",
           subtitle: "Nivel 5 · Guía de ejercicios",
           exercises: [
             {
@@ -1593,27 +1707,12 @@ export const unit1: Unit = {
               explanation:
                 "Con p = V, r = V y t = V (q = s = F) las cuatro premisas son V pero ¬t es F.",
             },
-            {
-              id: "u1-e-l3-e8",
-              type: "multiple-choice",
-              prompt:
-                "«Si iba solo y desarmado, su jefe no lo mataría. Para suplicarle perdón era necesario ir desarmado. Le suplicó perdón, pero su jefe igualmente lo mató.» ¿Qué conclusión es válida?",
-              options: [
-                "No le suplicó perdón",
-                "Fue armado",
-                "No fue solo",
-                "Su jefe no lo mató",
-              ],
-              correctIndex: 2,
-              explanation:
-                "s: iba solo, d: desarmado, m: lo mató. De la súplica sale d (la condición necesaria, Modus Ponens). De m y (s ∧ d) ⇒ ¬m sale ¬(s ∧ d) (Modus Tollens), o sea ¬s ∨ ¬d; como d vale, queda ¬s: no fue solo.",
-            },
           ],
         },
         {
           id: "u1-e-l4",
-          title: "Guía · Razonamientos categóricos",
-          subtitle: "Nivel 5 · Guía de ejercicios",
+          title: "Razonamientos categóricos",
+          subtitle: "Nivel 5 · Predicados",
           exercises: [
             {
               id: "u1-e-l4-e1",
@@ -1739,51 +1838,243 @@ export const unit1: Unit = {
               correctIndex: 3,
               explanation:
                 "(1): P ⊆ Q y a fuera de Q implican a fuera de P. (2): el testigo de c ∧ ¬a cae dentro de B porque A ∪ B cubre todo el universo: cumple c ∧ b.",
-            },
+              },
+            ],
+          },
+          {
+            id: "u1-e-l5",
+            title: "El gran desafío",
+            subtitle: "Jefe final · Parcial",
+            exercises: [
+              {
+                id: "u1-e-l5-e1",
+                type: "build-expression",
+                prompt:
+                  "Simboliza: «Si trajo cédula, entonces presentó el apto médico».  (c: trajo cédula, a: presentó el apto)",
+                bank: ["c", "a", "⇒", "∧", "∨", "¬"],
+                answer: ["c", "⇒", "a"],
+                explanation: "Condicional directo: c ⇒ a.",
+              },
+              {
+                id: "u1-e-l5-e2",
+                type: "multiple-choice",
+                prompt:
+                  "«Sofía no presentó el apto médico». Sabiendo que c ⇒ a, ¿qué se concluye por Modus Tollens?",
+                options: [
+                  "Sofía no trajo cédula (¬c)",
+                  "Sofía trajo cédula (c)",
+                  "Sofía presentó el apto (a)",
+                  "No se puede concluir nada",
+                ],
+                correctIndex: 0,
+                explanation: "De c ⇒ a y ¬a se infiere ¬c (Modus Tollens).",
+              },
+              {
+                id: "u1-e-l5-e3",
+                type: "multiple-choice",
+                prompt:
+                  "«Si iba solo y desarmado, su jefe no lo mataría. Para suplicarle perdón era necesario ir desarmado. Le suplicó perdón, pero su jefe igualmente lo mató.» ¿Qué conclusión es válida?",
+                options: [
+                  "No le suplicó perdón",
+                  "Fue armado",
+                  "No fue solo",
+                  "Su jefe no lo mató",
+                ],
+                correctIndex: 2,
+                explanation:
+                  "s: iba solo, d: desarmado, m: lo mató. De la súplica sale d (la condición necesaria, Modus Ponens). De m y (s ∧ d) ⇒ ¬m sale ¬(s ∧ d) (Modus Tollens), o sea ¬s ∨ ¬d; como d vale, queda ¬s: no fue solo.",
+              },
+            ],
+          },
+        ],
+      },
+      // ── Sección F · Práctica de Examen (UTN.BA) ──────────────────────────────
+      {
+        id: "u1-f",
+        title: "Práctica de Examen (UTN.BA)",
+        description: "Ejercicios reales tomados en exámenes parciales universitarios.",
+        accent: "blue",
+        guide: {
+          levels: [
+            {
+              emoji: "🎓",
+              title: "Simulacro de examen",
+              intro: "Entrena con los problemas de lógica reales de los parciales de la UTN.BA.",
+              entries: [
+                {
+                  text: "Los exámenes integran todas las áreas: simplificación con leyes, validez de razonamientos proposicionales, cuantificadores y traducción de lenguaje natural."
+                },
+                {
+                  term: "Demostración de validez",
+                  text: "Para probar que un razonamiento es válido, se encadenan premisas aplicando reglas. Si es inválido, se da un contraejemplo."
+                },
+                {
+                  term: "Negación de implicación",
+                  text: "Recuerda que ¬(A ⇒ B) ≡ A ∧ ¬B. Esta equivalencia aparece frecuentemente al negar enunciados cuantificados."
+                }
+              ]
+            }
           ],
+          tip: "¡Tómate tu tiempo! Estos ejercicios tienen el nivel real de exigencia de un examen parcial."
         },
-        {
-          id: "u1-e-l2",
-          title: "El gran desafío",
-          subtitle: "Jefe final · Parcial",
-          exercises: [
-            {
-              id: "u1-e-l2-e1",
-              type: "build-expression",
-              prompt:
-                "Simboliza: «Si trajo cédula, entonces presentó el apto médico».  (c: trajo cédula, a: presentó el apto)",
-              bank: ["c", "a", "⇒", "∧", "∨", "¬"],
-              answer: ["c", "⇒", "a"],
-              explanation: "Condicional directo: c ⇒ a.",
-            },
-            {
-              id: "u1-e-l2-e2",
-              type: "multiple-choice",
-              prompt:
-                "«Sofía no presentó el apto médico». Sabiendo que c ⇒ a, ¿qué se concluye por Modus Tollens?",
-              options: [
-                "Sofía no trajo cédula (¬c)",
-                "Sofía trajo cédula (c)",
-                "Sofía presentó el apto (a)",
-                "No se puede concluir nada",
-              ],
-              correctIndex: 0,
-              explanation: "De c ⇒ a y ¬a se infiere ¬c (Modus Tollens).",
-            },
-            {
-              id: "u1-e-l2-e3",
-              type: "counterexample",
-              prompt:
-                "¿Es inválido?  Encuentra el contraejemplo.\nPremisas: p ⇒ q ,  ¬p     Conclusión: ¬q",
-              premises: ["p ⇒ q", "¬p"],
-              conclusion: "¬q",
-              variables: ["p", "q"],
-              explanation:
-                "Con p = F y q = V las premisas son verdaderas pero ¬q es falsa: falacia de negar el antecedente.",
-            },
-          ],
-        },
-      ],
-    },
+        lessons: [
+          {
+            id: "u1-f-l1",
+            title: "Simulacro de Parcial I",
+            subtitle: "Nivel Examen · Parte 1",
+            exercises: [
+              {
+                id: "u1-f-l1-e1",
+                type: "simplify-steps",
+                prompt: "Simplifica el ejercicio de parcial (Tema 12):\n¬(p ∧ ¬q) ⇒ (¬q ∨ r)",
+                start: "¬(p ∧ ¬q) ⇒ (¬q ∨ r)",
+                steps: [
+                  {
+                    options: ["De Morgan y doble negación", "Definición de condicional", "Distributiva"],
+                    correctIndex: 1,
+                    result: "¬¬(p ∧ ¬q) ∨ (¬q ∨ r)"
+                  },
+                  {
+                    options: ["Doble negación (Involución)", "Ley de Absorción", "De Morgan"],
+                    correctIndex: 0,
+                    result: "(p ∧ ¬q) ∨ ¬q ∨ r"
+                  },
+                  {
+                    options: ["Conmutativa y asociativa", "De Morgan", "Distributiva"],
+                    correctIndex: 0,
+                    result: "(¬q ∨ (p ∧ ¬q)) ∨ r"
+                  },
+                  {
+                    options: ["Ley de Absorción", "Identidad", "Tercero excluido"],
+                    correctIndex: 0,
+                    result: "¬q ∨ r"
+                  }
+                ],
+                explanation: "Definición de condicional: ¬¬(p ∧ ¬q) ∨ (¬q ∨ r); luego Involución/Doble negación: (p ∧ ¬q) ∨ ¬q ∨ r; reordenando por conmutativa: (¬q ∨ (¬q ∧ p)) ∨ r; y por Absorción: ¬q ∨ r (equivalente a q ⇒ r)."
+              },
+              {
+                id: "u1-f-l1-e2",
+                type: "multiple-choice",
+                prompt: "Analiza el razonamiento (Tema 11):\n«Eric va a la playa o a las montañas. Si va a la playa, lleva sombrilla. Si va a las montañas, lleva mochila. Por lo tanto, Eric lleva sombrilla o mochila»",
+                options: [
+                  "Válido: Dilema Constructivo (regla válida)",
+                  "Inválido: falacia de afirmar el consecuente",
+                  "Válido: Modus Tollens",
+                  "Inválido: contraejemplo cuando no va a ningún lado"
+                ],
+                correctIndex: 0,
+                explanation: "Es una regla de inferencia clásica llamada Dilema Constructivo: dadas p ∨ q, p ⇒ r, y q ⇒ s, se deduce r ∨ s. Es válido."
+              },
+              {
+                id: "u1-f-l1-e3",
+                type: "multiple-choice",
+                prompt: "Indique el valor de verdad (Tema 14):\n«(∀x: p(x) ∨ ∀x: q(x)) ⇔ ∀x: [p(x) ∨ q(x)]»",
+                options: [
+                  "Falso: el universal no se distribuye sobre la disyunción (∨)",
+                  "Verdadero: el universal distribuye sobre la disyunción y la conjunción",
+                  "Verdadero: son equivalentes por De Morgan",
+                  "Falso: el existencial es el único que distribuye sobre ∨"
+                ],
+                correctIndex: 0,
+                explanation: "Falso. Que todos cumplan p(x) o todos cumplan q(x) implica que todos cumplen p(x) ∨ q(x), pero el recíproco no es cierto. Por ejemplo, en los enteros, todos los números son pares o impares (V), pero no todos son pares ni todos son impares (F)."
+              },
+              {
+                id: "u1-f-l1-e4",
+                type: "multiple-choice",
+                prompt: "Analice el razonamiento (Tema 14):\n«Cuando llueve y la ventana está abierta, se moja mi escritorio. La ventana está abierta y mi escritorio está seco. Por lo tanto, no llueve»",
+                options: [
+                  "Válido: de q ∧ ¬r y p ∧ q ⇒ r se infiere ¬(p ∧ q), que con q da ¬p",
+                  "Inválido: falacia de negar el antecedente",
+                  "Inválido: contraejemplo cuando no llueve pero la ventana se cierra",
+                  "Válido: por Silogismo Hipotético directo"
+                ],
+                correctIndex: 0,
+                explanation: "Válido. De p ∧ q ⇒ r y ¬r (del escritorio seco) se deduce ¬(p ∧ q) por Modus Tollens. ¬(p ∧ q) equivale a ¬p ∨ ¬q. Como sabemos que la ventana está abierta (q es V, por ende ¬q es F), por Silogismo Disyuntivo concluimos ¬p (no llueve)."
+              },
+              {
+                id: "u1-f-l1-e5",
+                type: "multiple-choice",
+                prompt: "Pruebe la validez del razonamiento (Tema 02):\nPremisas: (p ∧ q) ⇒ r  ;  ¬r ∨ t  ;  ¬t ∧ q\nConclusión: ¬p",
+                options: [
+                  "Válido: de ¬t ∧ q sale ¬t; con ¬r ∨ t queda ¬r; con (p ∧ q) ⇒ r sale ¬(p ∧ q) por MT, que con q da ¬p",
+                  "Inválido: contraejemplo con p=V, q=V, r=V, t=F",
+                  "Válido: por Modus Ponens directo en todas las premisas",
+                  "Inválido: falacia de afirmar el consecuente en la primera premisa"
+                ],
+                correctIndex: 0,
+                explanation: "Válido. 1. De ¬t ∧ q obtenemos ¬t y q por simplificación. 2. De ¬r ∨ t y ¬t concluimos ¬r por Silogismo Disyuntivo. 3. De (p ∧ q) ⇒ r y ¬r concluimos ¬(p ∧ q) por Modus Tollens. 4. ¬(p ∧ q) es ¬p ∨ ¬q. Como q es verdadero (¬q es F), queda ¬p por Silogismo Disyuntivo."
+              }
+            ]
+          },
+          {
+            id: "u1-f-l2",
+            title: "Simulacro de Parcial II",
+            subtitle: "Nivel Examen · Parte 2",
+            exercises: [
+              {
+                id: "u1-f-l2-e1",
+                type: "multiple-choice",
+                prompt: "Analiza el valor de verdad (Tema 15A):\n«∃y ∈ ℝ : ∀x ∈ ℝ : 2x + y = 0»",
+                options: [
+                  "Falso: ningún y fijo puede cumplir la ecuación para todos los reales x simultáneamente",
+                  "Verdadero: para cualquier y que elijamos podemos despejar x = -y/2",
+                  "Verdadero: si y = 0 se cumple para todo x",
+                  "Falso: la ecuación no tiene solución en el conjunto de los reales"
+                ],
+                correctIndex: 0,
+                explanation: "Falso. Para que sea verdadero tendría que existir un único número y que sumado a cualquier 2x diera 0. Si y fuera fijo, la ecuación solo se cumple para x = -y/2, no para todo x ∈ ℝ."
+              },
+              {
+                id: "u1-f-l2-e2",
+                type: "multiple-choice",
+                prompt: "Analice la validez del razonamiento (Tema 15A):\n«Cuando presiono el botón y la aplicación está abierta, se apaga el dispositivo. La aplicación está abierta y el dispositivo está encendido (no apagado). Por lo tanto, no estoy presionando el botón»",
+                options: [
+                  "Válido: por Modus Tollens entre las premisas, concluyendo ¬(b ∧ a), y luego Silogismo Disyuntivo con a",
+                  "Inválido: falacia de negar el antecedente",
+                  "Válido: por Modus Ponens directo",
+                  "Inválido: contraejemplo con b=V, a=F, d=F"
+                ],
+                correctIndex: 0,
+                explanation: "Válido. Premisas: (b ∧ a) ⇒ d  y  (a ∧ ¬d). De a ∧ ¬d obtenemos ¬d y a. Por Modus Tollens con (b ∧ a) ⇒ d y ¬d deducimos ¬(b ∧ a), que equivale a ¬b ∨ ¬a. Como a es verdadero (¬a es F), concluimos ¬b (no presiono el botón)."
+              },
+              {
+                id: "u1-f-l2-e3",
+                type: "multiple-choice",
+                prompt: "Sabiendo que  ∃x : ∀y : p(x, y)  es verdadera, ¿cuál de las siguientes proposiciones también lo es necesariamente?",
+                options: [
+                  "∀y : ∃x : p(x, y)  y  ∃x : ∃y : p(x, y)",
+                  "∀x : ∀y : p(x, y)  y  ∀x : ∃y : ¬p(x, y)",
+                  "Solo ∃x : ∃y : p(x, y)",
+                  "Ninguna de las opciones"
+                ],
+                correctIndex: 0,
+                explanation: "Si existe un x* que se relaciona con todo y, entonces para cualquier y existe al menos un x (el mismo x*), por lo que ∀y: ∃x: p(x,y) es verdadera. También existe al menos un par x, y que cumple p, por lo que ∃x: ∃y: p(x,y) es verdadera. Las demás no son necesariamente verdaderas."
+              },
+              {
+                id: "u1-f-l2-e4",
+                type: "counterexample",
+                prompt: "El razonamiento del parcial (Tema 10) es INVÁLIDO. Encuentra un contraejemplo (valores para un mueble x) que haga verdaderas las premisas y falsa la conclusión.\nPremisas: a (antiguo) ,  c ∨ o (cómodo o moderno) ,  c ⇒ b (cómodo ⇒ beige)\nConclusión: a ∧ b (antiguo y beige)",
+                premises: ["a", "c ∨ o", "c ⇒ b"],
+                conclusion: "a ∧ b",
+                variables: ["a", "c", "o", "b"],
+                explanation: "Asignando a = V (antiguo), c = F (no cómodo), o = V (moderno), b = F (no beige) las tres premisas se cumplen, pero la conclusión de que es antiguo y beige es falsa."
+              },
+              {
+                id: "u1-f-l2-e5",
+                type: "multiple-choice",
+                prompt: "Sabiendo que la proposición (Tema 04) es FALSA:\n¬(q ∨ r) ⇒ ¬s ∨ (p ∧ ¬r)\nDetermine los valores de verdad de p, q, r y s.",
+                options: [
+                  "p = F, q = F, r = F, s = V",
+                  "p = V, q = F, r = F, s = F",
+                  "p = F, q = V, r = F, s = V",
+                  "p = V, q = V, r = V, s = V"
+                ],
+                correctIndex: 0,
+                explanation: "El condicional es F si el antecedente ¬(q ∨ r) es V (por ende q=F y r=F) y el consecuente ¬s ∨ (p ∧ ¬r) es F. Para que la disyunción sea F, necesitamos ¬s=F (s=V) y p ∧ ¬r = F. Como r=F (¬r=V), entonces p tiene que ser F."
+              }
+            ]
+          }
+        ]
+      }
   ],
 };
