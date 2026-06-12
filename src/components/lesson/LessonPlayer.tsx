@@ -15,6 +15,7 @@ import { sfxCorrect, sfxWrong, sfxComplete, sfxFail } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 import { ExerciseView } from "./ExerciseView";
 import { CheatSheet } from "./CheatSheet";
+import { TableDraft } from "./TableDraft";
 import type { AnswerState } from "./types";
 import trophyAnim from "@/assets/lottie/trophy.json";
 
@@ -202,6 +203,7 @@ export function LessonPlayer({
           />
         </div>
         <CheatSheet />
+        <TableDraft />
         <div className="flex items-center gap-1 font-black text-rose-500">
           <Heart className="size-5 fill-rose-500" />
           <motion.span

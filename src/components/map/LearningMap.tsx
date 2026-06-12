@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, BookOpen, Dumbbell } from "lucide-react";
+import { Lock, BookOpen, Dumbbell, Table2 } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import { curriculum, allLessons } from "@/content";
 import { useProgress } from "@/stores/progress";
@@ -53,7 +53,16 @@ export function LearningMap() {
             Ludema
           </span>
         </Link>
-        <Hud />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/tools"
+            aria-label="Generador de tablas de verdad"
+            className="flex items-center rounded-full bg-white p-2 text-slate-500 shadow-pop-sm transition active:translate-y-0.5 dark:bg-slate-800 dark:text-slate-300"
+          >
+            <Table2 className="size-5" />
+          </Link>
+          <Hud />
+        </div>
       </header>
 
       {/* Unidad 1 */}
