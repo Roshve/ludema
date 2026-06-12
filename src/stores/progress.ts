@@ -36,6 +36,10 @@ type ProgressState = {
   completedLessons: Record<string, CompletedLesson>;
   /** Ids de ejercicios fallados pendientes de repaso. */
   missedExercises: string[];
+  /** Segundos totales de estudio activo acumulados. */
+  totalStudySeconds: number;
+  /** Segundos de estudio activo por día (clave: "YYYY-MM-DD" UTC). */
+  dailyStudy: Record<string, number>;
   hasHydrated: boolean;
 
   // Acciones
@@ -48,6 +52,8 @@ type ProgressState = {
   recordExercise: (exerciseId: string, correct: boolean) => void;
   /** XP de sesiones de práctica: suma directa y mantiene viva la racha. */
   addPracticeXp: (xpEarned: number) => void;
+  /** Suma segundos de estudio activo al total y al día de hoy. */
+  addStudySeconds: (seconds: number) => void;
   reset: () => void;
 };
 
@@ -61,6 +67,8 @@ export const useProgress = create<ProgressState>()(
       lastPlayedDate: null,
       completedLessons: {},
       missedExercises: [],
+      totalStudySeconds: 0,
+      dailyStudy: {},
       hasHydrated: false,
 
       setHydrated: () => set({ hasHydrated: true }),
@@ -135,6 +143,19 @@ export const useProgress = create<ProgressState>()(
         });
       },
 
+      addStudySeconds: (seconds) => {
+        if (seconds <= 0) return;
+        const state = get();
+        const today = todayStr();
+        set({
+          totalStudySeconds: state.totalStudySeconds + seconds,
+          dailyStudy: {
+            ...state.dailyStudy,
+            [today]: (state.dailyStudy[today] ?? 0) + seconds,
+          },
+        });
+      },
+
       reset: () =>
         set({
           hearts: MAX_HEARTS,
@@ -144,6 +165,8 @@ export const useProgress = create<ProgressState>()(
           lastPlayedDate: null,
           completedLessons: {},
           missedExercises: [],
+          totalStudySeconds: 0,
+          dailyStudy: {},
         }),
     }),
     {
@@ -179,4 +202,19 @@ export function isLessonCompleted(
   lessonId: string,
 ): boolean {
   return Boolean(completed[lessonId]);
+}
+
+export function lessonsCompletedCount(
+  completed: Record<string, CompletedLesson>,
+): number {
+  return Object.keys(completed).length;
+}
+
+/** Formatea segundos como "3h 25m", "45m" o "< 1m". */
+export function formatStudyTime(seconds: number): string {
+  if (seconds < 60) return "< 1m";
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  if (h === 0) return `${m}m`;
+  return `${h}h ${m}m`;
 }

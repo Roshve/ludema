@@ -17,6 +17,7 @@ import { ExerciseView } from "./ExerciseView";
 import { CheatSheet } from "./CheatSheet";
 import { TableDraft } from "./TableDraft";
 import type { AnswerState } from "./types";
+import { useStudyTimer } from "@/hooks/useStudyTimer";
 import trophyAnim from "@/assets/lottie/trophy.json";
 
 type Phase = "playing" | "complete" | "failed";
@@ -34,6 +35,9 @@ export function LessonPlayer({
     1,
     lesson.exercises.filter((e) => e.type !== "concept").length,
   );
+
+  const { flush: flushTimer } = useStudyTimer();
+
   const hearts = useProgress((s) => s.hearts);
   const loseHeart = useProgress((s) => s.loseHeart);
   const completeLesson = useProgress((s) => s.completeLesson);
@@ -87,10 +91,12 @@ export function LessonPlayer({
   function next() {
     // ¿Se quedó sin corazones?
     if (useProgress.getState().hearts <= 0) {
+      flushTimer();
       setPhase("failed");
       return;
     }
     if (index + 1 >= queue.length) {
+      flushTimer();
       if (practice) {
         addPracticeXp(correctCount * PRACTICE_XP_PER_CORRECT);
       } else {
