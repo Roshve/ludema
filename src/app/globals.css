@@ -219,6 +219,36 @@ body {
     0 0 4px rgb(0 207 255 / 0.18);
 }
 
+/* Scrollbar fina tipo píldora para paneles con overflow.
+   Usa var(--color-slate-*) así el tema arcade la re-skinea en cascada. */
+.scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-slate-300) transparent;
+}
+.scrollbar-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-slim::-webkit-scrollbar-thumb {
+  background: var(--color-slate-300);
+  border-radius: 9999px;
+}
+.scrollbar-slim::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-400);
+}
+.dark .scrollbar-slim {
+  scrollbar-color: var(--color-slate-700) transparent;
+}
+.dark .scrollbar-slim::-webkit-scrollbar-thumb {
+  background: var(--color-slate-700);
+}
+.dark .scrollbar-slim::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-600);
+}
+
 @keyframes pop-in {
   0% {
     transform: scale(0.9);

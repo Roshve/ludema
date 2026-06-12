@@ -1,31 +1,186 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Table2, Plus, Minus, Trash2, X, GripHorizontal } from "lucide-react";
-import { motion, useDragControls } from "motion/react";
+import { useEffect, useId, useRef, useState } from "react";
+import {
+  Table2,
+  Plus,
+  Minus,
+  Trash2,
+  X,
+  GripHorizontal,
+  GripVertical,
+} from "lucide-react";
+import { motion, useDragControls, Reorder } from "motion/react";
 import { cn } from "@/lib/utils";
+import { Tooltip } from "@/components/ui/Tooltip";
+
+// ── Types ────────────────────────────────────────────────────────────────────
+
+type Cell = boolean | null;
+type ColDef = { id: string; header: string };
+// Cells keyed by ColDef.id so column reordering doesn't touch cell data.
+type RowDef = { id: string; cells: Record<string, Cell> };
+
+// ── Constants ────────────────────────────────────────────────────────────────
 
 const MAX_COLS = 8;
 const MAX_ROWS = 16;
-type Cell = boolean | null;
+const SYMBOLS = ["¬", "∧", "∨", "⇒", "⇔", "(", ")", "p", "q", "r", "s", "t"];
 
-const DEFAULT_HEADERS = ["p", "q", ""];
-const DEFAULT_ROWS = 4;
+// ── Stable initial state (col ids shared between cols and rows) ───────────────
 
-function emptyRows(numRows: number, numCols: number): Cell[][] {
-  return Array.from({ length: numRows }, () => Array<Cell>(numCols).fill(null));
+function makeInitial(uid: () => string): { cols: ColDef[]; rows: RowDef[] } {
+  const cols: ColDef[] = [
+    { id: uid(), header: "p" },
+    { id: uid(), header: "q" },
+    { id: uid(), header: "" },
+  ];
+  const rows: RowDef[] = Array.from({ length: 4 }, () => ({
+    id: uid(),
+    cells: Object.fromEntries(cols.map((c) => [c.id, null as Cell])),
+  }));
+  return { cols, rows };
 }
+
+// ── DraggableCol — explicit grip strip + elastic input ───────────────────────
+
+function DraggableCol({
+  col,
+  onUpdate,
+  lastFocusedRef,
+}: {
+  col: ColDef;
+  onUpdate: (id: string, val: string) => void;
+  lastFocusedRef: React.RefObject<HTMLInputElement | null>;
+}) {
+  const controls = useDragControls();
+  return (
+    <Reorder.Item
+      as="th"
+      value={col}
+      dragControls={controls}
+      dragListener={false}
+      dragMomentum={false}
+      className="px-0.5 align-bottom"
+    >
+      {/* focus-within: el ring va aquí porque sobre el input lo taparía la barra
+          de agarre (el span relative del Tooltip pinta encima del box-shadow) */}
+      <div className="flex flex-col rounded-lg focus-within:ring-2 focus-within:ring-blue-400">
+        {/* Barra de agarre: cubre todo el ancho del input, único trigger del drag */}
+        <Tooltip label="Arrastrar columna" side="top" className="self-stretch">
+          <div
+            onPointerDown={(e) => controls.start(e)}
+            className="flex h-4 w-full cursor-grab items-center justify-center rounded-t-lg bg-slate-200 transition hover:bg-slate-300 active:cursor-grabbing dark:bg-slate-700 dark:hover:bg-slate-600"
+          >
+            <GripHorizontal className="size-3 text-slate-500 dark:text-slate-400" />
+          </div>
+        </Tooltip>
+        {/* Elastic input: inline-grid overlay makes width match content */}
+        <div className="inline-grid min-w-14 max-w-[180px]">
+          <span
+            aria-hidden
+            className="invisible col-start-1 row-start-1 whitespace-pre px-1 text-sm font-black"
+          >
+            {col.header || "—"}
+          </span>
+          <input
+            data-colid={col.id}
+            type="text"
+            value={col.header}
+            onChange={(e) => onUpdate(col.id, e.target.value)}
+            onFocus={(e) => {
+              lastFocusedRef.current = e.currentTarget;
+            }}
+            onPointerDown={(e) => e.stopPropagation()}
+            placeholder="—"
+            maxLength={60}
+            className="col-start-1 row-start-1 w-full cursor-text rounded-b-lg bg-slate-100 px-1 py-1.5 text-center text-sm font-black text-slate-700 outline-none dark:bg-slate-800 dark:text-slate-200"
+          />
+        </div>
+      </div>
+    </Reorder.Item>
+  );
+}
+
+// ── DraggableRow — needs its own useDragControls instance ────────────────────
+
+function DraggableRow({
+  row,
+  cols,
+  onCycle,
+}: {
+  row: RowDef;
+  cols: ColDef[];
+  onCycle: (rowId: string, colId: string) => void;
+}) {
+  const controls = useDragControls();
+  const vStr = (v: Cell) => (v === null ? "·" : v ? "V" : "F");
+
+  return (
+    <Reorder.Item
+      as="tr"
+      value={row}
+      dragControls={controls}
+      dragListener={false}
+      dragMomentum={false}
+    >
+      {/* Row grip */}
+      <td className="px-0.5">
+        <Tooltip label="Arrastrar fila" side="left">
+          <button
+            type="button"
+            aria-label="Arrastrar fila"
+            onPointerDown={(e) => controls.start(e)}
+            className="flex cursor-grab items-center justify-center rounded-md p-1 text-slate-300 transition active:cursor-grabbing hover:text-slate-400 dark:text-slate-600 dark:hover:text-slate-400"
+          >
+            <GripVertical className="size-3.5" />
+          </button>
+        </Tooltip>
+      </td>
+      {cols.map((col) => (
+        <td key={col.id} className="px-0.5">
+          <button
+            type="button"
+            onClick={() => onCycle(row.id, col.id)}
+            className={cn(
+              "block w-full min-w-14 rounded-lg border-2 py-1.5 text-sm font-black transition",
+              row.cells[col.id] === null
+                ? "border-dashed border-slate-300 bg-white text-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-500"
+                : "border-cyan-400 bg-cyan-50 text-cyan-700 dark:bg-cyan-950/40 dark:text-cyan-300",
+            )}
+          >
+            {vStr(row.cells[col.id])}
+          </button>
+        </td>
+      ))}
+    </Reorder.Item>
+  );
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 
 export function TableDraft() {
   const [open, setOpen] = useState(false);
-  const [headers, setHeaders] = useState<string[]>(DEFAULT_HEADERS);
-  const [cells, setCells] = useState<Cell[][]>(() =>
-    emptyRows(DEFAULT_ROWS, DEFAULT_HEADERS.length),
-  );
 
-  // The full-viewport div serves as the drag constraint boundary.
+  // IDs por instancia: prefijo de useId (idéntico en server y cliente) +
+  // contador en ref (no se resetea con Fast Refresh, a diferencia de un
+  // contador a nivel de módulo, que regeneraba ids ya usados → keys duplicadas).
+  const idPrefix = useId();
+  const seqRef = useRef(0);
+  const uid = () => `${idPrefix}${++seqRef.current}`;
+
+  // Una sola llamada a makeInitial: los IDs de columna deben ser los mismos
+  // en cols[] y en las claves de rows[].cells.
+  const [initial] = useState(() => makeInitial(uid));
+  const [cols, setCols] = useState<ColDef[]>(initial.cols);
+  const [rows, setRows] = useState<RowDef[]>(initial.rows);
+
+  // Constraint boundary for modal drag.
   const constraintRef = useRef<HTMLDivElement>(null);
-  const dragControls = useDragControls();
+  const modalDragControls = useDragControls();
+
+  // Last focused header input — used to insert symbols at cursor.
+  const lastFocusedRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -36,82 +191,132 @@ export function TableDraft() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // ── Column actions ────────────────────────────────────────────────────────
+
   function addCol() {
-    if (headers.length >= MAX_COLS) return;
-    setHeaders((h) => [...h, ""]);
-    setCells((rows) => rows.map((r) => [...r, null]));
+    if (cols.length >= MAX_COLS) return;
+    const newCol: ColDef = { id: uid(), header: "" };
+    setCols((c) => [...c, newCol]);
+    setRows((rs) =>
+      rs.map((r) => ({ ...r, cells: { ...r.cells, [newCol.id]: null } })),
+    );
   }
+
   function removeCol() {
-    if (headers.length <= 1) return;
-    setHeaders((h) => h.slice(0, -1));
-    setCells((rows) => rows.map((r) => r.slice(0, -1)));
+    if (cols.length <= 1) return;
+    const lastId = cols[cols.length - 1].id;
+    setCols((c) => c.slice(0, -1));
+    setRows((rs) =>
+      rs.map((r) => {
+        const cells = { ...r.cells };
+        delete cells[lastId];
+        return { ...r, cells };
+      }),
+    );
   }
+
+  function updateHeader(id: string, val: string) {
+    setCols((c) =>
+      c.map((col) => (col.id === id ? { ...col, header: val } : col)),
+    );
+  }
+
+  // ── Row actions ───────────────────────────────────────────────────────────
+
   function addRow() {
-    if (cells.length >= MAX_ROWS) return;
-    setCells((rows) => [...rows, Array<Cell>(headers.length).fill(null)]);
+    if (rows.length >= MAX_ROWS) return;
+    setRows((rs) => [
+      ...rs,
+      {
+        id: uid(),
+        cells: Object.fromEntries(cols.map((c) => [c.id, null as Cell])),
+      },
+    ]);
   }
+
   function removeRow() {
-    if (cells.length <= 1) return;
-    setCells((rows) => rows.slice(0, -1));
+    if (rows.length <= 1) return;
+    setRows((rs) => rs.slice(0, -1));
   }
+
+  // ── Cell action ───────────────────────────────────────────────────────────
+
+  function cycleCell(rowId: string, colId: string) {
+    setRows((rs) =>
+      rs.map((r) => {
+        if (r.id !== rowId) return r;
+        const v = r.cells[colId];
+        return {
+          ...r,
+          cells: {
+            ...r.cells,
+            [colId]: v === null ? true : v === true ? false : null,
+          },
+        };
+      }),
+    );
+  }
+
+  // ── Reset ─────────────────────────────────────────────────────────────────
+
   function clear() {
-    setHeaders(DEFAULT_HEADERS);
-    setCells(emptyRows(DEFAULT_ROWS, DEFAULT_HEADERS.length));
+    const { cols: c, rows: r } = makeInitial(uid);
+    setCols(c);
+    setRows(r);
   }
-  function cycleCell(row: number, col: number) {
-    setCells((prev) => {
-      const next = prev.map((r) => [...r]);
-      const v = prev[row][col];
-      next[row][col] = v === null ? true : v === true ? false : null;
-      return next;
-    });
-  }
-  function updateHeader(i: number, val: string) {
-    setHeaders((h) => {
-      const next = [...h];
-      next[i] = val;
-      return next;
+
+  // ── Symbol keyboard ───────────────────────────────────────────────────────
+
+  function insertSymbol(sym: string) {
+    const el = lastFocusedRef.current;
+    if (!el) return;
+    const id = el.dataset.colid;
+    if (!id) return;
+    const start = el.selectionStart ?? el.value.length;
+    const end = el.selectionEnd ?? el.value.length;
+    const next = el.value.slice(0, start) + sym + el.value.slice(end);
+    updateHeader(id, next);
+    requestAnimationFrame(() => {
+      el.focus();
+      el.setSelectionRange(start + sym.length, start + sym.length);
     });
   }
 
-  const vStr = (v: Cell) => (v === null ? "·" : v ? "V" : "F");
   const btnCtrl =
     "rounded-lg border border-slate-200 p-1 text-slate-500 transition disabled:opacity-30 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800";
 
+  // ── Render ────────────────────────────────────────────────────────────────
+
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label="Tabla borrador"
-        className="flex items-center rounded-full bg-white p-2 text-slate-500 shadow-pop-sm transition active:translate-y-0.5 dark:bg-slate-800 dark:text-slate-300"
-      >
-        <Table2 className="size-4" />
-      </button>
+      {/* Trigger */}
+      <Tooltip label="Tabla borrador" side="bottom">
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="Tabla borrador"
+          className="flex items-center rounded-full bg-white p-2 text-slate-500 shadow-pop-sm transition active:translate-y-0.5 dark:bg-slate-800 dark:text-slate-300"
+        >
+          <Table2 className="size-4" />
+        </button>
+      </Tooltip>
 
-      {/*
-        Always mounted so state survives close/reopen.
-        The outer div is both the overlay backdrop and the drag constraint boundary.
-      */}
+      {/* Always mounted; CSS hidden preserves state and modal drag position. */}
       <div
         ref={constraintRef}
         className={cn("fixed inset-0 z-40", !open && "hidden")}
       >
-        {/* Backdrop: click to close */}
+        {/* Backdrop */}
         <div
           className="absolute inset-0 cursor-default bg-slate-900/40"
           onClick={() => setOpen(false)}
         />
 
-        {/*
-          Flex container: centers the modal on load.
-          pointer-events-none so the backdrop click-through works;
-          the motion.div re-enables pointer events on itself.
-        */}
+        {/* Centers the modal on open; pointer-events-none for backdrop click-through */}
         <div className="pointer-events-none absolute inset-x-0 top-[5dvh] flex justify-center px-3 sm:px-6">
           <motion.div
             drag
-            dragControls={dragControls}
+            dragControls={modalDragControls}
             dragListener={false}
             dragConstraints={constraintRef}
             dragMomentum={false}
@@ -122,13 +327,12 @@ export function TableDraft() {
             onClick={(e) => e.stopPropagation()}
             className={cn(
               "pointer-events-auto w-full max-w-lg rounded-3xl border-2 border-slate-200 bg-white shadow-pop dark:border-slate-700 dark:bg-slate-900",
-              // Only animate pop-in on first open; drag handles subsequent positioning.
               open && "animate-pop-in",
             )}
           >
-            {/* ── Drag handle / header ── */}
+            {/* ── Modal drag handle / header ── */}
             <div
-              onPointerDown={(e) => dragControls.start(e)}
+              onPointerDown={(e) => modalDragControls.start(e)}
               className="flex cursor-grab items-center justify-between gap-2 rounded-t-3xl border-b border-slate-100 px-4 pt-4 pb-3 select-none active:cursor-grabbing dark:border-slate-700"
             >
               <div className="flex min-w-0 items-center gap-2">
@@ -139,25 +343,28 @@ export function TableDraft() {
               </div>
               <div
                 className="flex shrink-0 items-center gap-1"
-                /* Stop pointer-down here so buttons don't trigger drag. */
                 onPointerDown={(e) => e.stopPropagation()}
               >
-                <button
-                  type="button"
-                  onClick={clear}
-                  aria-label="Limpiar tabla"
-                  className="rounded-full p-1.5 text-slate-400 transition hover:text-rose-500 dark:hover:text-rose-400"
-                >
-                  <Trash2 className="size-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Cerrar"
-                  className="rounded-full p-1.5 text-slate-400 transition hover:text-slate-600 dark:hover:text-slate-300"
-                >
-                  <X className="size-5" strokeWidth={3} />
-                </button>
+                <Tooltip label="Limpiar" side="bottom">
+                  <button
+                    type="button"
+                    onClick={clear}
+                    aria-label="Limpiar tabla"
+                    className="rounded-full p-1.5 text-slate-400 transition hover:text-rose-500 dark:hover:text-rose-400"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </Tooltip>
+                <Tooltip label="Cerrar" side="bottom">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label="Cerrar"
+                    className="rounded-full p-1.5 text-slate-400 transition hover:text-slate-600 dark:hover:text-slate-300"
+                  >
+                    <X className="size-5" strokeWidth={3} />
+                  </button>
+                </Tooltip>
               </div>
             </div>
 
@@ -165,74 +372,120 @@ export function TableDraft() {
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 pt-3 pb-2">
               <span className="text-xs font-bold text-slate-500">Columnas:</span>
               <div className="flex items-center gap-1">
-                <button type="button" onClick={removeCol} disabled={headers.length <= 1} className={btnCtrl} aria-label="Eliminar columna">
-                  <Minus className="size-3.5" />
-                </button>
+                <Tooltip label="Eliminar columna" side="top">
+                  <button
+                    type="button"
+                    onClick={removeCol}
+                    disabled={cols.length <= 1}
+                    className={btnCtrl}
+                    aria-label="Eliminar columna"
+                  >
+                    <Minus className="size-3.5" />
+                  </button>
+                </Tooltip>
                 <span className="w-5 text-center text-xs font-black text-slate-700 dark:text-slate-200">
-                  {headers.length}
+                  {cols.length}
                 </span>
-                <button type="button" onClick={addCol} disabled={headers.length >= MAX_COLS} className={btnCtrl} aria-label="Añadir columna">
-                  <Plus className="size-3.5" />
-                </button>
+                <Tooltip label="Añadir columna" side="top">
+                  <button
+                    type="button"
+                    onClick={addCol}
+                    disabled={cols.length >= MAX_COLS}
+                    className={btnCtrl}
+                    aria-label="Añadir columna"
+                  >
+                    <Plus className="size-3.5" />
+                  </button>
+                </Tooltip>
               </div>
+
               <span className="text-xs font-bold text-slate-500">Filas:</span>
               <div className="flex items-center gap-1">
-                <button type="button" onClick={removeRow} disabled={cells.length <= 1} className={btnCtrl} aria-label="Eliminar fila">
-                  <Minus className="size-3.5" />
-                </button>
+                <Tooltip label="Eliminar fila" side="top">
+                  <button
+                    type="button"
+                    onClick={removeRow}
+                    disabled={rows.length <= 1}
+                    className={btnCtrl}
+                    aria-label="Eliminar fila"
+                  >
+                    <Minus className="size-3.5" />
+                  </button>
+                </Tooltip>
                 <span className="w-5 text-center text-xs font-black text-slate-700 dark:text-slate-200">
-                  {cells.length}
+                  {rows.length}
                 </span>
-                <button type="button" onClick={addRow} disabled={cells.length >= MAX_ROWS} className={btnCtrl} aria-label="Añadir fila">
-                  <Plus className="size-3.5" />
-                </button>
+                <Tooltip label="Añadir fila" side="top">
+                  <button
+                    type="button"
+                    onClick={addRow}
+                    disabled={rows.length >= MAX_ROWS}
+                    className={btnCtrl}
+                    aria-label="Añadir fila"
+                  >
+                    <Plus className="size-3.5" />
+                  </button>
+                </Tooltip>
               </div>
             </div>
 
-            {/* ── Table ── */}
-            <div className="max-h-[55dvh] overflow-auto px-4 pb-5">
+            {/* ── Symbol keyboard ── */}
+            <div className="flex flex-wrap gap-1 px-4 pb-2">
+              {SYMBOLS.map((sym) => (
+                <button
+                  key={sym}
+                  type="button"
+                  // Prevent blur of focused header input before reading selectionStart.
+                  onPointerDown={(e) => e.preventDefault()}
+                  onClick={() => insertSymbol(sym)}
+                  className="rounded-lg border-b-2 border-slate-300 bg-white px-2 py-1 text-xs font-black text-slate-700 shadow-sm transition active:translate-y-0.5 active:border-b-0 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                >
+                  {sym}
+                </button>
+              ))}
+            </div>
+
+            {/* ── Table with drag-to-reorder ── */}
+            <div className="scrollbar-slim max-h-[50dvh] overflow-auto px-4 pt-8 pb-5">
               <table className="mx-auto border-separate border-spacing-1">
                 <thead>
-                  <tr>
-                    {headers.map((h, i) => (
-                      <th key={i} className="px-0.5">
-                        <input
-                          type="text"
-                          value={h}
-                          onChange={(e) => updateHeader(i, e.target.value)}
-                          placeholder="—"
-                          maxLength={10}
-                          className="w-14 rounded-lg bg-slate-100 px-1 py-1.5 text-center text-sm font-black text-slate-700 outline-none focus:ring-2 focus:ring-blue-400 dark:bg-slate-800 dark:text-slate-200"
-                        />
-                      </th>
+                  <Reorder.Group
+                    as="tr"
+                    axis="x"
+                    values={cols}
+                    onReorder={setCols}
+                  >
+                    {/* Empty cell above row grips */}
+                    <th className="w-6" />
+                    {cols.map((col) => (
+                      <DraggableCol
+                        key={col.id}
+                        col={col}
+                        onUpdate={updateHeader}
+                        lastFocusedRef={lastFocusedRef}
+                      />
                     ))}
-                  </tr>
+                  </Reorder.Group>
                 </thead>
-                <tbody>
-                  {cells.map((row, ri) => (
-                    <tr key={ri}>
-                      {row.map((cell, ci) => (
-                        <td key={ci} className="px-0.5">
-                          <button
-                            type="button"
-                            onClick={() => cycleCell(ri, ci)}
-                            className={cn(
-                              "w-14 rounded-lg border-2 py-1.5 text-sm font-black transition",
-                              cell === null
-                                ? "border-dashed border-slate-300 bg-white text-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-500"
-                                : "border-cyan-400 bg-cyan-50 text-cyan-700 dark:bg-cyan-950/40 dark:text-cyan-300",
-                            )}
-                          >
-                            {vStr(cell)}
-                          </button>
-                        </td>
-                      ))}
-                    </tr>
+
+                <Reorder.Group
+                  as="tbody"
+                  axis="y"
+                  values={rows}
+                  onReorder={setRows}
+                >
+                  {rows.map((row) => (
+                    <DraggableRow
+                      key={row.id}
+                      row={row}
+                      cols={cols}
+                      onCycle={cycleCell}
+                    />
                   ))}
-                </tbody>
+                </Reorder.Group>
               </table>
               <p className="mt-2 text-center text-xs font-bold text-slate-400">
-                Toca cada celda · · · para alternar V / F
+                Arrastra encabezados o filas · toca celdas para alternar V / F
               </p>
             </div>
           </motion.div>

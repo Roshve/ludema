@@ -91,7 +91,7 @@ export function CheatSheet() {
             </div>
 
             {/* Content */}
-            <div className="max-h-[60dvh] overflow-y-auto px-4 pt-3 pb-5">
+            <div className="scrollbar-slim max-h-[60dvh] overflow-y-auto px-4 pt-3 pb-5">
               {tab === "laws" ? (
                 <ul className="flex flex-col gap-2.5">
                   {EQUIVALENCE_LAWS.map((law) => (
