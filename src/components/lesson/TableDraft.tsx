@@ -94,6 +94,9 @@ function DraggableCol({
             onPointerDown={(e) => e.stopPropagation()}
             placeholder="—"
             maxLength={60}
+            // size=1 anula el ancho intrínseco por defecto del input (~20ch),
+            // que inflaría el w-fit del modal; el span invisible dicta el ancho.
+            size={1}
             className="col-start-1 row-start-1 w-full cursor-text rounded-b-lg bg-slate-100 px-1 py-1.5 text-center text-sm font-black text-slate-700 outline-none dark:bg-slate-800 dark:text-slate-200"
           />
         </div>
@@ -326,7 +329,9 @@ export function TableDraft() {
             aria-label="Tabla borrador"
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              "pointer-events-auto w-full max-w-lg rounded-3xl border-2 border-slate-200 bg-white shadow-pop dark:border-slate-700 dark:bg-slate-900",
+              // En sm+ el modal crece con la tabla (w-fit) entre min-w-lg y el
+              // padding del wrapper; el overflow-auto interno queda de respaldo.
+              "pointer-events-auto w-full max-w-lg rounded-3xl border-2 border-slate-200 bg-white shadow-pop sm:w-fit sm:min-w-lg sm:max-w-full dark:border-slate-700 dark:bg-slate-900",
               open && "animate-pop-in",
             )}
           >
