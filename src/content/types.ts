@@ -9,6 +9,17 @@ export type ExerciseBase = {
   explanation?: string;
 };
 
+// "Tarjeta de concepto": teoría breve dentro de la lección, sin riesgo.
+// No se comprueba ni afecta corazones, precisión o XP; el pie muestra solo
+// «Continuar». El `prompt` hace de título de la tarjeta.
+export type ConceptExercise = ExerciseBase & {
+  type: "concept";
+  /** Párrafos del cuerpo de la tarjeta. */
+  body: string[];
+  /** Ejemplo o fórmula destacada opcional. */
+  example?: string;
+};
+
 // "Toca la Proposición": el usuario marca cuáles frases son proposiciones lógicas.
 export type TapPropositionExercise = ExerciseBase & {
   type: "tap-proposition";
@@ -89,6 +100,7 @@ export type DeductionStepsExercise = ExerciseBase & {
 };
 
 export type Exercise =
+  | ConceptExercise
   | TapPropositionExercise
   | MultipleChoiceExercise
   | BuildExpressionExercise

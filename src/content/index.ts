@@ -56,9 +56,10 @@ export function getLesson(id: string): Lesson | undefined {
 
 export const allLessonIds = LESSON_INDEX.map((c) => c.lesson.id);
 
-// XP otorgada al completar una lección sin fallar (10 por ejercicio).
+// XP otorgada al completar una lección (10 por ejercicio evaluable; las
+// tarjetas de concepto no cuentan).
 export function lessonXp(lesson: Lesson): number {
-  return lesson.exercises.length * 10;
+  return lesson.exercises.filter((e) => e.type !== "concept").length * 10;
 }
 
 // ── Secciones (para las mini-guías) ─────────────────────────────────────────

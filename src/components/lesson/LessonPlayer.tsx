@@ -28,7 +28,11 @@ export function LessonPlayer({
   /** Sesión de práctica: no marca lecciones completadas y da XP reducida. */
   practice?: boolean;
 }) {
-  const total = lesson.exercises.length;
+  // Las tarjetas de concepto no cuentan para la precisión ni la XP.
+  const gradedTotal = Math.max(
+    1,
+    lesson.exercises.filter((e) => e.type !== "concept").length,
+  );
   const hearts = useProgress((s) => s.hearts);
   const loseHeart = useProgress((s) => s.loseHeart);
   const completeLesson = useProgress((s) => s.completeLesson);
@@ -36,14 +40,19 @@ export function LessonPlayer({
   const recordExercise = useProgress((s) => s.recordExercise);
   const addPracticeXp = useProgress((s) => s.addPracticeXp);
 
+  // Cola de ejercicios: los fallados se re-añaden al final hasta acertarlos.
+  const [queue, setQueue] = useState(() => lesson.exercises);
   const [index, setIndex] = useState(0);
   const [pending, setPending] = useState<AnswerState>(null);
   const [checked, setChecked] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(false);
+  // Aciertos al primer intento (los recuperados en re-encolado no cuentan).
   const [correctCount, setCorrectCount] = useState(0);
   const [phase, setPhase] = useState<Phase>("playing");
+  const failedIdsRef = useRef(new Set<string>());
 
-  const exercise = lesson.exercises[index];
+  const exercise = queue[index];
+  const isConcept = exercise.type === "concept";
   const ctx = getLessonContext(lesson.id);
 
   // Ref para que onAnswer (memoizado) lea el valor actual de `checked`.
@@ -62,12 +71,17 @@ export function LessonPlayer({
     recordExercise(exercise.id, correct);
     if (correct) {
       sfxCorrect();
-      setCorrectCount((c) => c + 1);
+      if (!failedIdsRef.current.has(exercise.id)) {
+        setCorrectCount((c) => c + 1);
+      }
     } else {
       sfxWrong();
       loseHeart();
+      failedIdsRef.current.add(exercise.id);
+      // El ejercicio fallado vuelve al final de la cola hasta acertarlo.
+      setQueue((q) => [...q, exercise]);
     }
-  }, [pending, loseHeart, recordExercise, exercise.id]);
+  }, [pending, loseHeart, recordExercise, exercise]);
 
   function next() {
     // ¿Se quedó sin corazones?
@@ -75,7 +89,7 @@ export function LessonPlayer({
       setPhase("failed");
       return;
     }
-    if (index + 1 >= total) {
+    if (index + 1 >= queue.length) {
       if (practice) {
         addPracticeXp(correctCount * PRACTICE_XP_PER_CORRECT);
       } else {
@@ -90,6 +104,8 @@ export function LessonPlayer({
   }
 
   function restartSession() {
+    failedIdsRef.current.clear();
+    setQueue(lesson.exercises);
     setIndex(0);
     setPending(null);
     setChecked(false);
@@ -127,7 +143,7 @@ export function LessonPlayer({
     const xp = practice
       ? correctCount * PRACTICE_XP_PER_CORRECT
       : lessonXp(lesson);
-    const accuracy = Math.round((correctCount / total) * 100);
+    const accuracy = Math.round((correctCount / gradedTotal) * 100);
     return (
       <EndScreen
         icon={
@@ -163,7 +179,7 @@ export function LessonPlayer({
   }
 
   // ── Pantalla: jugando ──────────────────────────────────────────────────────
-  const progress = (index / total) * 100;
+  const progress = (index / queue.length) * 100;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -203,7 +219,8 @@ export function LessonPlayer({
       <main className="flex flex-1 flex-col overflow-x-clip py-4">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
-            key={exercise.id}
+            // index en la key: el mismo ejercicio re-encolado debe remontarse.
+            key={`${exercise.id}#${index}`}
             initial={{ x: 56, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -56, opacity: 0 }}
@@ -279,7 +296,12 @@ export function LessonPlayer({
           </motion.div>
         )}
 
-        {checked ? (
+        {isConcept ? (
+          // Las tarjetas de concepto no se comprueban: solo se continúa.
+          <Button className="w-full" onClick={next}>
+            Continuar
+          </Button>
+        ) : checked ? (
           <Button
             variant={lastCorrect ? "primary" : "danger"}
             className="w-full"

@@ -102,3 +102,40 @@ Lo que pedían Grassman (cap. 1) y los finales de Arriola: **construir** demostr
 - Formas normales (FND/FNC), circuitos lógicos y dualidad → unidad de Álgebra de Boole.
 - Diagramas de Venn interactivos para categóricos → requiere renderer gráfico.
 - Lógica del límite ε-δ (Arriola Ej. 15) → integración con Análisis.
+
+---
+
+# Iteración 3: Onboarding de principiante — enseñar antes de evaluar
+
+Diagnóstico (pedagogo + game designer): la app evaluaba antes de enseñar. La teoría vivía solo en la guía opcional y en explicaciones post-respuesta, el primer fallo costaba un corazón a los 30 segundos, las lecciones de 5 ítems daban ~1.7 exposiciones por concepto y los errores nunca se re-preguntaban en la sesión.
+
+## Mecánica 1 — Tarjetas de concepto (`concept`)
+
+Nuevo tipo de ítem **sin riesgo**: teoría breve dentro de la lección (título + párrafos + ejemplo destacado, estilo tarjeta ámbar con bombilla). No se comprueba: el pie muestra solo «Continuar» — sin corazones, sin precisión, sin XP.
+
+- `src/content/types.ts`: `ConceptExercise` (`body: string[]`, `example?`).
+- `src/components/lesson/exercises/ConceptCard.tsx` + case en `ExerciseView`.
+- `LessonPlayer`: rama `isConcept` en el pie; precisión y XP calculadas sobre `gradedTotal` (solo ejercicios evaluables); `lessonXp` y el pool de `/practice` excluyen tarjetas.
+
+## Mecánica 2 — Re-encolar errores
+
+La lección pasa de índice fijo a **cola**: al fallar, el ejercicio se re-añade al final y vuelve a aparecer hasta acertarlo (los corazones siguen limitando los intentos). La pantalla final reporta precisión **al primer intento**. Es el ciclo de Duolingo: el error se corrige en la misma sesión, no queda pendiente.
+
+## Contenido — toda la Unidad 1
+
+**33 tarjetas de concepto** intercaladas siguiendo el patrón *concepto → ejercicios que lo drillan* en las 27 lecciones, más **12 ejercicios nuevos** que cubren los huecos de principiante detectados:
+
+- **A** (la más reforzada, 25 → 44 ítems): qué es/no es proposición, simples-compuestas, **negación ≠ antónimo** («Juan no es alto» ≠ «Juan es bajo»), semántica intuitiva de ∧/∨ (la milanesa con papas), **alcance de la negación** (¬p ∨ q vs ¬(p ∨ q), con paréntesis en build-expression), ⇒/⇔, condicionales encubiertos, suficiente/necesaria. Se movió el ejercicio de condición necesaria de l2 a l5 (estaba antes de enseñarse).
+- **B**: método 2ⁿ y la fila tramposa del condicional, definiciones T-C-C, trucos contrarreloj (X ∨ ¬X), método de valores ocultos + 3 ejercicios nuevos (p ⇔ q, (p∧q)⇒p, ¬(p∧¬p)).
+- **C**: una tarjeta por grupo de leyes + estrategia de orden de simplificación + los tres asociados y la negación del condicional.
+- **D**: predicados/cuantificar, particularizar y elegir universo, negación de cuantificadores, el orden importa, escalera de fuerza.
+- **E**: qué es validez, las 4 reglas estrella, el contraejemplo, método del absurdo, traducción de categóricos (todos→⇒, algunos→∧), formato de demostración.
+- **F**: estrategia de parcial (diccionario primero, elegir método) y checklist de verificación.
+
+Total del currículo: **203 ítems** (33 tarjetas + 170 ejercicios evaluables).
+
+## Verificación (iteración 3)
+
+- Motor: p ⇔ q, (p ∧ q) ⇒ p y ¬(p ∧ ¬p) validados con `classify`/`truthColumn`.
+- `npm run build` (39 páginas) y lint sin regresiones (3 errores preexistentes).
+- Visual (playwright + Chrome): tarjeta con «Continuar» y sin «Comprobar»; lección u1-b-l2 jugada completa fallando e1 a propósito → el ejercicio **reaparece al final**, la lección completa al acertarlo y la precisión reporta 83% (5/6 al primer intento).

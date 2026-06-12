@@ -2,6 +2,7 @@
 
 import type { Exercise } from "@/content/types";
 import type { AnswerState } from "./types";
+import { ConceptCard } from "./exercises/ConceptCard";
 import { TapProposition } from "./exercises/TapProposition";
 import { MultipleChoice } from "./exercises/MultipleChoice";
 import { BuildExpression } from "./exercises/BuildExpression";
@@ -24,6 +25,8 @@ export function ExerciseView({
 }) {
   const common = { checked, onAnswer, requestCheck };
   switch (exercise.type) {
+    case "concept":
+      return <ConceptCard exercise={exercise} {...common} />;
     case "tap-proposition":
       return <TapProposition exercise={exercise} {...common} />;
     case "multiple-choice":

@@ -24,7 +24,9 @@ export function buildPracticeSession(
 ): Lesson | null {
   const pool: Exercise[] = [];
   for (const ctx of allLessons) {
-    if (completedLessons[ctx.lesson.id]) pool.push(...ctx.lesson.exercises);
+    if (!completedLessons[ctx.lesson.id]) continue;
+    // Las tarjetas de concepto no se repasan: solo ejercicios evaluables.
+    pool.push(...ctx.lesson.exercises.filter((e) => e.type !== "concept"));
   }
   if (pool.length === 0) return null;
 

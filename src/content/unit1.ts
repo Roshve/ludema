@@ -90,6 +90,40 @@ export const unit1: Unit = {
           subtitle: "Nivel 1 · Conceptos",
           exercises: [
             {
+              id: "u1-a-l1-c1",
+              type: "concept",
+              prompt: "¿Qué es una proposición?",
+              body: [
+                "Una proposición es un enunciado del que tiene sentido decir si es VERDADERO o FALSO.",
+                "«2 + 3 = 5» es una proposición (verdadera). «París está en Italia» también lo es: es falsa, pero AFIRMA algo.",
+              ],
+              example: "Proposición = se le puede asignar V o F",
+            },
+            {
+              id: "u1-a-l1-e6",
+              type: "multiple-choice",
+              prompt: "«El 7 es un número primo». ¿Es una proposición lógica?",
+              options: [
+                "Sí: afirma algo que es verdadero o falso",
+                "No: es una opinión",
+                "No: los números no son proposiciones",
+                "Solo si es verdadera",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Afirma algo comprobable (y de hecho es verdadera: 7 solo es divisible por 1 y por 7). Ser V o F no importa: basta con que se le pueda asignar un valor.",
+            },
+            {
+              id: "u1-a-l1-c2",
+              type: "concept",
+              prompt: "Lo que NO es una proposición",
+              body: [
+                "Las preguntas («¿qué hora es?»), las órdenes («¡cierra la puerta!») y los deseos no afirman nada: no se les puede asignar V o F.",
+                "Tampoco las expresiones con variable libre como «x + 1 = 4»: su verdad depende de cuánto valga x.",
+              ],
+              example: "¿…? · ¡…! · x + 1 = 4  →  no son proposiciones",
+            },
+            {
               id: "u1-a-l1-e1",
               type: "tap-proposition",
               prompt: "Toca todas las frases que sean proposiciones lógicas.",
@@ -116,6 +150,30 @@ export const unit1: Unit = {
               correctIndex: 0,
               explanation:
                 "Una orden no afirma algo verdadero o falso, así que «¡Estudia para el examen!» no es una proposición.",
+            },
+            {
+              id: "u1-a-l1-e7",
+              type: "multiple-choice",
+              prompt: "«x + 1 = 4». ¿Por qué NO es una proposición?",
+              options: [
+                "Tiene una variable libre: su verdad depende de cuánto valga x",
+                "Porque es falsa",
+                "Porque las ecuaciones nunca son proposiciones",
+                "Sí es una proposición",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Con x = 3 sería verdadera y con x = 5 falsa: sin fijar x no tiene UN valor de verdad. (Cuantificada, como «existe un x tal que…», sí sería proposición).",
+            },
+            {
+              id: "u1-a-l1-c3",
+              type: "concept",
+              prompt: "Simples y compuestas",
+              body: [
+                "Una proposición SIMPLE expresa una sola idea. Una COMPUESTA une varias simples mediante conectivos como «y», «o», «no», «si… entonces».",
+                "Detectar las ideas simples es el primer paso para simbolizar cualquier frase.",
+              ],
+              example: "«Llueve y hace frío» = «llueve» + «hace frío» unidas por «y»",
             },
             {
               id: "u1-a-l1-e3",
@@ -157,12 +215,76 @@ export const unit1: Unit = {
           subtitle: "Nivel 1 · Conectivos",
           exercises: [
             {
+              id: "u1-a-l2-c1",
+              type: "concept",
+              prompt: "La negación ¬",
+              body: [
+                "¬p se lee «no p» y cambia el valor de verdad: si p es V, ¬p es F (y al revés).",
+                "¡Ojo! Negar NO es decir lo contrario: la negación de «Juan es alto» es «Juan no es alto», no «Juan es bajo» (podría ser de estatura media).",
+              ],
+              example: "¬(es alto) = «no es alto»  ≠  «es bajo»",
+            },
+            {
+              id: "u1-a-l2-e6",
+              type: "multiple-choice",
+              prompt: "¿Cuál es la NEGACIÓN de «Juan es alto»?",
+              options: [
+                "Juan no es alto",
+                "Juan es bajo",
+                "Juan es de estatura media",
+                "Nadie es alto",
+              ],
+              correctIndex: 0,
+              explanation:
+                "La negación solo dice que el enunciado original es falso. «Juan es bajo» afirma algo más fuerte: Juan podría no ser alto ni bajo.",
+            },
+            {
+              id: "u1-a-l2-c2",
+              type: "concept",
+              prompt: "Conjunción ∧ y disyunción ∨",
+              body: [
+                "p ∧ q («p y q») solo es VERDADERA si ambas lo son: basta una falsa para hundirla.",
+                "p ∨ q («p o q») solo es FALSA si ambas lo son: basta una verdadera para salvarla. Y no es excluyente: si ambas son V, la disyunción es V.",
+              ],
+              example: "∧ exige las dos  ·  ∨ se conforma con una",
+            },
+            {
               id: "u1-a-l2-e1",
               type: "multiple-choice",
               prompt: "¿Qué símbolo representa la conjunción «y»?",
               options: ["∧", "∨", "¬", "⇒"],
               correctIndex: 0,
               explanation: "La conjunción «y» se simboliza con ∧.",
+            },
+            {
+              id: "u1-a-l2-e7",
+              type: "multiple-choice",
+              prompt:
+                "Pediste «milanesa con papas» (m ∧ p) y te trajeron solo la milanesa. ¿Se cumplió lo pedido?",
+              options: [
+                "No: la conjunción exige que se cumplan las DOS partes",
+                "Sí: con una parte alcanza",
+                "Sí: la milanesa es lo importante",
+                "Depende del restaurante",
+              ],
+              correctIndex: 0,
+              explanation:
+                "m ∧ p es verdadera solo si m y p son ambas verdaderas. Sin papas (p = F), la conjunción completa es falsa.",
+            },
+            {
+              id: "u1-a-l2-e8",
+              type: "multiple-choice",
+              prompt:
+                "«Llevo paraguas o me presto uno» (p ∨ q). ¿En qué único caso es FALSA?",
+              options: [
+                "Cuando no llevo paraguas Y tampoco me prestan uno",
+                "Cuando llevo paraguas",
+                "Cuando pasan las dos cosas a la vez",
+                "Nunca puede ser falsa",
+              ],
+              correctIndex: 0,
+              explanation:
+                "La disyunción solo falla si ambas partes fallan. Si pasan las dos a la vez, sigue siendo verdadera (el «o» lógico no es excluyente).",
             },
             {
               id: "u1-a-l2-e2",
@@ -174,12 +296,32 @@ export const unit1: Unit = {
               explanation: "«Pero» funciona como conjunción: p ∧ q.",
             },
             {
+              id: "u1-a-l2-c3",
+              type: "concept",
+              prompt: "El alcance de la negación",
+              body: [
+                "¬p ∨ q significa (¬p) ∨ q: el ¬ afecta SOLO a p. La negación es el conectivo más «pegajoso»: se aplica primero.",
+                "Para negar un bloque entero hacen falta paréntesis: ¬(p ∨ q) niega toda la disyunción.",
+              ],
+              example: "¬p ∨ q  ≠  ¬(p ∨ q)",
+            },
+            {
               id: "u1-a-l2-e3",
               type: "build-expression",
               prompt: "Traduce: «No llueve o hace frío».  (p: llueve, q: hace frío)",
               bank: ["p", "q", "¬", "∨", "∧", "⇒"],
               answer: ["¬", "p", "∨", "q"],
               explanation: "La negación afecta solo a p: ¬p ∨ q.",
+            },
+            {
+              id: "u1-a-l2-e9",
+              type: "multiple-choice",
+              prompt:
+                "¿Cuál expresa «NO es cierto que (llueva o truene)»?  (p: llueve, q: truena)",
+              options: ["¬(p ∨ q)", "¬p ∨ q", "p ∨ ¬q", "¬p ⇒ q"],
+              correctIndex: 0,
+              explanation:
+                "Se niega el bloque completo, así que los paréntesis son obligatorios. ¬p ∨ q solo negaría «llueve».",
             },
             {
               id: "u1-a-l2-e4",
@@ -189,16 +331,6 @@ export const unit1: Unit = {
               correctIndex: 0,
               explanation: "«Si p entonces q» es el condicional p ⇒ q.",
             },
-            {
-              id: "u1-a-l2-e5",
-              type: "multiple-choice",
-              prompt:
-                "«Es necesario que haya nubes para que llueva». ¿Cuál es el consecuente del condicional?",
-              options: ["Hay nubes", "Llueve", "No llueve", "No hay nubes"],
-              correctIndex: 0,
-              explanation:
-                "«A es necesario para B» se simboliza B ⇒ A. Aquí: llueve ⇒ hay nubes, así que el consecuente es «hay nubes».",
-            },
           ],
         },
         {
@@ -206,6 +338,16 @@ export const unit1: Unit = {
           title: "Traducir al símbolo",
           subtitle: "Nivel 1 · Reto",
           exercises: [
+            {
+              id: "u1-a-l3-c1",
+              type: "concept",
+              prompt: "Condicional ⇒ y bicondicional ⇔",
+              body: [
+                "«Si p entonces q» se escribe p ⇒ q: p es el ANTECEDENTE (la condición) y q el CONSECUENTE (lo que resulta).",
+                "«p si y solo si q» se escribe p ⇔ q: exige que ambas tengan el mismo valor de verdad.",
+              ],
+              example: "si… entonces… → ⇒   ·   si y solo si → ⇔",
+            },
             {
               id: "u1-a-l3-e1",
               type: "build-expression",
@@ -251,6 +393,26 @@ export const unit1: Unit = {
               explanation:
                 "«A es suficiente para B» se simboliza A ⇒ B. Estudiar basta para aprobar: p ⇒ q.",
             },
+            {
+              id: "u1-a-l3-e6",
+              type: "build-expression",
+              prompt:
+                "Traduce: «Aunque llueve, salimos».  (p: llueve, q: salimos)",
+              bank: ["p", "q", "∧", "∨", "¬", "⇒"],
+              answer: ["p", "∧", "q"],
+              explanation:
+                "«Aunque», igual que «pero» y «sin embargo», une dos hechos que ocurren a la vez: es una conjunción p ∧ q.",
+            },
+            {
+              id: "u1-a-l3-e7",
+              type: "build-expression",
+              prompt:
+                "Traduce: «No es cierto que llueva y truene».  (p: llueve, q: truena)",
+              bank: ["¬", "(", "p", "∧", "q", ")", "∨"],
+              answer: ["¬", "(", "p", "∧", "q", ")"],
+              explanation:
+                "Se niega el bloque completo: ¬(p ∧ q). Sin paréntesis, ¬p ∧ q diría «no llueve y truena», que es otra cosa.",
+            },
           ],
         },
         {
@@ -258,6 +420,16 @@ export const unit1: Unit = {
           title: "Guía · Proposiciones y condicionales",
           subtitle: "Nivel 1 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-a-l4-c1",
+              type: "concept",
+              prompt: "Condicionales encubiertos",
+              body: [
+                "Muchas frases son condicionales sin decir «si… entonces»: «Todo número par tiene cuadrado par» significa «SI un número es par, ENTONCES su cuadrado es par».",
+                "Reescribir la frase en forma Si/Entonces es el primer paso para simbolizarla bien.",
+              ],
+              example: "«Todo A es B»  →  Si es A, entonces es B",
+            },
             {
               id: "u1-a-l4-e1",
               type: "tap-proposition",
@@ -340,6 +512,21 @@ export const unit1: Unit = {
               explanation:
                 "La condición SUFICIENTE va en el antecedente: tener 3 correctos ⇒ aprobar.",
             },
+            {
+              id: "u1-a-l4-e6",
+              type: "multiple-choice",
+              prompt:
+                "«Los múltiplos de 6 son múltiplos de 3». ¿Cuál es su forma Si… entonces…?",
+              options: [
+                "Si un número es múltiplo de 6, entonces es múltiplo de 3.",
+                "Si un número es múltiplo de 3, entonces es múltiplo de 6.",
+                "Si un número no es múltiplo de 6, entonces no es múltiplo de 3.",
+                "No es un condicional.",
+              ],
+              correctIndex: 0,
+              explanation:
+                "«Todo A es B» se reescribe como A ⇒ B. Ser múltiplo de 6 garantiza ser múltiplo de 3 (6k = 3·2k), no al revés.",
+            },
           ],
         },
         {
@@ -347,6 +534,26 @@ export const unit1: Unit = {
           title: "El lenguaje del condicional",
           subtitle: "Nivel 1 · Si, sólo si, a menos que",
           exercises: [
+            {
+              id: "u1-a-l5-c1",
+              type: "concept",
+              prompt: "Suficiente vs. necesaria",
+              body: [
+                "La condición SUFICIENTE va en el antecedente: «basta p para q» se escribe p ⇒ q.",
+                "La condición NECESARIA va en el consecuente: «hace falta q para p» se escribe p ⇒ q. Sin q no puede darse p.",
+              ],
+              example: "suficiente ⇒ necesaria",
+            },
+            {
+              id: "u1-a-l5-e6",
+              type: "multiple-choice",
+              prompt:
+                "«Es necesario que haya nubes para que llueva». ¿Cuál es el consecuente del condicional?",
+              options: ["Hay nubes", "Llueve", "No llueve", "No hay nubes"],
+              correctIndex: 0,
+              explanation:
+                "«A es necesario para B» se simboliza B ⇒ A. Aquí: llueve ⇒ hay nubes, así que el consecuente es «hay nubes».",
+            },
             {
               id: "u1-a-l5-e1",
               type: "multiple-choice",
@@ -447,6 +654,16 @@ export const unit1: Unit = {
           subtitle: "Nivel 2 · Tablas",
           exercises: [
             {
+              id: "u1-b-l1-c1",
+              type: "concept",
+              prompt: "Cómo se arma una tabla",
+              body: [
+                "Con n variables hay 2ⁿ combinaciones de valores: 2 variables → 4 filas, 3 variables → 8 filas.",
+                "El truco para no saltarse ninguna: en la primera columna alterna bloques grandes (VVFF…), en la siguiente bloques más chicos (VFVF…).",
+              ],
+              example: "n variables → 2ⁿ filas",
+            },
+            {
               id: "u1-b-l1-e1",
               type: "truth-table",
               prompt: "Completa la columna final de la tabla de verdad.",
@@ -468,6 +685,16 @@ export const unit1: Unit = {
               explanation: "Solo es verdadera cuando p es falsa y q verdadera.",
             },
             {
+              id: "u1-b-l1-c2",
+              type: "concept",
+              prompt: "La fila tramposa del condicional",
+              body: [
+                "p ⇒ q solo es FALSO en una fila: antecedente V y consecuente F. En TODAS las demás es verdadero.",
+                "Sí: con antecedente falso el condicional es verdadero. «Si gano la lotería, te regalo un auto» no miente mientras no gane la lotería.",
+              ],
+              example: "p ⇒ q  solo falla en  V ⇒ F",
+            },
+            {
               id: "u1-b-l1-e4",
               type: "truth-table",
               prompt: "Completa la columna final.",
@@ -482,6 +709,14 @@ export const unit1: Unit = {
               formula: "¬(p ∧ q)",
               explanation: "Es falsa solo cuando p y q son ambas verdaderas (De Morgan).",
             },
+            {
+              id: "u1-b-l1-e6",
+              type: "truth-table",
+              prompt: "Completa la columna final.",
+              formula: "p ⇔ q",
+              explanation:
+                "El bicondicional es verdadero cuando p y q tienen el MISMO valor: ambas V o ambas F.",
+            },
           ],
         },
         {
@@ -489,6 +724,16 @@ export const unit1: Unit = {
           title: "Clasificación",
           subtitle: "Nivel 2 · Clasificar",
           exercises: [
+            {
+              id: "u1-b-l2-c1",
+              type: "concept",
+              prompt: "Tautología, contradicción, contingencia",
+              body: [
+                "TAUTOLOGÍA: la columna final es toda V (verdadera siempre, pase lo que pase). CONTRADICCIÓN: toda F. CONTINGENCIA: mezcla de V y F.",
+                "Para clasificar no siempre hace falta toda la tabla: si encuentras UNA fila V y UNA fila F, ya es contingencia.",
+              ],
+              example: "toda V → tautología · toda F → contradicción · mezcla → contingencia",
+            },
             {
               id: "u1-b-l2-e1",
               type: "classify",
@@ -524,6 +769,14 @@ export const unit1: Unit = {
               formula: "p ⇔ ¬p",
               explanation: "p nunca es igual a su negación: contradicción.",
             },
+            {
+              id: "u1-b-l2-e6",
+              type: "classify",
+              prompt: "Clasifica: (p ∧ q) ⇒ p",
+              formula: "(p ∧ q) ⇒ p",
+              explanation:
+                "Si se cumple la conjunción, en particular se cumple p: el condicional nunca falla. Tautología (es la regla de Simplificación).",
+            },
           ],
         },
         {
@@ -531,6 +784,16 @@ export const unit1: Unit = {
           title: "Reto rápido",
           subtitle: "Nivel 2 · ¡Contrarreloj!",
           exercises: [
+            {
+              id: "u1-b-l3-c1",
+              type: "concept",
+              prompt: "Trucos para clasificar rápido",
+              body: [
+                "Busca la ESTRUCTURA antes de calcular: X ∨ ¬X siempre es V (tautología) y X ∧ ¬X siempre es F (contradicción), sea X lo que sea.",
+                "Si no la ves, prueba una fila estratégica: ¿puedo hacerla falsa? ¿puedo hacerla verdadera? Con una de cada, es contingencia.",
+              ],
+              example: "X ∨ ¬X ≡ V   ·   X ∧ ¬X ≡ F",
+            },
             {
               id: "u1-b-l3-e1",
               type: "classify",
@@ -569,6 +832,15 @@ export const unit1: Unit = {
               formula: "(p ∨ q) ⇒ p",
               explanation: "Falla cuando p es F y q es V: contingencia.",
             },
+            {
+              id: "u1-b-l3-e6",
+              type: "classify",
+              prompt: "¡Último y rápido! Clasifica: ¬(p ∧ ¬p)",
+              formula: "¬(p ∧ ¬p)",
+              timeLimit: 15,
+              explanation:
+                "Es la negación de una contradicción: tautología (principio de no contradicción).",
+            },
           ],
         },
         {
@@ -576,6 +848,16 @@ export const unit1: Unit = {
           title: "Guía · Valores ocultos",
           subtitle: "Nivel 2 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-b-l4-c1",
+              type: "concept",
+              prompt: "El método de los valores ocultos",
+              body: [
+                "Empieza SIEMPRE por lo forzado: si una conjunción vale V, sus dos partes valen V. Si un condicional vale F, su antecedente es V y su consecuente F.",
+                "Propaga esos valores como un detective. Si una variable puede ser V o F sin romper nada, su valor NO se puede conocer.",
+              ],
+              example: "∧ = V → ambas V   ·   ⇒ = F → V ⇒ F",
+            },
             {
               id: "u1-b-l4-e1",
               type: "multiple-choice",
@@ -742,6 +1024,16 @@ export const unit1: Unit = {
           subtitle: "Nivel 3 · De Morgan e Involución",
           exercises: [
             {
+              id: "u1-c-l1-c1",
+              type: "concept",
+              prompt: "Leyes de De Morgan e Involución",
+              body: [
+                "De Morgan reparte una negación dentro del paréntesis CAMBIANDO el conectivo: ¬(p ∨ q) ≡ ¬p ∧ ¬q  y  ¬(p ∧ q) ≡ ¬p ∨ ¬q.",
+                "Involución (doble negación): negar dos veces es volver al original, ¬¬p ≡ p.",
+              ],
+              example: "¬(p ∨ q) ≡ ¬p ∧ ¬q   ·   ¬¬p ≡ p",
+            },
+            {
               id: "u1-c-l1-e1",
               type: "multiple-choice",
               prompt: "¿Cuál es la forma equivalente a  ¬(p ∨ q)  según las Leyes de De Morgan?",
@@ -805,6 +1097,16 @@ export const unit1: Unit = {
           title: "Condicional y Absorción",
           subtitle: "Nivel 3 · Conectivos y Absorción",
           exercises: [
+            {
+              id: "u1-c-l2-c1",
+              type: "concept",
+              prompt: "Definición de condicional y Absorción",
+              body: [
+                "El condicional se puede REESCRIBIR sin flecha: p ⇒ q ≡ ¬p ∨ q. Es el primer paso de casi toda simplificación.",
+                "Absorción: cuando una variable «contiene» a la otra, sobra. p ∧ (p ∨ q) ≡ p  y  p ∨ (p ∧ q) ≡ p.",
+              ],
+              example: "p ⇒ q ≡ ¬p ∨ q   ·   p ∨ (p ∧ q) ≡ p",
+            },
             {
               id: "u1-c-l2-e1",
               type: "multiple-choice",
@@ -885,6 +1187,16 @@ export const unit1: Unit = {
           title: "Distributividad y Neutros",
           subtitle: "Nivel 3 · Distribución y simplificación con V/F",
           exercises: [
+            {
+              id: "u1-c-l3-c1",
+              type: "concept",
+              prompt: "Distributiva, neutros y opuestos",
+              body: [
+                "La distributiva reparte como en álgebra: p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r), y también al revés (factor común).",
+                "Los opuestos generan constantes: p ∨ ¬p ≡ V y p ∧ ¬p ≡ F. Y las constantes se absorben: p ∧ V ≡ p, p ∨ F ≡ p, p ∨ V ≡ V, p ∧ F ≡ F.",
+              ],
+              example: "p ∨ ¬p ≡ V   ·   p ∧ V ≡ p",
+            },
             {
               id: "u1-c-l3-e1",
               type: "simplify-steps",
@@ -975,6 +1287,16 @@ export const unit1: Unit = {
           title: "Guía · Simplificación con leyes",
           subtitle: "Nivel 3 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-c-l4-c1",
+              type: "concept",
+              prompt: "Estrategia de simplificación",
+              body: [
+                "Orden recomendado: 1° eliminar bicondicionales, 2° eliminar condicionales (¬p ∨ q), 3° meter negaciones con De Morgan e involución, 4° rematar con distributiva o absorción.",
+                "Si te atascas, busca opuestos (X ∧ ¬X, X ∨ ¬X): generan V o F y simplifican en cascada. El botón 📖 tiene todas las leyes.",
+              ],
+              example: "⇔ → ⇒ → De Morgan → distributiva/absorción",
+            },
             {
               id: "u1-c-l4-e1",
               type: "simplify-steps",
@@ -1115,6 +1437,16 @@ export const unit1: Unit = {
           subtitle: "Nivel 3 · Recíproco, contrario y contrarrecíproco",
           exercises: [
             {
+              id: "u1-c-l5-c1",
+              type: "concept",
+              prompt: "Los tres condicionales asociados",
+              body: [
+                "A p ⇒ q se le asocian: el RECÍPROCO q ⇒ p (se intercambia), el CONTRARIO ¬p ⇒ ¬q (se niega) y el CONTRARRECÍPROCO ¬q ⇒ ¬p (se hace ambas cosas).",
+                "Solo el contrarrecíproco es equivalente al original. El recíproco y el contrario son equivalentes entre sí.",
+              ],
+              example: "p ⇒ q  ≡  ¬q ⇒ ¬p",
+            },
+            {
               id: "u1-c-l5-e1",
               type: "multiple-choice",
               prompt:
@@ -1159,6 +1491,16 @@ export const unit1: Unit = {
               formula: "(p ⇒ q) ⇔ (¬p ⇒ ¬q)",
               explanation:
                 "Directo y CONTRARIO no son equivalentes: con p = F y q = V el directo es V pero el contrario es F. Es una contingencia.",
+            },
+            {
+              id: "u1-c-l5-c2",
+              type: "concept",
+              prompt: "Cómo se niega un condicional",
+              body: [
+                "Negar una implicación NUNCA da otra implicación: ¬(p ⇒ q) ≡ p ∧ ¬q. Es el único caso que la rompe: antecedente cumplido y consecuente fallado.",
+                "Se deduce con las leyes que ya conoces: ¬(p ⇒ q) ≡ ¬(¬p ∨ q) ≡ p ∧ ¬q (definición de condicional + De Morgan + involución).",
+              ],
+              example: "¬(p ⇒ q) ≡ p ∧ ¬q",
             },
             {
               id: "u1-c-l5-e5",
@@ -1282,6 +1624,16 @@ export const unit1: Unit = {
           subtitle: "Nivel 4",
           exercises: [
             {
+              id: "u1-d-l1-c1",
+              type: "concept",
+              prompt: "Predicados y cuantificadores",
+              body: [
+                "Un predicado p(x) es una propiedad que depende de una variable: «x es par». No es proposición hasta fijar x… o CUANTIFICARLA.",
+                "∀x: p(x) («para todo x») exige que TODOS los del dominio cumplan. ∃x: p(x) («existe x») se conforma con UNO. El dominio importa: ∀x∈ℝ: x² ≥ 0 es V, pero en otros dominios las cosas cambian.",
+              ],
+              example: "∀ = todos, sin excepción   ·   ∃ = al menos uno",
+            },
+            {
               id: "u1-d-l1-e1",
               type: "multiple-choice",
               prompt: "¿Es verdadero o falso?   ∀x ∈ ℝ:  x² ≥ 0",
@@ -1329,6 +1681,16 @@ export const unit1: Unit = {
           title: "Guía · Predicados",
           subtitle: "Nivel 4 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-d-l2-c1",
+              type: "concept",
+              prompt: "Particularizar y elegir el universo",
+              body: [
+                "Particularizar es sustituir la variable por un valor concreto: si p(x) es «x es primo», entonces p(13) es V y p(8) es F.",
+                "Para que ∀x: p(x) sea V en un dominio U, TODOS sus elementos deben cumplir p. Para que ∃x: p(x) sea F, NINGUNO debe cumplirla. Elegir bien el universo decide el valor de verdad.",
+              ],
+              example: "p(x): «x es primo»  →  p(13) = V, p(8) = F",
+            },
             {
               id: "u1-d-l2-e1",
               type: "tap-proposition",
@@ -1441,6 +1803,16 @@ export const unit1: Unit = {
           subtitle: "Nivel 4 · Guía de ejercicios",
           exercises: [
             {
+              id: "u1-d-l3-c1",
+              type: "concept",
+              prompt: "Negar cuantificadores",
+              body: [
+                "La negación INTERCAMBIA el cuantificador y niega lo de adentro: ¬(∀x: p(x)) ≡ ∃x: ¬p(x)  y  ¬(∃x: p(x)) ≡ ∀x: ¬p(x).",
+                "Por eso UN solo contraejemplo basta para refutar un «para todo»: encontrarlo demuestra ∃x: ¬p(x).",
+              ],
+              example: "¬∀ ≡ ∃¬   ·   ¬∃ ≡ ∀¬",
+            },
+            {
               id: "u1-d-l3-e1",
               type: "multiple-choice",
               prompt: "¿Verdadero o falso?   ∃x ∈ ℤ :  3x + 11 = 20",
@@ -1528,6 +1900,16 @@ export const unit1: Unit = {
           title: "Guía · Dobles cuantificadores",
           subtitle: "Nivel 4 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-d-l4-c1",
+              type: "concept",
+              prompt: "El orden de los cuantificadores importa",
+              body: [
+                "∀x ∃y: «para cada x hay un y» — el y puede CAMBIAR con cada x. ∃y ∀x: «hay UN y fijo que sirve para todos» — mucho más exigente.",
+                "Con p(x,y): x + y = 8 en ℤ: ∀x∃y es V (sirve y = 8 − x), pero ∃y∀x es F (ningún y fijo suma 8 con todos).",
+              ],
+              example: "∀x ∃y  ≠  ∃y ∀x",
+            },
             {
               id: "u1-d-l4-e1",
               type: "multiple-choice",
@@ -1633,6 +2015,16 @@ export const unit1: Unit = {
           title: "Álgebra de cuantificadores",
           subtitle: "Nivel 4 · Qué se hereda y qué no",
           exercises: [
+            {
+              id: "u1-d-l5-c1",
+              type: "concept",
+              prompt: "La escalera de fuerza",
+              body: [
+                "En dominios no vacíos: ∃y∀x ⇒ ∀x∃y ⇒ ∃x∃y. Lo fuerte implica lo débil; subir la escalera al revés NO vale.",
+                "Distribución: ∃ reparte sobre ∨ y ∀ reparte sobre ∧. Las otras dos combinaciones (∃ con ∧, ∀ con ∨) solo valen en UNA dirección.",
+              ],
+              example: "∃∀ ⇒ ∀∃ ⇒ ∃∃",
+            },
             {
               id: "u1-d-l5-e1",
               type: "multiple-choice",
@@ -1799,6 +2191,26 @@ export const unit1: Unit = {
           subtitle: "Nivel 5 · Reglas elementales",
           exercises: [
             {
+              id: "u1-e-l1-c1",
+              type: "concept",
+              prompt: "¿Qué es un razonamiento válido?",
+              body: [
+                "Un razonamiento tiene PREMISAS y una CONCLUSIÓN. Es VÁLIDO si siempre que las premisas son verdaderas, la conclusión está obligada a serlo.",
+                "Válido no significa verdadero: importa la FORMA, no el contenido. Un razonamiento válido con premisas falsas puede concluir cualquier cosa.",
+              ],
+              example: "premisas V  ⟹  conclusión V (obligatoriamente)",
+            },
+            {
+              id: "u1-e-l1-c2",
+              type: "concept",
+              prompt: "Las cuatro reglas estrella",
+              body: [
+                "Modus Ponens: de p ⇒ q y p, sale q. Modus Tollens: de p ⇒ q y ¬q, sale ¬p.",
+                "Silogismo Hipotético: encadena p ⇒ q y q ⇒ r en p ⇒ r. Silogismo Disyuntivo: de p ∨ q y ¬p, sale q. Todas están siempre en el botón 📖.",
+              ],
+              example: "MP · MT · SH · SD",
+            },
+            {
               id: "u1-e-l1-e1",
               type: "multiple-choice",
               prompt: "Identifica qué regla de inferencia se aplica en:\n«Si llueve, voy al cine. Llueve. Por lo tanto, voy al cine.»\n(p ⇒ q ,  p   ∴  q)",
@@ -1870,6 +2282,16 @@ export const unit1: Unit = {
           title: "Contraejemplos básicos",
           subtitle: "Nivel 5 · Razonamientos inválidos",
           exercises: [
+            {
+              id: "u1-e-l2-c1",
+              type: "concept",
+              prompt: "El contraejemplo",
+              body: [
+                "Para probar que un razonamiento es INVÁLIDO basta UNA asignación de valores que haga verdaderas todas las premisas y FALSA la conclusión.",
+                "Estrategia: fuerza primero la conclusión a F y luego intenta salvar las premisas en V. Si lo logras, ahí está el contraejemplo.",
+              ],
+              example: "premisas V + conclusión F  =  inválido",
+            },
             {
               id: "u1-e-l2-e1",
               type: "counterexample",
@@ -1947,6 +2369,16 @@ export const unit1: Unit = {
           title: "Validez de razonamientos",
           subtitle: "Nivel 5 · Guía de ejercicios",
           exercises: [
+            {
+              id: "u1-e-l3-c1",
+              type: "concept",
+              prompt: "El método del absurdo",
+              body: [
+                "Supón premisas V y conclusión F, y propaga los valores forzados. Si TODO camino muere en contradicción, no existe contraejemplo: el razonamiento es VÁLIDO.",
+                "Si en cambio encuentras una asignación coherente, esa asignación ES el contraejemplo. Mucho más corto que una tabla de 2ⁿ filas.",
+              ],
+              example: "contradicción → válido   ·   asignación coherente → inválido",
+            },
             {
               id: "u1-e-l3-e1",
               type: "multiple-choice",
@@ -2068,6 +2500,16 @@ export const unit1: Unit = {
           title: "Razonamientos categóricos",
           subtitle: "Nivel 5 · Predicados",
           exercises: [
+            {
+              id: "u1-e-l4-c1",
+              type: "concept",
+              prompt: "Razonamientos con cuantificadores",
+              body: [
+                "«Todos los A son B» se traduce ∀x: [a(x) ⇒ b(x)] (inclusión de conjuntos). «Algunos A son B» se traduce ∃x: [a(x) ∧ b(x)] (hay un testigo en la intersección).",
+                "¡Cuidado con el error clásico!: «algunos» va con ∧, nunca con ⇒. Y con hasta 4 clases puedes dibujar un diagrama de Venn para verlo.",
+              ],
+              example: "todos → ∀ con ⇒   ·   algunos → ∃ con ∧",
+            },
             {
               id: "u1-e-l4-e1",
               type: "build-expression",
@@ -2200,6 +2642,16 @@ export const unit1: Unit = {
             title: "Deducción formal",
             subtitle: "Nivel 5 · Demostrar paso a paso",
             exercises: [
+              {
+                id: "u1-e-l5-c1",
+                type: "concept",
+                prompt: "El formato de una demostración",
+                body: [
+                  "Una demostración formal es una lista numerada: primero las premisas y luego líneas nuevas, cada una justificada por una REGLA aplicada a líneas anteriores («de 1 y 2, MP»).",
+                  "Con cuantificadores, el orden manda: particulariza PRIMERO el existencial (te da el testigo a) y recién después especializa los universales en ese mismo a.",
+                ],
+                example: "línea · fórmula · regla · de dónde sale",
+              },
               {
                 id: "u1-e-l5-e1",
                 type: "deduction-steps",
@@ -2464,6 +2916,16 @@ export const unit1: Unit = {
             subtitle: "Nivel Examen · Parte 1",
             exercises: [
               {
+                id: "u1-f-l1-c1",
+                type: "concept",
+                prompt: "Estrategia de parcial",
+                body: [
+                  "Lee el enunciado DOS veces y arma el diccionario antes de simbolizar (p: …, q: …). La mitad de los errores de parcial son de traducción, no de lógica.",
+                  "Administra el método: tabla solo con pocas variables; absurdo cuando la conclusión es simple; deducción cuando ves el camino. Las leyes están en el botón 📖.",
+                ],
+                example: "1° diccionario · 2° simbolizar · 3° elegir método",
+              },
+              {
                 id: "u1-f-l1-e1",
                 type: "simplify-steps",
                 prompt: "Simplifica el ejercicio de parcial (Tema 12):\n¬(p ∧ ¬q) ⇒ (¬q ∨ r)",
@@ -2551,6 +3013,16 @@ export const unit1: Unit = {
             title: "Simulacro de Parcial II",
             subtitle: "Nivel Examen · Parte 2",
             exercises: [
+              {
+                id: "u1-f-l2-c1",
+                type: "concept",
+                prompt: "Antes de responder, verifica",
+                body: [
+                  "En cuantificadores, pregúntate SIEMPRE: ¿el orden importa aquí? ¿esta distribución es de las válidas (∃ con ∨, ∀ con ∧)?",
+                  "En razonamientos: si crees que es válido, nombra la regla de cada paso; si crees que es inválido, tu contraejemplo debe hacer V TODAS las premisas, no solo algunas.",
+                ],
+                example: "válido → reglas nombradas · inválido → contraejemplo completo",
+              },
               {
                 id: "u1-f-l2-e1",
                 type: "multiple-choice",
