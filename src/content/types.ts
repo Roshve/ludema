@@ -70,6 +70,24 @@ export type CounterexampleExercise = ExerciseBase & {
   variables: string[];
 };
 
+// "Deducción formal": derivación línea a línea. Las premisas van numeradas
+// (1..n) y cada paso muestra la línea derivada; el usuario elige la regla de
+// inferencia que la justifica.
+export type DeductionStepsExercise = ExerciseBase & {
+  type: "deduction-steps";
+  /** Premisas numeradas mostradas como punto de partida. */
+  premises: string[];
+  steps: {
+    /** Nombres de reglas entre las que elegir. */
+    options: string[];
+    correctIndex: number;
+    /** Línea derivada al aplicar la regla correcta. */
+    result: string;
+    /** Líneas de las que se obtiene, p. ej. "de 1 y 2". */
+    from?: string;
+  }[];
+};
+
 export type Exercise =
   | TapPropositionExercise
   | MultipleChoiceExercise
@@ -77,7 +95,8 @@ export type Exercise =
   | TruthTableExercise
   | ClassifyExercise
   | SimplifyStepsExercise
-  | CounterexampleExercise;
+  | CounterexampleExercise
+  | DeductionStepsExercise;
 
 export type ExerciseType = Exercise["type"];
 

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, BookOpen } from "lucide-react";
+import { Lock, BookOpen, Dumbbell } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import { curriculum, allLessons } from "@/content";
 import { useProgress } from "@/stores/progress";
+import { useHydrated } from "@/hooks/useHydrated";
 import { ACCENT } from "@/lib/accent";
 import { cn } from "@/lib/utils";
 import { Hud } from "@/components/hud/Hud";
@@ -17,7 +18,9 @@ function offsetFor(i: number): number {
 }
 
 export function LearningMap() {
+  const hydrated = useHydrated();
   const completed = useProgress((s) => s.completedLessons);
+  const missedCount = useProgress((s) => s.missedExercises.length);
 
   // Conjunto de lecciones desbloqueadas (la primera, o aquellas cuya anterior está completa).
   const unlocked = new Set<string>();
@@ -145,6 +148,22 @@ export function LearningMap() {
           </p>
         </div>
       </section>
+
+      {/* Práctica: repaso de lecciones completadas, priorizando errores. */}
+      {hydrated && Object.keys(completed).length > 0 && (
+        <Link
+          href="/practice"
+          aria-label="Práctica: repasa lo aprendido"
+          className="fixed bottom-6 right-6 z-30 rounded-full border-b-4 border-emerald-700 bg-emerald-500 p-4 text-white shadow-pop transition active:translate-y-0.5 active:border-b-2"
+        >
+          <Dumbbell className="size-6" />
+          {missedCount > 0 && (
+            <span className="absolute -right-1 -top-1 grid min-w-6 place-items-center rounded-full bg-rose-500 px-1.5 py-0.5 text-xs font-black">
+              {missedCount}
+            </span>
+          )}
+        </Link>
+      )}
     </div>
     </MotionConfig>
   );

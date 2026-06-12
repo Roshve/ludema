@@ -52,7 +52,31 @@ export const unit1: Unit = {
               {
                 term: "Disyunción excluyente",
                 symbol: "⊻",
-                text: "Verdadera si solo uno de los dos se cumple, pero no ambos.",
+                text: "Verdadera si solo uno de los dos se cumple, pero no ambos. Se expresa con los conectivos básicos: (p ∨ q) ∧ ¬(p ∧ q).",
+              },
+            ],
+          },
+          {
+            emoji: "🗣️",
+            title: "El lenguaje del condicional",
+            intro:
+              "El español esconde condicionales bajo varias formas. La clave es siempre identificar quién es el antecedente.",
+            entries: [
+              {
+                term: "q si p",
+                text: "Lo que sigue al «si» SIEMPRE es el antecedente, aunque aparezca al final: «Iré al cine si termino la tarea» significa termino ⇒ voy.",
+              },
+              {
+                term: "p sólo si q",
+                text: "«Sólo si» introduce la condición necesaria (el consecuente): «Apruebo sólo si estudio» significa apruebo ⇒ estudio.",
+              },
+              {
+                term: "Suficiente / necesaria",
+                text: "La condición SUFICIENTE va en el antecedente; la NECESARIA, en el consecuente.",
+              },
+              {
+                term: "A menos que",
+                text: "«p a menos que q» equivale a ¬q ⇒ p, que se reduce a p ∨ q: «Voy a la playa a menos que llueva» es voy ∨ llueve.",
               },
             ],
           },
@@ -315,6 +339,73 @@ export const unit1: Unit = {
               correctIndex: 1,
               explanation:
                 "La condición SUFICIENTE va en el antecedente: tener 3 correctos ⇒ aprobar.",
+            },
+          ],
+        },
+        {
+          id: "u1-a-l5",
+          title: "El lenguaje del condicional",
+          subtitle: "Nivel 1 · Si, sólo si, a menos que",
+          exercises: [
+            {
+              id: "u1-a-l5-e1",
+              type: "multiple-choice",
+              prompt:
+                "«Te llevaré al partido si apruebas Matemática Discreta».\n(a: apruebas · t: te llevo al partido). ¿Cuál es su forma simbólica?",
+              options: ["a ⇒ t", "t ⇒ a", "a ⇔ t", "t ∨ a"],
+              correctIndex: 0,
+              explanation:
+                "Lo que sigue al «si» es el antecedente aunque esté al final de la frase: «t si a» significa a ⇒ t. La promesa solo se rompe si apruebas y no te llevan.",
+            },
+            {
+              id: "u1-a-l5-e2",
+              type: "multiple-choice",
+              prompt:
+                "«Los autos paran sólo si el semáforo está en rojo».\n(p: los autos paran · r: el semáforo está en rojo). ¿Forma simbólica?",
+              options: ["p ⇒ r", "r ⇒ p", "p ⇔ r", "r ∧ p"],
+              correctIndex: 0,
+              explanation:
+                "«Sólo si» introduce la condición NECESARIA (el consecuente): si pararon, el semáforo estaba en rojo. No promete que en rojo siempre paren.",
+            },
+            {
+              id: "u1-a-l5-e3",
+              type: "multiple-choice",
+              prompt:
+                "«Aprobarás si estudias» y «Aprobarás sólo si estudias». ¿Significan lo mismo?",
+              options: [
+                "No: la primera es estudias ⇒ apruebas y la segunda apruebas ⇒ estudias",
+                "Sí: ambas son estudias ⇒ apruebas",
+                "Sí: ambas son apruebas ⇒ estudias",
+                "No: la segunda es un bicondicional",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Son los condicionales recíprocos. «Si» apunta al antecedente; «sólo si» apunta al consecuente. Decir ambas a la vez sí daría el bicondicional.",
+            },
+            {
+              id: "u1-a-l5-e4",
+              type: "build-expression",
+              prompt:
+                "Traduce: «Iré a la playa a menos que llueva».\n(p: voy a la playa · q: llueve)",
+              bank: ["p", "∨", "q", "⇒", "¬", "∧"],
+              answer: ["p", "∨", "q"],
+              explanation:
+                "«A menos que» equivale a «si no…»: ¬q ⇒ p. Aplicando la definición de condicional queda ¬¬q ∨ p, es decir, p ∨ q.",
+            },
+            {
+              id: "u1-a-l5-e5",
+              type: "multiple-choice",
+              prompt:
+                "«En el menú puedes elegir sopa o ensalada, pero no ambas» (o exclusivo s ⊻ e). ¿Cómo se expresa con los conectivos básicos?",
+              options: [
+                "(s ∨ e) ∧ ¬(s ∧ e)",
+                "(s ∧ e) ∨ ¬(s ∨ e)",
+                "s ∨ e",
+                "¬s ∨ ¬e",
+              ],
+              correctIndex: 0,
+              explanation:
+                "El o exclusivo exige al menos uno (s ∨ e) y prohíbe los dos a la vez (¬(s ∧ e)). La segunda opción es justamente su negación (el bicondicional).",
             },
           ],
         },
@@ -620,6 +711,24 @@ export const unit1: Unit = {
               {
                 term: "Identidad (Neutro)",
                 text: "Neutros de conjunción y disyunción: p ∧ V ≡ p  y  p ∨ F ≡ p.",
+              },
+            ],
+          },
+          {
+            emoji: "🔁",
+            title: "Condicionales asociados y negación",
+            intro:
+              "A cada condicional p ⇒ q se le asocian otros tres. Solo uno es equivalente al original.",
+            entries: [
+              { term: "Recíproco", text: "q ⇒ p. NO es equivalente al directo." },
+              { term: "Contrario", text: "¬p ⇒ ¬q. Tampoco es equivalente al directo." },
+              {
+                term: "Contrarrecíproco",
+                text: "¬q ⇒ ¬p. El ÚNICO equivalente al directo: p ⇒ q ≡ ¬q ⇒ ¬p. A su vez, recíproco ≡ contrario entre sí.",
+              },
+              {
+                term: "Negación del condicional",
+                text: "¬(p ⇒ q) ≡ p ∧ ¬q. Negar una implicación NO da otra implicación: afirma el antecedente y niega el consecuente.",
               },
             ],
           },
@@ -1000,6 +1109,98 @@ export const unit1: Unit = {
             },
           ],
         },
+        {
+          id: "u1-c-l5",
+          title: "Condicionales asociados y negación",
+          subtitle: "Nivel 3 · Recíproco, contrario y contrarrecíproco",
+          exercises: [
+            {
+              id: "u1-c-l5-e1",
+              type: "multiple-choice",
+              prompt:
+                "Dado «Si un número es múltiplo de 4, entonces es par», ¿cuál es su CONTRARRECÍPROCO?",
+              options: [
+                "Si un número no es par, entonces no es múltiplo de 4.",
+                "Si un número es par, entonces es múltiplo de 4.",
+                "Si un número no es múltiplo de 4, entonces no es par.",
+                "Un número es múltiplo de 4 y no es par.",
+              ],
+              correctIndex: 0,
+              explanation:
+                "El contrarrecíproco de p ⇒ q es ¬q ⇒ ¬p: se intercambian Y se niegan. Las otras opciones son el recíproco, el contrario y la negación.",
+            },
+            {
+              id: "u1-c-l5-e2",
+              type: "multiple-choice",
+              prompt:
+                "¿Cuál de los condicionales asociados es EQUIVALENTE al directo p ⇒ q?",
+              options: [
+                "El contrarrecíproco: ¬q ⇒ ¬p",
+                "El recíproco: q ⇒ p",
+                "El contrario: ¬p ⇒ ¬q",
+                "Los tres son equivalentes",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Solo el contrarrecíproco tiene la misma tabla de verdad que el directo. El recíproco y el contrario son equivalentes ENTRE SÍ, pero no con el original.",
+            },
+            {
+              id: "u1-c-l5-e3",
+              type: "classify",
+              prompt: "Clasifica:  (p ⇒ q) ⇔ (¬q ⇒ ¬p)",
+              formula: "(p ⇒ q) ⇔ (¬q ⇒ ¬p)",
+              explanation:
+                "Directo y contrarrecíproco siempre coinciden: el bicondicional entre ambos es una tautología.",
+            },
+            {
+              id: "u1-c-l5-e4",
+              type: "classify",
+              prompt: "Clasifica:  (p ⇒ q) ⇔ (¬p ⇒ ¬q)",
+              formula: "(p ⇒ q) ⇔ (¬p ⇒ ¬q)",
+              explanation:
+                "Directo y CONTRARIO no son equivalentes: con p = F y q = V el directo es V pero el contrario es F. Es una contingencia.",
+            },
+            {
+              id: "u1-c-l5-e5",
+              type: "build-expression",
+              prompt: "Construye la NEGACIÓN de  p ⇒ q  sin usar ⇒.",
+              bank: ["p", "∧", "¬", "q", "⇒", "∨"],
+              answer: ["p", "∧", "¬", "q"],
+              explanation:
+                "¬(p ⇒ q) ≡ ¬(¬p ∨ q) ≡ p ∧ ¬q: el condicional solo falla cuando el antecedente se cumple y el consecuente no.",
+            },
+            {
+              id: "u1-c-l5-e6",
+              type: "multiple-choice",
+              prompt:
+                "La negación de «Si llueve, llevo paraguas» es…",
+              options: [
+                "Llueve y no llevo paraguas.",
+                "Si llueve, no llevo paraguas.",
+                "Si no llueve, no llevo paraguas.",
+                "No llueve o no llevo paraguas.",
+              ],
+              correctIndex: 0,
+              explanation:
+                "¬(p ⇒ q) ≡ p ∧ ¬q. La negación de una implicación nunca es otra implicación: es el caso concreto que la rompe.",
+            },
+            {
+              id: "u1-c-l5-e7",
+              type: "multiple-choice",
+              prompt:
+                "De la guía: la negación de  ∃x∈ℤ: (x < 3 ⇒ x + 1 < 0)  es…",
+              options: [
+                "∀x∈ℤ: (x < 3 ∧ x + 1 ≥ 0)",
+                "∀x∈ℤ: (x < 3 ⇒ x + 1 ≥ 0)",
+                "∃x∈ℤ: (x ≥ 3 ⇒ x + 1 ≥ 0)",
+                "∀x∈ℤ: (x ≥ 3 ∨ x + 1 < 0)",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Se cambia ∃ por ∀ y se niega el condicional de adentro: ¬(A ⇒ B) ≡ A ∧ ¬B, con ¬(x + 1 < 0) ≡ x + 1 ≥ 0.",
+            },
+          ],
+        },
       ],
     },
     // ── Sección D · Predicados y Cuantificadores ─────────────────────────────
@@ -1064,6 +1265,10 @@ export const unit1: Unit = {
               {
                 term: "Distribución",
                 text: "∃ distribuye en ∨ y ∀ distribuye en ∧. Las otras dos combinaciones NO son equivalencias.",
+              },
+              {
+                term: "Escalera de fuerza",
+                text: "∃y∀x ⇒ ∀x∃y ⇒ ∃x∃y (en dominios no vacíos). Lo fuerte implica lo débil, nunca al revés.",
               },
             ],
           },
@@ -1423,6 +1628,88 @@ export const unit1: Unit = {
             },
           ],
         },
+        {
+          id: "u1-d-l5",
+          title: "Álgebra de cuantificadores",
+          subtitle: "Nivel 4 · Qué se hereda y qué no",
+          exercises: [
+            {
+              id: "u1-d-l5-e1",
+              type: "multiple-choice",
+              prompt:
+                "Sabiendo que  ∀x: ∃y: p(x, y)  es VERDADERA, ¿se puede asegurar el valor de  ∃x: ∃y: p(x, y)?",
+              options: [
+                "Sí: es verdadera, basta tomar cualquier x con su y",
+                "Sí: es falsa",
+                "No: queda indeterminada",
+                "Solo si el dominio es finito",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Lo universal implica lo existencial (en dominios no vacíos): si para TODO x hay un y, en particular para alguno lo hay. ∀x∃y ⇒ ∃x∃y.",
+            },
+            {
+              id: "u1-d-l5-e2",
+              type: "multiple-choice",
+              prompt:
+                "Con la misma hipótesis (∀x: ∃y: p(x, y) verdadera), ¿se puede asegurar  ∀x: ∀y: p(x, y)?",
+              options: [
+                "No: queda indeterminada",
+                "Sí: es verdadera",
+                "Sí: es falsa",
+                "Es equivalente a la hipótesis",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Que cada x tenga ALGÚN y no obliga a que sirvan TODOS los y. Con p(x,y): x + y = 8 en ℤ la hipótesis es V y ∀∀ es F; con p(x,y): «y = y» ambas son V.",
+            },
+            {
+              id: "u1-d-l5-e3",
+              type: "multiple-choice",
+              prompt:
+                "Con la misma hipótesis (∀x: ∃y: p(x, y) verdadera), ¿qué vale  ∃x: ∀y: ¬p(x, y)?",
+              options: [
+                "Es FALSA con seguridad: contradiría la hipótesis para ese x",
+                "Es VERDADERA con seguridad",
+                "Queda indeterminada",
+                "Es equivalente a la hipótesis",
+              ],
+              correctIndex: 0,
+              explanation:
+                "∃x∀y:¬p(x,y) es exactamente la NEGACIÓN de ∀x∃y:p(x,y). Si la hipótesis es V, su negación es F.",
+            },
+            {
+              id: "u1-d-l5-e4",
+              type: "multiple-choice",
+              prompt:
+                "¿Es  ∃x: [p(x) ∧ q(x)]  equivalente a  ∃x: p(x) ∧ ∃x: q(x)?",
+              options: [
+                "No: la primera implica la segunda, pero no al revés",
+                "Sí: el existencial distribuye sobre ∧",
+                "No: la segunda implica la primera, pero no al revés",
+                "Sí: por De Morgan",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Si UN MISMO x cumple ambas, hay testigo para cada una. Pero al revés no: en ℤ hay pares y hay impares, y ningún x es par e impar a la vez.",
+            },
+            {
+              id: "u1-d-l5-e5",
+              type: "multiple-choice",
+              prompt:
+                "¿Es  ∀x: [p(x) ∨ q(x)]  equivalente a  ∀x: p(x) ∨ ∀x: q(x)?",
+              options: [
+                "No: la segunda implica la primera, pero no al revés",
+                "Sí: el universal distribuye sobre ∨",
+                "No: la primera implica la segunda, pero no al revés",
+                "Sí: ambas dicen lo mismo",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Si todos cumplen p (o todos q), todos cumplen p ∨ q. Pero en ℤ todo número es par o impar (V) sin que todos sean pares ni todos impares (F).",
+            },
+          ],
+        },
       ],
     },
     // ── Sección E · Razonamientos ────────────────────────────────────────────
@@ -1477,6 +1764,28 @@ export const unit1: Unit = {
               {
                 term: "Negar el antecedente",
                 text: "Falacia común: de p ⇒ q y ¬p NO se puede deducir ¬q.",
+              },
+            ],
+          },
+          {
+            emoji: "🎭",
+            title: "Método del absurdo",
+            intro:
+              "Para decidir la validez sin hacer toda la tabla: supón las premisas VERDADERAS y la conclusión FALSA, y persigue los valores forzados.",
+            entries: [
+              {
+                text: "Si esa suposición lleva a una contradicción, no existe contraejemplo: el razonamiento es VÁLIDO.",
+              },
+              {
+                text: "Si en cambio logras una asignación coherente, eso ES el contraejemplo: el razonamiento es INVÁLIDO.",
+              },
+              {
+                term: "Estrategia",
+                text: "Empieza por lo que deja menos opciones (la conclusión, una premisa de una sola letra o una negación) y propaga los valores.",
+              },
+              {
+                term: "¿Qué método me conviene?",
+                text: "Tabla: pocas variables (con n variables son 2ⁿ filas). Absurdo: va directo al grano. Deducción: cuando ves el camino de reglas.",
               },
             ],
           },
@@ -1616,6 +1925,21 @@ export const unit1: Unit = {
               explanation:
                 "Forzamos conclusión falsa: q = V. Para ¬r = V necesitamos r = F. Como r = F, para que ¬p ∨ r sea V necesitamos ¬p = V (p = F). Con p=F y q=V, p ⇒ q es V. Contraejemplo: p=F, q=V, r=F.",
             },
+            {
+              id: "u1-e-l2-e6",
+              type: "multiple-choice",
+              prompt:
+                "Método del absurdo sobre   p ∨ q ;  ¬p   ∴  q\nSupón la conclusión FALSA (q = F) y las premisas VERDADERAS. De ¬p = V sale p = F. ¿Qué pasa con la premisa p ∨ q?",
+              options: [
+                "Queda F ∨ F = F, contradiciendo que era V: el razonamiento es VÁLIDO",
+                "Queda V: encontramos el contraejemplo, es INVÁLIDO",
+                "Queda indeterminada: hay que probar otra asignación",
+                "El método no se puede aplicar con dos premisas",
+              ],
+              correctIndex: 0,
+              explanation:
+                "La única forma de tener premisas V y conclusión F se autodestruye: no existe contraejemplo. Es el Silogismo Disyuntivo, demostrado por el absurdo.",
+            },
           ],
         },
         {
@@ -1706,6 +2030,36 @@ export const unit1: Unit = {
               variables: ["p", "q", "r", "s", "t"],
               explanation:
                 "Con p = V, r = V y t = V (q = s = F) las cuatro premisas son V pero ¬t es F.",
+            },
+            {
+              id: "u1-e-l3-e8",
+              type: "multiple-choice",
+              prompt:
+                "Método del absurdo sobre   (p ∧ q) ⇒ r ;  p ;  q   ∴  r\nSupón r = F y las tres premisas verdaderas. ¿Qué ocurre?",
+              options: [
+                "p = V y q = V fuerzan (p ∧ q) = V, y con r = F la primera premisa queda F: contradicción → VÁLIDO",
+                "Se halla el contraejemplo p = V, q = V, r = F: INVÁLIDO",
+                "r puede ser V o F: queda indeterminado",
+                "El absurdo no aplica cuando hay tres premisas",
+              ],
+              correctIndex: 0,
+              explanation:
+                "Suponer premisas V y conclusión F obliga a que (p ∧ q) ⇒ r sea V ⇒ F = F, contradiciendo la suposición. No hay contraejemplo posible: el razonamiento es válido.",
+            },
+            {
+              id: "u1-e-l3-e9",
+              type: "multiple-choice",
+              prompt:
+                "Para analizar la validez de un razonamiento con 5 proposiciones simples, ¿qué método conviene y por qué?",
+              options: [
+                "El del absurdo o la deducción: la tabla tendría 2⁵ = 32 filas",
+                "La tabla de verdad: es siempre la más corta",
+                "Ninguno: con 5 variables no se puede decidir",
+                "Contar los conectivos de cada premisa",
+              ],
+              correctIndex: 0,
+              explanation:
+                "La tabla crece exponencialmente (2ⁿ filas). El método del absurdo va directo: fuerza conclusión F y premisas V, y mira si sobrevive alguna asignación.",
             },
           ],
         },
@@ -1843,11 +2197,197 @@ export const unit1: Unit = {
           },
           {
             id: "u1-e-l5",
+            title: "Deducción formal",
+            subtitle: "Nivel 5 · Demostrar paso a paso",
+            exercises: [
+              {
+                id: "u1-e-l5-e1",
+                type: "deduction-steps",
+                prompt:
+                  "Justifica cada línea de la demostración para concluir ¬p.",
+                premises: ["p ⇒ q", "q ⇒ r", "¬r"],
+                steps: [
+                  {
+                    options: [
+                      "Silogismo Hipotético (SH)",
+                      "Modus Ponens (MP)",
+                      "Conjunción",
+                    ],
+                    correctIndex: 0,
+                    result: "p ⇒ r",
+                    from: "de 1 y 2",
+                  },
+                  {
+                    options: [
+                      "Modus Tollens (MT)",
+                      "Silogismo Disyuntivo (SD)",
+                      "Adición",
+                    ],
+                    correctIndex: 0,
+                    result: "¬p",
+                    from: "de 4 y 3",
+                  },
+                ],
+                explanation:
+                  "Encadenando los condicionales (SH) queda p ⇒ r; negar su consecuente con ¬r niega el antecedente (MT): ¬p.",
+              },
+              {
+                id: "u1-e-l5-e2",
+                type: "deduction-steps",
+                prompt:
+                  "Un final clásico: «Si usó la estrategia 1, no usó la 2. Si no usó la 1, usó la 3. Usó la 2.» Demuestra que usó la estrategia 3.",
+                premises: ["p ⇒ ¬q", "¬p ⇒ r", "q"],
+                steps: [
+                  {
+                    options: [
+                      "Modus Tollens (MT)",
+                      "Modus Ponens (MP)",
+                      "Simplificación",
+                    ],
+                    correctIndex: 0,
+                    result: "¬p",
+                    from: "de 1 y 3",
+                  },
+                  {
+                    options: [
+                      "Modus Ponens (MP)",
+                      "Modus Tollens (MT)",
+                      "Conjunción",
+                    ],
+                    correctIndex: 0,
+                    result: "r",
+                    from: "de 2 y 4",
+                  },
+                ],
+                explanation:
+                  "q hace falso al consecuente ¬q, así que MT da ¬p. Ese ¬p activa la segunda premisa por MP y se concluye r: usó la estrategia 3.",
+              },
+              {
+                id: "u1-e-l5-e3",
+                type: "deduction-steps",
+                prompt:
+                  "Estilo Sherlock Holmes: justifica las tres líneas para concluir r.",
+                premises: ["p ⇒ q", "¬q", "¬p ⇒ (r ∨ s)", "¬s"],
+                steps: [
+                  {
+                    options: [
+                      "Modus Tollens (MT)",
+                      "Modus Ponens (MP)",
+                      "Silogismo Disyuntivo (SD)",
+                    ],
+                    correctIndex: 0,
+                    result: "¬p",
+                    from: "de 1 y 2",
+                  },
+                  {
+                    options: [
+                      "Modus Ponens (MP)",
+                      "Silogismo Hipotético (SH)",
+                      "Adición",
+                    ],
+                    correctIndex: 0,
+                    result: "r ∨ s",
+                    from: "de 3 y 5",
+                  },
+                  {
+                    options: [
+                      "Silogismo Disyuntivo (SD)",
+                      "Simplificación",
+                      "Modus Tollens (MT)",
+                    ],
+                    correctIndex: 0,
+                    result: "r",
+                    from: "de 6 y 4",
+                  },
+                ],
+                explanation:
+                  "MT descarta p; MP abre la disyunción r ∨ s; y como ¬s descarta s, el Silogismo Disyuntivo deja r.",
+              },
+              {
+                id: "u1-e-l5-e4",
+                type: "deduction-steps",
+                prompt:
+                  "Razonamiento categórico: «Algunos escritores son pintores. Todos los pintores son bohemios.» Demuestra que algunos son bohemios.\n(e: escritor · p: pintor · b: bohemio)",
+                premises: ["∃x: [e(x) ∧ p(x)]", "∀x: [p(x) ⇒ b(x)]"],
+                steps: [
+                  {
+                    options: [
+                      "Particularización Existencial (PE)",
+                      "Especificación Universal (EU)",
+                      "Generalización Existencial (GE)",
+                    ],
+                    correctIndex: 0,
+                    result: "e(a) ∧ p(a)",
+                    from: "de 1, con a testigo",
+                  },
+                  {
+                    options: [
+                      "Simplificación",
+                      "Adición",
+                      "Modus Ponens (MP)",
+                    ],
+                    correctIndex: 0,
+                    result: "p(a)",
+                    from: "de 3",
+                  },
+                  {
+                    options: [
+                      "Especificación Universal (EU)",
+                      "Generalización Universal (GU)",
+                      "Particularización Existencial (PE)",
+                    ],
+                    correctIndex: 0,
+                    result: "p(a) ⇒ b(a)",
+                    from: "de 2",
+                  },
+                  {
+                    options: [
+                      "Modus Ponens (MP)",
+                      "Modus Tollens (MT)",
+                      "Silogismo Disyuntivo (SD)",
+                    ],
+                    correctIndex: 0,
+                    result: "b(a)",
+                    from: "de 4 y 5",
+                  },
+                  {
+                    options: [
+                      "Generalización Existencial (GE)",
+                      "Generalización Universal (GU)",
+                      "Especificación Universal (EU)",
+                    ],
+                    correctIndex: 0,
+                    result: "∃x: b(x)",
+                    from: "de 6",
+                  },
+                ],
+                explanation:
+                  "Primero SIEMPRE se particulariza el existencial (el testigo a). Luego se especializa el universal en ese mismo a, se aplica MP y se generaliza existencialmente.",
+              },
+              {
+                id: "u1-e-l5-e5",
+                type: "multiple-choice",
+                prompt:
+                  "Completa con una conclusión válida y demostrable:\n∀x: [p(x) ∨ q(x)] ;  ∀x: [p(x) ⇒ r(x)] ;  ¬r(a)   ∴  ¿?",
+                options: [
+                  "∃x: q(x)",
+                  "∃x: r(x)",
+                  "∀x: q(x)",
+                  "∃x: p(x)",
+                ],
+                correctIndex: 0,
+                explanation:
+                  "EU en a: p(a) ⇒ r(a); con ¬r(a) sale ¬p(a) (MT); con p(a) ∨ q(a) queda q(a) (SD); y por GE: ∃x: q(x).",
+              },
+            ],
+          },
+          {
+            id: "u1-e-l6",
             title: "El gran desafío",
             subtitle: "Jefe final · Parcial",
             exercises: [
               {
-                id: "u1-e-l5-e1",
+                id: "u1-e-l6-e1",
                 type: "build-expression",
                 prompt:
                   "Simboliza: «Si trajo cédula, entonces presentó el apto médico».  (c: trajo cédula, a: presentó el apto)",
@@ -1856,7 +2396,7 @@ export const unit1: Unit = {
                 explanation: "Condicional directo: c ⇒ a.",
               },
               {
-                id: "u1-e-l5-e2",
+                id: "u1-e-l6-e2",
                 type: "multiple-choice",
                 prompt:
                   "«Sofía no presentó el apto médico». Sabiendo que c ⇒ a, ¿qué se concluye por Modus Tollens?",
@@ -1870,7 +2410,7 @@ export const unit1: Unit = {
                 explanation: "De c ⇒ a y ¬a se infiere ¬c (Modus Tollens).",
               },
               {
-                id: "u1-e-l5-e3",
+                id: "u1-e-l6-e3",
                 type: "multiple-choice",
                 prompt:
                   "«Si iba solo y desarmado, su jefe no lo mataría. Para suplicarle perdón era necesario ir desarmado. Le suplicó perdón, pero su jefe igualmente lo mató.» ¿Qué conclusión es válida?",
@@ -2071,6 +2611,46 @@ export const unit1: Unit = {
                 ],
                 correctIndex: 0,
                 explanation: "El condicional es F si el antecedente ¬(q ∨ r) es V (por ende q=F y r=F) y el consecuente ¬s ∨ (p ∧ ¬r) es F. Para que la disyunción sea F, necesitamos ¬s=F (s=V) y p ∧ ¬r = F. Como r=F (¬r=V), entonces p tiene que ser F."
+              },
+              {
+                id: "u1-f-l2-e6",
+                type: "deduction-steps",
+                prompt:
+                  "Ahora DEMUESTRA formalmente el argumento del botón (Tema 15A): de  (b ∧ a) ⇒ d  y  a ∧ ¬d , concluye ¬b justificando cada línea.",
+                premises: ["(b ∧ a) ⇒ d", "a ∧ ¬d"],
+                steps: [
+                  {
+                    options: ["Simplificación", "Adición", "Modus Ponens (MP)"],
+                    correctIndex: 0,
+                    result: "¬d",
+                    from: "de 2"
+                  },
+                  {
+                    options: ["Modus Tollens (MT)", "Modus Ponens (MP)", "Silogismo Hipotético (SH)"],
+                    correctIndex: 0,
+                    result: "¬(b ∧ a)",
+                    from: "de 1 y 3"
+                  },
+                  {
+                    options: ["De Morgan", "Distributiva", "Doble negación (Involución)"],
+                    correctIndex: 0,
+                    result: "¬b ∨ ¬a",
+                    from: "de 4"
+                  },
+                  {
+                    options: ["Simplificación", "Conjunción", "Adición"],
+                    correctIndex: 0,
+                    result: "a",
+                    from: "de 2"
+                  },
+                  {
+                    options: ["Silogismo Disyuntivo (SD)", "Modus Tollens (MT)", "Dilema Constructivo (DC)"],
+                    correctIndex: 0,
+                    result: "¬b",
+                    from: "de 5 y 6"
+                  }
+                ],
+                explanation: "Simplificación extrae ¬d y a de la segunda premisa; MT niega el antecedente compuesto; De Morgan lo reparte; y el Silogismo Disyuntivo descarta ¬a (porque a vale) dejando ¬b."
               }
             ]
           }

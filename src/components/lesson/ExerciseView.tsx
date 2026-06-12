@@ -9,6 +9,7 @@ import { TruthTable } from "./exercises/TruthTable";
 import { Classify } from "./exercises/Classify";
 import { SimplifySteps } from "./exercises/SimplifySteps";
 import { Counterexample } from "./exercises/Counterexample";
+import { DeductionSteps } from "./exercises/DeductionSteps";
 
 export function ExerciseView({
   exercise,
@@ -37,5 +38,7 @@ export function ExerciseView({
       return <SimplifySteps exercise={exercise} {...common} />;
     case "counterexample":
       return <Counterexample exercise={exercise} {...common} />;
+    case "deduction-steps":
+      return <DeductionSteps exercise={exercise} {...common} />;
   }
 }

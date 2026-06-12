@@ -17,6 +17,12 @@ function yesterdayStr(): string {
   d.setDate(d.getDate() - 1);
   return todayStr(d);
 }
+// Racha diaria: se mantiene si ya jugó hoy, crece si jugó ayer, se reinicia si no.
+function nextStreak(streak: number, lastPlayedDate: string | null): number {
+  if (lastPlayedDate === todayStr()) return streak;
+  if (lastPlayedDate === yesterdayStr()) return streak + 1;
+  return 1;
+}
 
 export type CompletedLesson = { xp: number; completedAt: string };
 
@@ -28,6 +34,8 @@ type ProgressState = {
   streak: number;
   lastPlayedDate: string | null;
   completedLessons: Record<string, CompletedLesson>;
+  /** Ids de ejercicios fallados pendientes de repaso. */
+  missedExercises: string[];
   hasHydrated: boolean;
 
   // Acciones
@@ -36,6 +44,10 @@ type ProgressState = {
   loseHeart: () => void;
   refillHearts: () => void;
   completeLesson: (lessonId: string, xpEarned: number) => void;
+  /** Registra el resultado de un ejercicio: acumula fallos y limpia aciertos. */
+  recordExercise: (exerciseId: string, correct: boolean) => void;
+  /** XP de sesiones de práctica: suma directa y mantiene viva la racha. */
+  addPracticeXp: (xpEarned: number) => void;
   reset: () => void;
 };
 
@@ -48,6 +60,7 @@ export const useProgress = create<ProgressState>()(
       streak: 0,
       lastPlayedDate: null,
       completedLessons: {},
+      missedExercises: [],
       hasHydrated: false,
 
       setHydrated: () => set({ hasHydrated: true }),
@@ -83,16 +96,7 @@ export const useProgress = create<ProgressState>()(
       completeLesson: (lessonId, xpEarned) => {
         const state = get();
         const today = todayStr();
-
-        // Racha diaria.
-        let streak = state.streak;
-        if (state.lastPlayedDate === today) {
-          // ya jugó hoy, sin cambios.
-        } else if (state.lastPlayedDate === yesterdayStr()) {
-          streak += 1;
-        } else {
-          streak = 1;
-        }
+        const streak = nextStreak(state.streak, state.lastPlayedDate);
 
         const prev = state.completedLessons[lessonId];
         const bestXp = Math.max(prev?.xp ?? 0, xpEarned);
@@ -110,6 +114,27 @@ export const useProgress = create<ProgressState>()(
         });
       },
 
+      recordExercise: (exerciseId, correct) => {
+        const { missedExercises } = get();
+        const pending = missedExercises.includes(exerciseId);
+        if (!correct && !pending) {
+          set({ missedExercises: [...missedExercises, exerciseId] });
+        } else if (correct && pending) {
+          set({
+            missedExercises: missedExercises.filter((id) => id !== exerciseId),
+          });
+        }
+      },
+
+      addPracticeXp: (xpEarned) => {
+        const state = get();
+        set({
+          xp: state.xp + Math.max(0, xpEarned),
+          streak: nextStreak(state.streak, state.lastPlayedDate),
+          lastPlayedDate: todayStr(),
+        });
+      },
+
       reset: () =>
         set({
           hearts: MAX_HEARTS,
@@ -118,6 +143,7 @@ export const useProgress = create<ProgressState>()(
           streak: 0,
           lastPlayedDate: null,
           completedLessons: {},
+          missedExercises: [],
         }),
     }),
     {

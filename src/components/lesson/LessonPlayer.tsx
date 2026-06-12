@@ -10,6 +10,7 @@ import { useProgress } from "@/stores/progress";
 import { Button } from "@/components/ui/Button";
 import { Lottie } from "@/components/ui/Lottie";
 import { fireConfetti } from "@/lib/confetti";
+import { PRACTICE_XP_PER_CORRECT } from "@/lib/practice";
 import { sfxCorrect, sfxWrong, sfxComplete, sfxFail } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 import { ExerciseView } from "./ExerciseView";
@@ -19,12 +20,21 @@ import trophyAnim from "@/assets/lottie/trophy.json";
 
 type Phase = "playing" | "complete" | "failed";
 
-export function LessonPlayer({ lesson }: { lesson: Lesson }) {
+export function LessonPlayer({
+  lesson,
+  practice = false,
+}: {
+  lesson: Lesson;
+  /** Sesión de práctica: no marca lecciones completadas y da XP reducida. */
+  practice?: boolean;
+}) {
   const total = lesson.exercises.length;
   const hearts = useProgress((s) => s.hearts);
   const loseHeart = useProgress((s) => s.loseHeart);
   const completeLesson = useProgress((s) => s.completeLesson);
   const refillHearts = useProgress((s) => s.refillHearts);
+  const recordExercise = useProgress((s) => s.recordExercise);
+  const addPracticeXp = useProgress((s) => s.addPracticeXp);
 
   const [index, setIndex] = useState(0);
   const [pending, setPending] = useState<AnswerState>(null);
@@ -49,6 +59,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     const correct = pending?.correct ?? false;
     setChecked(true);
     setLastCorrect(correct);
+    recordExercise(exercise.id, correct);
     if (correct) {
       sfxCorrect();
       setCorrectCount((c) => c + 1);
@@ -56,7 +67,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
       sfxWrong();
       loseHeart();
     }
-  }, [pending, loseHeart]);
+  }, [pending, loseHeart, recordExercise, exercise.id]);
 
   function next() {
     // ¿Se quedó sin corazones?
@@ -65,8 +76,11 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
       return;
     }
     if (index + 1 >= total) {
-      const xp = lessonXp(lesson);
-      completeLesson(lesson.id, xp);
+      if (practice) {
+        addPracticeXp(correctCount * PRACTICE_XP_PER_CORRECT);
+      } else {
+        completeLesson(lesson.id, lessonXp(lesson));
+      }
       setPhase("complete");
       return;
     }
@@ -75,13 +89,17 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     setChecked(false);
   }
 
-  function restart() {
-    refillHearts();
+  function restartSession() {
     setIndex(0);
     setPending(null);
     setChecked(false);
     setCorrectCount(0);
     setPhase("playing");
+  }
+
+  function restart() {
+    refillHearts();
+    restartSession();
   }
 
   // ── Pantalla: sin corazones ────────────────────────────────────────────────
@@ -106,7 +124,9 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
 
   // ── Pantalla: lección completada ───────────────────────────────────────────
   if (phase === "complete") {
-    const xp = lessonXp(lesson);
+    const xp = practice
+      ? correctCount * PRACTICE_XP_PER_CORRECT
+      : lessonXp(lesson);
     const accuracy = Math.round((correctCount / total) * 100);
     return (
       <EndScreen
@@ -114,10 +134,10 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
           <Lottie animationData={trophyAnim} loop={false} className="size-44" />
         }
         celebrate
-        title="¡Lección completada!"
+        title={practice ? "¡Práctica completada!" : "¡Lección completada!"}
         subtitle={`Precisión ${accuracy}% · +${xp} XP`}
         primary={
-          ctx?.nextLessonId ? (
+          !practice && ctx?.nextLessonId ? (
             <Link href={`/lesson/${ctx.nextLessonId}`}>
               <Button>Siguiente lección</Button>
             </Link>
@@ -128,9 +148,15 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
           )
         }
         secondary={
-          <Link href="/logica">
-            <Button variant="neutral">Ir al mapa</Button>
-          </Link>
+          practice ? (
+            <Button variant="neutral" onClick={restartSession}>
+              Repetir práctica
+            </Button>
+          ) : (
+            <Link href="/logica">
+              <Button variant="neutral">Ir al mapa</Button>
+            </Link>
+          )
         }
       />
     );

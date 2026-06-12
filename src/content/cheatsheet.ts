@@ -61,6 +61,11 @@ export const EQUIVALENCE_LAWS: EquivalenceLaw[] = [
   {
     name: "Contrarrecíproco",
     formula: "p ⇒ q ≡ ¬q ⇒ ¬p",
+    example: "recíproco (q ⇒ p) y contrario (¬p ⇒ ¬q) NO equivalen al directo",
+  },
+  {
+    name: "Negación del Condicional",
+    formula: "¬(p ⇒ q) ≡ p ∧ ¬q",
   },
   {
     name: "Definición de Bicondicional",
@@ -104,5 +109,30 @@ export const INFERENCE_RULES: InferenceRule[] = [
     name: "Conjunción",
     premises: ["p", "q"],
     conclusion: "p ∧ q",
+  },
+  {
+    name: "Dilema Constructivo (DC)",
+    premises: ["p ∨ q", "p ⇒ r", "q ⇒ s"],
+    conclusion: "r ∨ s",
+  },
+  {
+    name: "Especificación Universal (EU)",
+    premises: ["∀x: p(x)"],
+    conclusion: "p(a)   (a cualquiera)",
+  },
+  {
+    name: "Particularización Existencial (PE)",
+    premises: ["∃x: p(x)"],
+    conclusion: "p(a)   (a testigo)",
+  },
+  {
+    name: "Generalización Universal (GU)",
+    premises: ["p(a)   (a arbitrario)"],
+    conclusion: "∀x: p(x)",
+  },
+  {
+    name: "Generalización Existencial (GE)",
+    premises: ["p(a)"],
+    conclusion: "∃x: p(x)",
   },
 ];
