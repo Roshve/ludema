@@ -12,7 +12,7 @@ import { SubjectCard } from "./SubjectCard";
 export function HomeLanding() {
   return (
     <MotionConfig reducedMotion="user">
-      <div className="mx-auto min-h-dvh w-full max-w-3xl px-4 pb-24">
+      <div className="mx-auto min-h-dvh w-full max-w-2xl px-4 pb-24">
         {/* Barra superior mínima */}
         <header className="sticky top-0 z-20 -mx-4 flex items-center justify-between border-b border-slate-200/70 bg-background/85 px-4 py-3 backdrop-blur dark:border-slate-700/70">
           <div className="flex items-center gap-2">

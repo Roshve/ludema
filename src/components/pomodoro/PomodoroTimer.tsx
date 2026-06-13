@@ -189,7 +189,7 @@ export function PomodoroTimer() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="mx-auto flex min-h-dvh w-full max-w-sm flex-col items-center px-4 py-8">
+      <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col items-center px-4 py-8">
         {/* Cabecera */}
         <header className="mb-8 flex w-full items-center gap-3">
           <Link

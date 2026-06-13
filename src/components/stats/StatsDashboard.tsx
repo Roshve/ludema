@@ -93,7 +93,7 @@ export function StatsDashboard() {
   const todaySeconds = hydrated ? (dailyStudy[todayStr] ?? 0) : 0;
 
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-lg px-4 py-8">
+    <div className="mx-auto min-h-dvh w-full max-w-2xl px-4 py-8">
       {/* Cabecera */}
       <header className="mb-8 flex items-center gap-3">
         <Link
