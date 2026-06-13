@@ -138,16 +138,22 @@ Para más detalles de la arquitectura de contenido, leé [`CLAUDE.md`](CLAUDE.md
 
 ## Releases (solo mantenedores)
 
-```bash
-npm run release          # patch automático (detecta feat/fix en commits)
-npm run release:minor    # minor manual
-npm run release:major    # major manual
-npm run release:dry      # preview sin commitear
+El versionado es **automático vía GitHub Actions** con [release-please](https://github.com/googleapis/release-please). No se corre nada localmente.
 
-git push --follow-tags origin main
-```
+### Flujo
 
-El release bumps la versión en `package.json`, actualiza `CHANGELOG.md` y crea un tag `vX.Y.Z`.
+1. Se mergean PRs a `main` con Conventional Commits.
+2. El workflow **Release** (`.github/workflows/release.yml`) corre y abre/actualiza
+   automáticamente un PR llamado **"chore(main): release X.Y.Z"** que acumula el
+   bump de `package.json` y las notas del `CHANGELOG.md`.
+3. Un mantenedor revisa y **mergea ese PR de release**.
+4. Al mergearlo: release-please crea el tag `vX.Y.Z` y el **GitHub Release** con las
+   notas del CHANGELOG. El deploy a Pages se dispara automáticamente y la UI muestra
+   la nueva versión.
+
+> ⚠️ **Conventional Commits es obligatorio**: `feat`, `fix` y `perf` son los tipos
+> que bumbean versión y aparecen en el CHANGELOG. Sin la convención correcta, el
+> versionado semántico no funciona.
 
 ---
 
@@ -159,6 +165,7 @@ El botón de reporte in-app (⚙️ → "Reportar o sugerir") genera issues con 
 
 ## Consideraciones futuras
 
-- **Branch protection:** configurar en GitHub Settings → Branches para requerir que el CI pase y haya al menos 1 review antes de mergear a `main`.
-- **Commit hooks:** si el equipo crece, se puede agregar `husky` + `commitlint` para validar commits automáticamente.
+- **Branch protection:** configurar en GitHub Settings → Branches para requerir que el CI pase y haya al menos 1 review antes de mergear a `main`. El modelo de release-please ya es compatible (el release ocurre vía PR, no por push directo).
+- **Commit hooks:** si el equipo crece, se puede agregar `husky` + `commitlint` para validar commits localmente antes de pushear.
+- **CI en el release-PR:** por limitación de GitHub Actions, el `GITHUB_TOKEN` no dispara otros workflows en PRs creados por bots. Si se quiere que el build corra también sobre el release-PR, configurar un PAT como `secrets.RELEASE_TOKEN` y pasarlo como `token:` en `release.yml`.
 - **CODE_OF_CONDUCT y SECURITY:** útiles cuando el proyecto sea más público.

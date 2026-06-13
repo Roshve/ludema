@@ -10,11 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "release": "standard-version",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major",
-    "release:dry": "standard-version --dry-run"
+    "lint": "eslint"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.9",
@@ -37,7 +33,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
-    "standard-version": "^9.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
