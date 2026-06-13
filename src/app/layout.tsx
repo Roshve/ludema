@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito, Press_Start_2P } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { UiSounds } from "@/components/ui/UiSounds";
+import { AchievementToast } from "@/components/achievements/AchievementToast";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -66,6 +67,7 @@ export default function RootLayout({
           }}
         />
         <UiSounds />
+        <AchievementToast />
         {children}
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>

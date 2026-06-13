@@ -2,6 +2,11 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { curriculum, allLessons } from "@/content";
+import {
+  ACHIEVEMENTS,
+  type AchievementStats,
+} from "@/content/achievements";
 
 export const MAX_HEARTS = 5;
 // Un corazón se regenera cada 5 minutos.
@@ -44,6 +49,10 @@ type ProgressState = {
   pomodorosCompleted: number;
   /** Segundos totales de enfoque Pomodoro completados. */
   totalFocusSeconds: number;
+  /** Logros desbloqueados: id → ISO timestamp del momento de desbloqueo. */
+  unlockedAchievements: Record<string, string>;
+  /** Cola de logros pendientes de mostrar en el toast (se consume de a uno). */
+  pendingAchievements: string[];
   hasHydrated: boolean;
 
   // Acciones
@@ -63,6 +72,10 @@ type ProgressState = {
    * y alimenta dailyStudy/totalStudySeconds para la racha y el gráfico.
    */
   completePomodoro: (focusSeconds: number) => void;
+  /** Revisa todos los logros y encola los recién desbloqueados. */
+  checkAchievements: () => void;
+  /** Saca el logro con ese id de la cola pendiente (llamado por el toast). */
+  dismissPendingAchievement: (id: string) => void;
   reset: () => void;
 };
 
@@ -80,6 +93,8 @@ export const useProgress = create<ProgressState>()(
       dailyStudy: {},
       pomodorosCompleted: 0,
       totalFocusSeconds: 0,
+      unlockedAchievements: {},
+      pendingAchievements: [],
       hasHydrated: false,
 
       setHydrated: () => set({ hasHydrated: true }),
@@ -131,6 +146,7 @@ export const useProgress = create<ProgressState>()(
             [lessonId]: { xp: bestXp, completedAt: today },
           },
         });
+        get().checkAchievements();
       },
 
       recordExercise: (exerciseId, correct) => {
@@ -152,6 +168,7 @@ export const useProgress = create<ProgressState>()(
           streak: nextStreak(state.streak, state.lastPlayedDate),
           lastPlayedDate: todayStr(),
         });
+        get().checkAchievements();
       },
 
       addStudySeconds: (seconds) => {
@@ -165,6 +182,7 @@ export const useProgress = create<ProgressState>()(
             [today]: (state.dailyStudy[today] ?? 0) + seconds,
           },
         });
+        get().checkAchievements();
       },
 
       completePomodoro: (focusSeconds) => {
@@ -183,6 +201,32 @@ export const useProgress = create<ProgressState>()(
           streak: nextStreak(state.streak, state.lastPlayedDate),
           lastPlayedDate: today,
         });
+        get().checkAchievements();
+      },
+
+      checkAchievements: () => {
+        const state = get();
+        const stats = buildAchievementStats(state);
+        const newlyUnlocked: string[] = [];
+        for (const a of ACHIEVEMENTS) {
+          if (!state.unlockedAchievements[a.id] && a.unlocked(stats)) {
+            newlyUnlocked.push(a.id);
+          }
+        }
+        if (newlyUnlocked.length === 0) return;
+        const now = new Date().toISOString();
+        const updated = { ...state.unlockedAchievements };
+        for (const id of newlyUnlocked) updated[id] = now;
+        set({
+          unlockedAchievements: updated,
+          pendingAchievements: [...state.pendingAchievements, ...newlyUnlocked],
+        });
+      },
+
+      dismissPendingAchievement: (id) => {
+        set((state) => ({
+          pendingAchievements: state.pendingAchievements.filter((x) => x !== id),
+        }));
       },
 
       reset: () =>
@@ -198,6 +242,8 @@ export const useProgress = create<ProgressState>()(
           dailyStudy: {},
           pomodorosCompleted: 0,
           totalFocusSeconds: 0,
+          unlockedAchievements: {},
+          pendingAchievements: [],
         }),
     }),
     {
@@ -217,6 +263,51 @@ export const useProgress = create<ProgressState>()(
     },
   ),
 );
+
+// ── Función auxiliar interna para cómputo de logros ─────────────────────────
+
+type AchievementInput = Pick<
+  ProgressState,
+  "completedLessons" | "streak" | "xp" | "pomodorosCompleted" | "totalStudySeconds"
+>;
+
+/** Construye las estadísticas que necesitan los predicados de logros. */
+export function buildAchievementStats(s: AchievementInput): AchievementStats {
+  const { completedLessons, streak, xp, pomodorosCompleted, totalStudySeconds } = s;
+  const lessonsCount = lessonsCompletedCount(completedLessons);
+  const level = levelFromXp(xp);
+
+  const allSections = curriculum.flatMap((u) => (u.available ? u.sections : []));
+
+  const isSectionComplete = (sectionId: string): boolean => {
+    const section = allSections.find((sec) => sec.id === sectionId);
+    if (!section) return false;
+    return section.lessons.every((l) => Boolean(completedLessons[l.id]));
+  };
+
+  const goldSectionsCount = allSections.filter((sec) =>
+    sec.lessons.every((l) => Boolean(completedLessons[l.id])),
+  ).length;
+
+  const unit1 = curriculum.find((u) => u.id === "u1");
+  const unit1Gold = unit1
+    ? unit1.sections.every((sec) =>
+        sec.lessons.every((l) => Boolean(completedLessons[l.id])),
+      )
+    : false;
+
+  return {
+    lessonsCount,
+    totalLessons: allLessons.length,
+    streak,
+    level,
+    pomodorosCompleted,
+    totalStudySeconds,
+    goldSectionsCount,
+    unit1Gold,
+    isSectionComplete,
+  };
+}
 
 // ── Selectores / utilidades derivadas ───────────────────────────────────────
 

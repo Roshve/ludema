@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Flame, Star, BookOpen, Clock, CalendarDays, Timer, Zap } from "lucide-react";
+import { ArrowLeft, Flame, Star, BookOpen, Clock, CalendarDays, Timer, Zap, Trophy, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import {
   useProgress,
@@ -11,6 +11,7 @@ import {
   lessonsCompletedCount,
   formatStudyTime,
 } from "@/stores/progress";
+import { ACHIEVEMENTS } from "@/content/achievements";
 import { useHydrated } from "@/hooks/useHydrated";
 import { cn } from "@/lib/utils";
 
@@ -75,10 +76,13 @@ export function StatsDashboard() {
   const pomodorosCompleted = useProgress((s) => s.pomodorosCompleted);
   const totalFocusSeconds = useProgress((s) => s.totalFocusSeconds);
 
+  const unlockedAchievements = useProgress((s) => s.unlockedAchievements);
+
   const level = hydrated ? levelFromXp(xp) : 1;
   const into = hydrated ? xpIntoLevel(xp) : 0;
   const lessonsCount = hydrated ? lessonsCompletedCount(completedLessons) : 0;
   const totalTime = hydrated ? formatStudyTime(totalStudySeconds) : "< 1m";
+  const unlockedCount = hydrated ? Object.keys(unlockedAchievements).length : 0;
 
   const days = lastNDays(7);
   const maxSeconds = hydrated
@@ -169,6 +173,25 @@ export function StatsDashboard() {
           {hydrated ? formatStudyTime(todaySeconds) : "< 1m"}
         </p>
       </div>
+
+      {/* Logros */}
+      <Link
+        href="/logros"
+        className="mt-3 flex items-center gap-3 rounded-2xl bg-white px-5 py-4 shadow-pop-sm transition hover:brightness-95 dark:bg-slate-800"
+      >
+        <span className="grid size-10 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
+          <Trophy className="size-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+            Logros
+          </p>
+          <p className="text-xl font-black text-slate-800 dark:text-slate-100">
+            {unlockedCount}&nbsp;/&nbsp;{ACHIEVEMENTS.length}
+          </p>
+        </div>
+        <ChevronRight className="size-5 shrink-0 text-slate-400" />
+      </Link>
 
       {/* Mini-gráfico últimos 7 días */}
       <div className="mt-3 rounded-2xl bg-white px-5 py-5 shadow-pop-sm dark:bg-slate-800">

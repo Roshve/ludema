@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Heart, Star, BarChart3, Timer } from "lucide-react";
+import { Heart, Star, BarChart3, Timer, Trophy } from "lucide-react";
 import { motion } from "motion/react";
 import { FlameIcon } from "./FlameIcon";
 import {
@@ -57,6 +57,7 @@ export function Hud() {
   const xp = useProgress((s) => s.xp);
   const streak = useProgress((s) => s.streak);
   const syncHearts = useProgress((s) => s.syncHearts);
+  const pendingCount = useProgress((s) => s.pendingAchievements.length);
 
   // Regenera corazones al montar y cada 30 s.
   useEffect(() => {
@@ -91,6 +92,16 @@ export function Hud() {
         className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
       >
         <Timer className="size-5" />
+      </Link>
+      <Link
+        href="/logros"
+        aria-label="Ver logros"
+        className="relative text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+      >
+        <Trophy className="size-5" />
+        {hydrated && pendingCount > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-amber-400" />
+        )}
       </Link>
       <Link
         href="/estadisticas"
