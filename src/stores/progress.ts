@@ -40,6 +40,10 @@ type ProgressState = {
   totalStudySeconds: number;
   /** Segundos de estudio activo por día (clave: "YYYY-MM-DD" UTC). */
   dailyStudy: Record<string, number>;
+  /** Pomodoros de enfoque completados (25 min cada uno). */
+  pomodorosCompleted: number;
+  /** Segundos totales de enfoque Pomodoro completados. */
+  totalFocusSeconds: number;
   hasHydrated: boolean;
 
   // Acciones
@@ -54,6 +58,11 @@ type ProgressState = {
   addPracticeXp: (xpEarned: number) => void;
   /** Suma segundos de estudio activo al total y al día de hoy. */
   addStudySeconds: (seconds: number) => void;
+  /**
+   * Registra un Pomodoro de enfoque completado: incrementa contadores propios
+   * y alimenta dailyStudy/totalStudySeconds para la racha y el gráfico.
+   */
+  completePomodoro: (focusSeconds: number) => void;
   reset: () => void;
 };
 
@@ -69,6 +78,8 @@ export const useProgress = create<ProgressState>()(
       missedExercises: [],
       totalStudySeconds: 0,
       dailyStudy: {},
+      pomodorosCompleted: 0,
+      totalFocusSeconds: 0,
       hasHydrated: false,
 
       setHydrated: () => set({ hasHydrated: true }),
@@ -156,6 +167,24 @@ export const useProgress = create<ProgressState>()(
         });
       },
 
+      completePomodoro: (focusSeconds) => {
+        if (focusSeconds <= 0) return;
+        const state = get();
+        const today = todayStr();
+        set({
+          pomodorosCompleted: state.pomodorosCompleted + 1,
+          totalFocusSeconds: state.totalFocusSeconds + focusSeconds,
+          // El enfoque también cuenta como tiempo de estudio y mantiene la racha.
+          totalStudySeconds: state.totalStudySeconds + focusSeconds,
+          dailyStudy: {
+            ...state.dailyStudy,
+            [today]: (state.dailyStudy[today] ?? 0) + focusSeconds,
+          },
+          streak: nextStreak(state.streak, state.lastPlayedDate),
+          lastPlayedDate: today,
+        });
+      },
+
       reset: () =>
         set({
           hearts: MAX_HEARTS,
@@ -167,6 +196,8 @@ export const useProgress = create<ProgressState>()(
           missedExercises: [],
           totalStudySeconds: 0,
           dailyStudy: {},
+          pomodorosCompleted: 0,
+          totalFocusSeconds: 0,
         }),
     }),
     {

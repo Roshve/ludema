@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Flame, Star, BookOpen, Clock, CalendarDays } from "lucide-react";
+import { ArrowLeft, Flame, Star, BookOpen, Clock, CalendarDays, Timer, Zap } from "lucide-react";
 import { motion } from "motion/react";
 import {
   useProgress,
@@ -72,6 +72,8 @@ export function StatsDashboard() {
   const completedLessons = useProgress((s) => s.completedLessons);
   const totalStudySeconds = useProgress((s) => s.totalStudySeconds);
   const dailyStudy = useProgress((s) => s.dailyStudy);
+  const pomodorosCompleted = useProgress((s) => s.pomodorosCompleted);
+  const totalFocusSeconds = useProgress((s) => s.totalFocusSeconds);
 
   const level = hydrated ? levelFromXp(xp) : 1;
   const into = hydrated ? xpIntoLevel(xp) : 0;
@@ -127,6 +129,18 @@ export function StatsDashboard() {
           label="Tiempo total"
           value={totalTime}
           colorClass="bg-violet-500"
+        />
+        <StatCard
+          icon={<Timer className="size-5" />}
+          label="Pomodoros"
+          value={hydrated ? String(pomodorosCompleted) : "0"}
+          colorClass="bg-rose-500"
+        />
+        <StatCard
+          icon={<Zap className="size-5" />}
+          label="Tiempo enfoque"
+          value={hydrated ? formatStudyTime(totalFocusSeconds) : "< 1m"}
+          colorClass="bg-cyan-500"
         />
       </div>
 

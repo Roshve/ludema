@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Heart, Star, BarChart3 } from "lucide-react";
+import { Heart, Star, BarChart3, Timer } from "lucide-react";
 import { motion } from "motion/react";
 import { FlameIcon } from "./FlameIcon";
 import {
@@ -85,6 +85,13 @@ export function Hud() {
           {into}/{XP_LEVEL_SIZE}
         </span>
       </Pill>
+      <Link
+        href="/pomodoro"
+        aria-label="Temporizador Pomodoro"
+        className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+      >
+        <Timer className="size-5" />
+      </Link>
       <Link
         href="/estadisticas"
         aria-label="Ver estadísticas"
