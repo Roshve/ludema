@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { Hud } from "@/components/hud/Hud";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { LessonNode, GoldBadge, type NodeState } from "./LessonNode";
+import { JumpToCurrentButton } from "./JumpToCurrentButton";
 
 // Sendero en zigzag: desplazamiento horizontal según la posición.
 function offsetFor(i: number): number {
@@ -41,6 +42,14 @@ export function LearningMap() {
   const unit1Done = unit1.sections.every((s) =>
     s.lessons.every((l) => completed[l.id]),
   );
+
+  // Primera lección aún no completada (la "lección actual" del usuario).
+  const currentLesson = allLessons.find((c) => !completed[c.lesson.id]);
+  const currentAccent = currentLesson
+    ? unit1.sections.find((s) =>
+        s.lessons.some((l) => l.id === currentLesson.lesson.id),
+      )?.accent
+    : undefined;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -157,6 +166,14 @@ export function LearningMap() {
           </p>
         </div>
       </section>
+
+      {/* Volver a la lección actual cuando queda fuera de pantalla. */}
+      {hydrated && currentLesson && currentAccent && (
+        <JumpToCurrentButton
+          lessonId={currentLesson.lesson.id}
+          accent={currentAccent}
+        />
+      )}
 
       {/* Práctica: repaso de lecciones completadas, priorizando errores. */}
       {hydrated && Object.keys(completed).length > 0 && (

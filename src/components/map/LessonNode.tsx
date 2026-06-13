@@ -74,7 +74,8 @@ export function LessonNode({
 
   return (
     <div
-      className="flex justify-center"
+      id={`lesson-node-${lessonId}`}
+      className="flex justify-center scroll-mt-28"
       style={{ transform: `translateX(${offset}px)` }}
     >
       {locked ? (
