@@ -1,14 +1,6 @@
 import type { Lesson, Section, Unit } from "./types";
 import { unit1 } from "./unit1";
-
-// Unidad 2: placeholder "próximamente" (se desbloquea al dorar la Unidad 1).
-const unit2: Unit = {
-  id: "u2",
-  title: "Unidad 2 · Conjuntos",
-  subtitle: "Próximamente",
-  available: false,
-  sections: [],
-};
+import { unit2 } from "./unit2";
 
 export const curriculum: Unit[] = [unit1, unit2];
 
