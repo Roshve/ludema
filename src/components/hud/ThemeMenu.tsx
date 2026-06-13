@@ -17,6 +17,7 @@ import { useSoundEnabled } from "@/hooks/useSoundEnabled";
 import { sfxClick } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 import { ReportDialog } from "@/components/ui/ReportDialog";
+import { APP_VERSION } from "@/lib/version";
 
 const OPTIONS: { pref: ThemePref; label: string; Icon: typeof Sun }[] = [
   { pref: "light", label: "Claro", Icon: Sun },
@@ -120,6 +121,12 @@ export function ThemeMenu() {
               <Flag className="size-4" />
               <span className="flex-1 text-left">Reportar o sugerir</span>
             </button>
+
+            <div className="mx-2 my-1.5 border-t-2 border-slate-100 dark:border-slate-700" />
+
+            <p className="px-3 py-1 text-center text-xs font-bold text-slate-400 dark:text-slate-500">
+              Ludema v{APP_VERSION}
+            </p>
           </div>
         </>
       )}

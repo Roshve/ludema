@@ -6,6 +6,7 @@ import { ThemeMenu } from "@/components/hud/ThemeMenu";
 import { GitHubLink } from "@/components/ui/GitHubLink";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SubjectCard } from "./SubjectCard";
+import { APP_VERSION } from "@/lib/version";
 
 // Portada: elige la materia ("juego") que quieres aprender. El Hud completo
 // (corazones/racha/nivel) vive dentro de cada materia, aquí solo el tema.
@@ -44,6 +45,10 @@ export function HomeLanding() {
             <SubjectCard key={subject.slug} subject={subject} />
           ))}
         </div>
+
+        <footer className="mt-12 text-center text-xs font-bold text-slate-400 dark:text-slate-500">
+          Ludema v{APP_VERSION}
+        </footer>
       </div>
     </MotionConfig>
   );
