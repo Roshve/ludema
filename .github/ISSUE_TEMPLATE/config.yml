@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Reportar desde la app
+    url: https://roshve.github.io/ludema
+    about: Usá el botón ⚙️ → "Reportar o sugerir" dentro de la app para pre-rellenar el issue con contexto automático.

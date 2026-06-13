@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ludema
 
-## Getting Started
+**Ludema** es una app estilo Duolingo para aprender **lógica universitaria** — tablas de verdad, leyes lógicas, cuantificadores, inferencia — de forma gamificada. Sin backend, sin cuentas: todo el progreso vive en `localStorage`.
 
-First, run the development server:
+🔗 **Demo:** [roshve.github.io/ludema](https://roshve.github.io/ludema)
+
+---
+
+## Stack
+
+| Capa | Tecnología |
+|------|-----------|
+| Framework | Next.js 16 (static export) |
+| UI | React 19, Tailwind v4 |
+| Estado | Zustand 5 (persistido en localStorage) |
+| Íconos | lucide-react |
+| Animaciones | motion/react |
+| Deploy | GitHub Pages (GitHub Actions) |
+
+---
+
+## Quickstart
+
+**Requisito:** Node.js 22+ (ver [`.nvmrc`](.nvmrc)).
 
 ```bash
+# Si usás nvm
+nvm use
+
+# Instalar dependencias
+npm install
+
+# Servidor de desarrollo en http://localhost:3000
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Scripts disponibles
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Comando | Descripción |
+|---------|-------------|
+| `npm run dev` | Servidor de desarrollo (Turbopack) |
+| `npm run build` | ✅ **El gate del proyecto** — type-check + static export a `out/` |
+| `npm run lint` | ESLint (hay 3 errores preexistentes conocidos; no es el gate) |
+| `npm run release` | Bump de versión patch, CHANGELOG y tag git |
+| `npm run release:minor` | Bump minor |
+| `npm run release:dry` | Preview del release sin commitear |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Arquitectura (resumen)
 
-To learn more about Next.js, take a look at the following resources:
+El proyecto es **data-driven** y tiene tres seams principales:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Contenido** (`src/content/`) — jerarquía Unidad → Sección → Lección → Ejercicio. Para agregar lecciones solo se edita `unit1.ts` (o un nuevo `unitN.ts`), sin tocar componentes.
+2. **Motor de lógica** (`src/lib/logic/`) — parser + evaluador puro para fórmulas proposicionales. Alimenta la validación automática de ejercicios.
+3. **Renderers** (`src/components/lesson/`) — cada tipo de ejercicio tiene su propio componente; `LessonPlayer.tsx` orquesta el flujo corazones/XP/completado.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📖 La documentación de arquitectura completa está en [`CLAUDE.md`](CLAUDE.md) y [`AGENTS.md`](AGENTS.md).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contribuir
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+¡Las contribuciones son bienvenidas! Leé [`CONTRIBUTING.md`](CONTRIBUTING.md) para el flujo de trabajo, la convención de commits y cómo agregar contenido nuevo.
+
+---
+
+## Licencia
+
+[MIT](LICENSE) © 2026 Roshve
