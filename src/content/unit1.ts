@@ -1365,13 +1365,28 @@ export const unit1: Unit = {
                   result: "(¬p ∧ (q ∧ ¬r)) ∨ ¬q",
                 },
                 {
-                  options: ["Idempotencia", "De Morgan", "Absorción generalizada"],
-                  correctIndex: 2,
+                  options: ["Conmutativa y asociativa", "De Morgan", "Idempotencia"],
+                  correctIndex: 0,
+                  result: "¬q ∨ (q ∧ (¬p ∧ ¬r))",
+                },
+                {
+                  options: ["Distributiva", "Absorción", "De Morgan"],
+                  correctIndex: 0,
+                  result: "(¬q ∨ q) ∧ (¬q ∨ (¬p ∧ ¬r))",
+                },
+                {
+                  options: ["Complementación", "Idempotencia", "Distributiva"],
+                  correctIndex: 0,
+                  result: "V ∧ (¬q ∨ (¬p ∧ ¬r))",
+                },
+                {
+                  options: ["Identidad (Neutro)", "Dominación", "Absorción"],
+                  correctIndex: 0,
                   result: "¬q ∨ (¬p ∧ ¬r)",
                 },
               ],
               explanation:
-                "El q interno se absorbe contra ¬q: (A ∧ q) ∨ ¬q ≡ A ∨ ¬q. Resultado: ¬q ∨ (¬p ∧ ¬r).",
+                "Tras reordenar (conmutativa/asociativa) a ¬q ∨ (q ∧ (¬p ∧ ¬r)), la distributiva de ∨ sobre ∧ da (¬q ∨ q) ∧ (¬q ∨ (¬p ∧ ¬r)). El primer factor es V por complementación, y por neutro queda ¬q ∨ (¬p ∧ ¬r) (es decir, q ⇒ (¬p ∧ ¬r)).",
             },
             {
               id: "u1-c-l4-e3",
