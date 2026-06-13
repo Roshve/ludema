@@ -30,6 +30,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /ludema
+          NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
