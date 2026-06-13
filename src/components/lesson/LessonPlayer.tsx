@@ -227,15 +227,6 @@ export function LessonPlayer({
         </div>
         <CheatSheet />
         <TableDraft />
-        <button
-          type="button"
-          onClick={() => setReportOpen(true)}
-          aria-label="Reportar este ejercicio"
-          title="Reportar o sugerir"
-          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition"
-        >
-          <Flag className="size-5" />
-        </button>
         <div className="flex items-center gap-1 font-black text-rose-500">
           <Heart className="size-5 fill-rose-500" />
           <motion.span
@@ -279,6 +270,9 @@ export function LessonPlayer({
         open={reportOpen}
         onClose={() => setReportOpen(false)}
         context={{
+          unitTitle: ctx?.unit.title,
+          sectionTitle: ctx?.section.title,
+          lessonTitle: lesson.title,
           lessonId: lesson.id,
           exerciseId: exercise.id,
           exerciseType: exercise.type,
@@ -337,6 +331,20 @@ export function LessonPlayer({
                 </span>
               )}
             </span>
+            <button
+              type="button"
+              onClick={() => setReportOpen(true)}
+              aria-label="Reportar este ejercicio"
+              title="Reportar o sugerir"
+              className={cn(
+                "ml-auto shrink-0 self-start rounded-lg p-1 transition",
+                lastCorrect
+                  ? "text-emerald-400 hover:bg-emerald-100 hover:text-emerald-600 dark:hover:bg-emerald-900/40"
+                  : "text-rose-400 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-900/40",
+              )}
+            >
+              <Flag className="size-4" />
+            </button>
           </motion.div>
         )}
 

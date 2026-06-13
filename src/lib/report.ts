@@ -42,6 +42,9 @@ export const CATEGORY_META: Record<ReportCategory, CategoryMeta> = {
 };
 
 export interface ReportContext {
+  unitTitle?: string;
+  sectionTitle?: string;
+  lessonTitle?: string;
   lessonId?: string;
   exerciseId?: string;
   exerciseType?: string;
@@ -74,14 +77,23 @@ export function buildIssueUrl({
     contextLines.push(`- **URL:** ${window.location.href}`);
     contextLines.push(`- **Navegador:** ${navigator.userAgent}`);
   }
+  if (context?.unitTitle) {
+    contextLines.push(`- **Unidad:** ${context.unitTitle}`);
+  }
+  if (context?.sectionTitle) {
+    contextLines.push(`- **Sección:** ${context.sectionTitle}`);
+  }
   if (context?.lessonId) {
-    contextLines.push(`- **Lección:** \`${context.lessonId}\``);
+    const lessonLabel = context.lessonTitle
+      ? `${context.lessonTitle} (\`${context.lessonId}\`)`
+      : `\`${context.lessonId}\``;
+    contextLines.push(`- **Lección:** ${lessonLabel}`);
   }
   if (context?.exerciseId) {
-    contextLines.push(`- **Ejercicio:** \`${context.exerciseId}\``);
-  }
-  if (context?.exerciseType) {
-    contextLines.push(`- **Tipo:** \`${context.exerciseType}\``);
+    const exerciseLabel = context.exerciseType
+      ? `\`${context.exerciseId}\` (tipo: \`${context.exerciseType}\`)`
+      : `\`${context.exerciseId}\``;
+    contextLines.push(`- **Ejercicio:** ${exerciseLabel}`);
   }
 
   const contextSection =
