@@ -153,15 +153,7 @@ El release bumps la versión en `package.json`, actualiza `CHANGELOG.md` y crea 
 
 ## Labels de GitHub
 
-El botón de reporte in-app (⚙️ → "Reportar o sugerir") genera issues con estos labels. Hay que crearlos en el repo si no existen:
-
-```bash
-gh api repos/Roshve/ludema/labels --method POST -f name="contenido"   -f color="BFD4F2" -f description="Error de contenido"
-gh api repos/Roshve/ludema/labels --method POST -f name="bug"         -f color="D73A4A" -f description="Bug técnico"
-gh api repos/Roshve/ludema/labels --method POST -f name="enhancement" -f color="A2EEEF" -f description="Sugerencia / mejora"
-```
-
-> `bug` y `enhancement` suelen existir por defecto; si recibís un 422 en alguno, el label ya está creado y podés ignorarlo.
+El botón de reporte in-app (⚙️ → "Reportar o sugerir") genera issues con estos labels. Para crearlos o actualizarlos, corré el workflow **Setup labels** desde GitHub Actions → Actions → Setup labels → Run workflow. Es idempotente: si el label ya existe, lo actualiza.
 
 ---
 

@@ -1,0 +1,26 @@
+name: Setup labels
+
+on:
+  workflow_dispatch:
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create or update labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          create_label() {
+            gh api repos/${{ github.repository }}/labels \
+              --method POST \
+              -f name="$1" -f color="$2" -f description="$3" 2>/dev/null || \
+            gh api repos/${{ github.repository }}/labels/"$1" \
+              --method PATCH \
+              -f color="$2" -f description="$3"
+          }
+          create_label "contenido"   "BFD4F2" "Error de contenido"
+          create_label "bug"         "D73A4A" "Bug técnico"
+          create_label "enhancement" "A2EEEF" "Sugerencia / mejora"
