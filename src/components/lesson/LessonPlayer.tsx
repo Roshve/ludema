@@ -18,6 +18,11 @@ import { CheatSheet } from "./CheatSheet";
 import { TableDraft } from "./TableDraft";
 import type { AnswerState } from "./types";
 import { useStudyTimer } from "@/hooks/useStudyTimer";
+import {
+  trackExerciseAnswered,
+  trackLessonComplete,
+  trackLessonFailed,
+} from "@/lib/analytics";
 import trophyAnim from "@/assets/lottie/trophy.json";
 
 type Phase = "playing" | "complete" | "failed";
@@ -74,6 +79,7 @@ export function LessonPlayer({
     setChecked(true);
     setLastCorrect(correct);
     recordExercise(exercise.id, correct);
+    trackExerciseAnswered({ exerciseId: exercise.id, exerciseType: exercise.type, correct });
     if (correct) {
       sfxCorrect();
       if (!failedIdsRef.current.has(exercise.id)) {
@@ -92,16 +98,25 @@ export function LessonPlayer({
     // ¿Se quedó sin corazones?
     if (useProgress.getState().hearts <= 0) {
       flushTimer();
+      trackLessonFailed({ lessonId: lesson.id });
       setPhase("failed");
       return;
     }
     if (index + 1 >= queue.length) {
       flushTimer();
+      const xp = practice ? correctCount * PRACTICE_XP_PER_CORRECT : lessonXp(lesson);
+      const accuracy = Math.round((correctCount / gradedTotal) * 100);
       if (practice) {
         addPracticeXp(correctCount * PRACTICE_XP_PER_CORRECT);
       } else {
         completeLesson(lesson.id, lessonXp(lesson));
       }
+      trackLessonComplete({
+        lessonId: lesson.id,
+        xp,
+        accuracy,
+        heartsLeft: useProgress.getState().hearts,
+      });
       setPhase("complete");
       return;
     }

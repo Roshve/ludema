@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito, Press_Start_2P } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { UiSounds } from "@/components/ui/UiSounds";
 import "./globals.css";
 
@@ -19,6 +20,10 @@ const pressStart = Press_Start_2P({
 // Los URLs de metadata.icons no reciben el basePath automáticamente:
 // prefijar a mano (mismo env var que usa next.config.ts para GH Pages).
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+// GA4: solo se carga cuando se provee el ID en el build (ej. deploy de GH Pages).
+// En dev local sin .env.local el componente no se renderiza.
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   title: {
@@ -62,6 +67,7 @@ export default function RootLayout({
         />
         <UiSounds />
         {children}
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

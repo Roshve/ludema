@@ -8,6 +8,7 @@ import { useProgress, formatStudyTime } from "@/stores/progress";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { sfxComplete, sfxClick } from "@/lib/sfx";
+import { trackPomodoroComplete } from "@/lib/analytics";
 
 // ── Constantes de duración ────────────────────────────────────────────────────
 const FOCUS_S = 25 * 60;
@@ -112,6 +113,7 @@ export function PomodoroTimer() {
       if (from === "focus") {
         sfxComplete();
         completePomodoro(FOCUS_S);
+        trackPomodoroComplete({ focusSeconds: FOCUS_S });
         focusDoneRef.current += 1;
         const next: Phase =
           focusDoneRef.current % CYCLES_BEFORE_LONG === 0 ? "long" : "short";

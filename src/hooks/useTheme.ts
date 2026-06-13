@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { trackThemeChange } from "@/lib/analytics";
 
 export type ThemePref = "light" | "dark" | "system" | "arcade";
 
@@ -51,6 +52,7 @@ export function useTheme() {
     setThemeState(pref);
     localStorage.setItem(STORAGE_KEY, pref);
     applyTheme(pref);
+    trackThemeChange({ theme: pref });
   }, []);
 
   return { theme, setTheme };
