@@ -67,3 +67,21 @@ export function trackPomodoroComplete({
 export function trackThemeChange({ theme }: { theme: string }) {
   sendGAEvent("event", "theme_change", { theme });
 }
+
+// ── Eventos de reporte ────────────────────────────────────────────────────────
+
+export function trackReportOpened({
+  category,
+  lessonId,
+  exerciseId,
+}: {
+  category: string;
+  lessonId?: string;
+  exerciseId?: string;
+}) {
+  sendGAEvent("event", "report_opened", {
+    report_category: category,
+    lesson_id: lessonId ?? null,
+    exercise_id: exerciseId ?? null,
+  });
+}

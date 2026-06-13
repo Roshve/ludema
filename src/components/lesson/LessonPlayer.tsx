@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { X, Heart, Check, HeartCrack } from "lucide-react";
+import { X, Heart, Check, HeartCrack, Flag } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import type { Lesson } from "@/content/types";
 import { getLessonContext, lessonXp } from "@/content";
@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { ExerciseView } from "./ExerciseView";
 import { CheatSheet } from "./CheatSheet";
 import { TableDraft } from "./TableDraft";
+import { ReportDialog } from "@/components/ui/ReportDialog";
 import type { AnswerState } from "./types";
 import { useStudyTimer } from "@/hooks/useStudyTimer";
 import {
@@ -59,6 +60,7 @@ export function LessonPlayer({
   // Aciertos al primer intento (los recuperados en re-encolado no cuentan).
   const [correctCount, setCorrectCount] = useState(0);
   const [phase, setPhase] = useState<Phase>("playing");
+  const [reportOpen, setReportOpen] = useState(false);
   const failedIdsRef = useRef(new Set<string>());
 
   const exercise = queue[index];
@@ -225,6 +227,15 @@ export function LessonPlayer({
         </div>
         <CheatSheet />
         <TableDraft />
+        <button
+          type="button"
+          onClick={() => setReportOpen(true)}
+          aria-label="Reportar este ejercicio"
+          title="Reportar o sugerir"
+          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition"
+        >
+          <Flag className="size-5" />
+        </button>
         <div className="flex items-center gap-1 font-black text-rose-500">
           <Heart className="size-5 fill-rose-500" />
           <motion.span
@@ -263,6 +274,16 @@ export function LessonPlayer({
           </motion.div>
         </AnimatePresence>
       </main>
+
+      <ReportDialog
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        context={{
+          lessonId: lesson.id,
+          exerciseId: exercise.id,
+          exerciseType: exercise.type,
+        }}
+      />
 
       {/* Pie: feedback + acción */}
       <footer

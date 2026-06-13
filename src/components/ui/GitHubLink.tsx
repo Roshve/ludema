@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
-
-const REPO_URL = "https://github.com/Roshve/ludema";
+import { REPO_URL } from "@/lib/report";
 
 // lucide-react ya no trae íconos de marcas; logo de GitHub inline.
 function GitHubMark({ className }: { className?: string }) {

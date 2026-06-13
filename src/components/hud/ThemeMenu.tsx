@@ -10,11 +10,13 @@ import {
   Check,
   Volume2,
   VolumeX,
+  Flag,
 } from "lucide-react";
 import { useTheme, type ThemePref } from "@/hooks/useTheme";
 import { useSoundEnabled } from "@/hooks/useSoundEnabled";
 import { sfxClick } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
+import { ReportDialog } from "@/components/ui/ReportDialog";
 
 const OPTIONS: { pref: ThemePref; label: string; Icon: typeof Sun }[] = [
   { pref: "light", label: "Claro", Icon: Sun },
@@ -27,6 +29,7 @@ export function ThemeMenu() {
   const { theme, setTheme } = useTheme();
   const { enabled: soundOn, setEnabled: setSoundOn } = useSoundEnabled();
   const [open, setOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
 
   return (
     <div className="relative">
@@ -102,9 +105,29 @@ export function ThemeMenu() {
               <span className="flex-1 text-left">Sonido</span>
               {soundOn && <Check className="size-4" strokeWidth={3} />}
             </button>
+
+            <div className="mx-2 my-1.5 border-t-2 border-slate-100 dark:border-slate-700" />
+
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                setOpen(false);
+                setReportOpen(true);
+              }}
+              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-extrabold text-slate-600 transition hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700"
+            >
+              <Flag className="size-4" />
+              <span className="flex-1 text-left">Reportar o sugerir</span>
+            </button>
           </div>
         </>
       )}
+
+      <ReportDialog
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+      />
     </div>
   );
 }
