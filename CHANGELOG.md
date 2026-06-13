@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/Roshve/ludema/compare/ludema-v0.1.1...ludema-v0.2.0) (2026-06-13)
+
+
+### Features
+
+* botón flotante para volver a la lección actual en el mapa ([0e01214](https://github.com/Roshve/ludema/commit/0e01214187a13483e793ce536c9739ea86697aad))
+* mostrar versión de la app en UI (menú de ajustes y portada) ([a75fd8e](https://github.com/Roshve/ludema/commit/a75fd8e676cc1dc1ab2438b60accf7dcfee33b6b))
+* reportes de usuario → issues de GitHub pre-rellenados ([8a087d1](https://github.com/Roshve/ludema/commit/8a087d14095e804ab8116b114ca57048289844c6))
+* sistema de logros cosméticos con toast celebratorio y página /logros ([bb7c9f6](https://github.com/Roshve/ludema/commit/bb7c9f67d1573cf628b55e85d41e3fbfde66209a))
+
+
+### Bug Fixes
+
+* corregir comando de labels a gh api (gh label no existe en esta versión) ([69fb412](https://github.com/Roshve/ludema/commit/69fb4128b4f4cffc4c4f5f4c6be01f27914c4500))
+* mover flag de reporte al feedback e incluir unidad/sección/lección ([ac3c4a0](https://github.com/Roshve/ludema/commit/ac3c4a0f56f26d9842432dcd64b1c6e7b1d25022))
+
 ### 0.1.1 (2026-06-13)
 
 
