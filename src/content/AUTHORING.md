@@ -19,6 +19,8 @@ exit 0  ✓  →  listo para commitear
 
 Para cambios de código (componentes, motor, stores): usá `pnpm check` (lint + test + build).
 
+Para comparar la calidad entre dos corridas de generación: usá `pnpm eval:content` (Fase 3 del harness — mide explanation, distractores, variedad de `correctIndex`; no sustituye al validador).
+
 ---
 
 ## Notación del motor proposicional

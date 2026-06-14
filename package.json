@@ -18,6 +18,7 @@
     "test:watch": "vitest",
     "prepare": "husky",
     "validate:content": "tsx scripts/validate-content.ts",
+    "eval:content": "tsx scripts/eval-content.ts",
     "check": "pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
