@@ -6,31 +6,31 @@
 
 ## Setup local
 
-**Requisito:** Node.js 22 (ver [`.nvmrc`](.nvmrc)).
+**Requisito:** Node.js 22 (ver [`.nvmrc`](.nvmrc)) y pnpm (`npm i -g pnpm` o Corepack).
 
 ```bash
 # Usando nvm (recomendado)
 nvm use
 
-npm install
-npm run dev   # http://localhost:3000
+pnpm install
+pnpm dev   # http://localhost:3000
 ```
 
 > ⚠️ **Este proyecto usa Next.js 16**, que tiene breaking changes respecto a versiones anteriores (`params` es una `Promise`, rutas dinámicas requieren `generateStaticParams`, Turbopack en dev). Leé [`AGENTS.md`](AGENTS.md) antes de tocar código de routing o data-fetching.
 
 ---
 
-## El gate: `npm run build`
+## El gate: `pnpm build`
 
 No hay test runner. El único gate que debe pasar antes de abrir un PR es:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Esto corre type-check de TypeScript y genera el static export en `out/`. Si el build falla, el CI también falla.
 
-> `npm run lint` tiene 3 errores preexistentes conocidos que no son regresiones. No uses lint como criterio de éxito.
+> `pnpm lint` tiene 3 errores preexistentes conocidos que no son regresiones. No uses lint como criterio de éxito.
 
 ---
 
@@ -77,7 +77,7 @@ style: unificar ancho de página a max-w-2xl
    ```bash
    git checkout -b feat/agregar-ejercicio-bicondicional
    ```
-2. Hacé tus cambios y verificá que `npm run build` pasa.
+2. Hacé tus cambios y verificá que `pnpm build` pasa.
 3. Commiteá siguiendo Conventional Commits.
 4. Abrí un PR contra `main` usando la plantilla provista. El CI correrá el build automáticamente.
 5. Un mantenedor revisará y mergeará el PR.
@@ -121,7 +121,7 @@ src/content/
 Para ejercicios de tipo motor, verificá tu fórmula antes de commitear:
 
 ```bash
-npx tsx --tsconfig ./tsconfig.json <tu-script-de-prueba>.ts
+pnpm dlx tsx --tsconfig ./tsconfig.json <tu-script-de-prueba>.ts
 ```
 
 El alias `@/*` resuelve a `src/*`. Usá `truthColumn`, `classify` y `findCounterexample` de `src/lib/logic/`.

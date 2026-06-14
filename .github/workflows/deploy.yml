@@ -22,15 +22,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /ludema
           NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
+      - name: Build docs (Docusaurus)
+        working-directory: website
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+      - name: Merge docs into Pages output
+        run: cp -r website/build out/docs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

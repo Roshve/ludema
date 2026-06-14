@@ -13,12 +13,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # dev server at http://localhost:3000
-npm run build    # type-check + static export to out/ (also the only "test" gate)
-npm run lint     # eslint
+pnpm dev         # dev server at http://localhost:3000
+pnpm build       # type-check + static export to out/ (also the only "test" gate)
+pnpm lint        # eslint
 ```
 
-There is **no test runner configured**. Pure logic (`src/lib/logic/`) and content are verified with throwaway scripts run via `npx tsx --tsconfig ./tsconfig.json <file>.ts` (the `@/*` alias resolves). When changing the engine or adding exercises, validate by scripting against `truthColumn`, `classify`, and `findCounterexample`. `npm run build` is the gate that must pass.
+There is **no test runner configured**. Pure logic (`src/lib/logic/`) and content are verified with throwaway scripts run via `pnpm dlx tsx --tsconfig ./tsconfig.json <file>.ts` (the `@/*` alias resolves). When changing the engine or adding exercises, validate by scripting against `truthColumn`, `classify`, and `findCounterexample`. `pnpm build` is the gate that must pass.
 
 ## Architecture
 

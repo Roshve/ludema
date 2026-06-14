@@ -21,29 +21,26 @@
 
 ## Quickstart
 
-**Requisito:** Node.js 22+ (ver [`.nvmrc`](.nvmrc)).
+**Requisito:** Node.js 22+ (ver [`.nvmrc`](.nvmrc)) y pnpm (`npm i -g pnpm` o Corepack).
 
 ```bash
 # Si usás nvm
 nvm use
 
 # Instalar dependencias
-npm install
+pnpm install
 
 # Servidor de desarrollo en http://localhost:3000
-npm run dev
+pnpm dev
 ```
 
 ### Scripts disponibles
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Servidor de desarrollo (Turbopack) |
-| `npm run build` | ✅ **El gate del proyecto** — type-check + static export a `out/` |
-| `npm run lint` | ESLint (hay 3 errores preexistentes conocidos; no es el gate) |
-| `npm run release` | Bump de versión patch, CHANGELOG y tag git |
-| `npm run release:minor` | Bump minor |
-| `npm run release:dry` | Preview del release sin commitear |
+| `pnpm dev` | Servidor de desarrollo (Turbopack) |
+| `pnpm build` | ✅ **El gate del proyecto** — type-check + static export a `out/` |
+| `pnpm lint` | ESLint (hay 3 errores preexistentes conocidos; no es el gate) |
 
 ---
 
