@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/Roshve/ludema/compare/ludema-v0.2.0...ludema-v0.3.0) (2026-06-14)
+
+
+### Features
+
+* agregar sitio de documentación Docusaurus + migrar a pnpm ([230c17b](https://github.com/Roshve/ludema/commit/230c17b857a836b6d8670d725397a6422485350c))
+
+
+### Bug Fixes
+
+* aprobar build scripts de sharp y unrs-resolver en pnpm 11 ([31d3b4e](https://github.com/Roshve/ludema/commit/31d3b4ea8460639b60fdee8ad45cc6766c8c2e6d))
+* **ci:** agregar --ignore-scripts a pnpm install en workflows ([b722568](https://github.com/Roshve/ludema/commit/b72256856947a9961d04dba634c9c8300e77e095))
+* **ci:** eliminar pnpm-workspace.yaml residual ([3963402](https://github.com/Roshve/ludema/commit/39634028e0095208ae538eb86f7d20308d909111))
+* **ts:** excluir website/ del tsconfig raíz ([dec40d8](https://github.com/Roshve/ludema/commit/dec40d82cf34d8e74f93488f7b2224f58f3673dd))
+
 ## [0.2.0](https://github.com/Roshve/ludema/compare/ludema-v0.1.1...ludema-v0.2.0) (2026-06-13)
 
 
