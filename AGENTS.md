@@ -33,6 +33,19 @@ Convención de IDs (se reporta como `warn`, no rompe el loop):
 > schema de los 9 tipos con snippets válidos y las restricciones que el validador exige.
 > Generar con esa guía a la vista reduce las iteraciones validar→corregir.
 
+### Después de cambiar un **prompt de generación o modelo**
+
+```bash
+pnpm eval:content --unit u2 --out run-a.txt   # baseline antes del cambio
+# (regenerar u2 con el nuevo prompt/modelo)
+pnpm eval:content --unit u2 --out run-b.txt
+diff run-a.txt run-b.txt                        # qué casos pasaron de PASS → FAIL
+```
+
+Mide **calidad pedagógica** (no correctitud — eso ya lo hace `validate:content`):
+explanation presente y sustantiva, distractores en `build-expression`, variedad de `correctIndex`, etc.
+Sin args evalúa el golden congelado (`src/content/eval/golden.ts`) como calibración.
+
 ### Después de tocar **código** (componentes, motor, stores, routing)
 
 ```bash
