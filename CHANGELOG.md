@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/Roshve/ludema/compare/ludema-v0.5.0...ludema-v0.6.0) (2026-06-14)
+
+
+### Features
+
+* add content authoring scaffold (harness phase 2) ([543137b](https://github.com/Roshve/ludema/commit/543137b046fb737a311fa9be82a788179c6ce807))
+
 ## [0.5.0](https://github.com/Roshve/ludema/compare/ludema-v0.4.0...ludema-v0.5.0) (2026-06-14)
 
 
