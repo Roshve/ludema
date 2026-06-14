@@ -23,6 +23,9 @@ const config: Config = {
 
   onBrokenLinks: "throw",
 
+  // Módulo arcade: se inyecta en el cliente para crear el botón de toggle
+  clientModules: ["./src/js/arcade-toggle.js"],
+
   headTags: [
     {
       tagName: "link",
@@ -35,6 +38,12 @@ const config: Config = {
         href: "https://fonts.gstatic.com",
         crossorigin: "anonymous",
       },
+    },
+    // Script pre-paint: restaura el tema arcade antes del primer render (evita FOUC)
+    {
+      tagName: "script",
+      attributes: {},
+      innerHTML: `try{if(localStorage.getItem("ludema-docs-arcade")==="1")document.documentElement.classList.add("theme-arcade")}catch(e){}`,
     },
   ],
 
@@ -98,32 +107,43 @@ const config: Config = {
           label: "Materias",
         },
         {
+          // Chip primario — estilizado como botón pill en custom.css
           href: APP_URL,
           label: "Ir a la app",
           position: "right",
+          className: "navbar__cta",
         },
         {
+          // Ícono GitHub — solo ícono, sin label (accesible vía aria-label)
           href: "https://github.com/roshve/ludema",
-          label: "GitHub",
           position: "right",
+          className: "header-github-link",
+          "aria-label": "Repositorio en GitHub",
         },
       ],
     },
     footer: {
       style: "dark",
+      logo: {
+        alt: "Ludema",
+        src: "img/ludema-blanco.svg",
+        href: APP_URL,
+        height: 36,
+      },
       links: [
         {
-          title: "Docs",
+          title: "Proyecto",
           items: [
+            { label: "Introducción", to: "/proyecto/intro" },
             { label: "Arquitectura", to: "/proyecto/arquitectura" },
-            { label: "Contribuir", to: "/proyecto/contribuir" },
             { label: "Modelo de contenido", to: "/proyecto/modelo-de-contenido" },
+            { label: "Contribuir", to: "/proyecto/contribuir" },
           ],
         },
         {
-          title: "Materias",
+          title: "Lógica",
           items: [
-            { label: "Lógica — Introducción", to: "/logica/intro" },
+            { label: "Introducción", to: "/logica/intro" },
             { label: "Lógica Proposicional", to: "/logica/logica-proposicional" },
             { label: "Tablas de Verdad", to: "/logica/tablas-de-verdad" },
           ],
@@ -131,12 +151,16 @@ const config: Config = {
         {
           title: "Más",
           items: [
-            { label: "App Ludema", href: APP_URL },
-            { label: "GitHub", href: "https://github.com/roshve/ludema" },
+            { label: "Ir a la app", href: APP_URL, className: "footer__cta" },
+            {
+              label: "GitHub",
+              href: "https://github.com/roshve/ludema",
+              className: "footer__github-link",
+            },
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Ludema. Construido con Docusaurus.`,
+      copyright: `© ${new Date().getFullYear()} Ludema · v0.6.0 · Construido con Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

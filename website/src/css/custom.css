@@ -4,6 +4,7 @@
  * Consistente con src/lib/accent.ts del proyecto principal.
  */
 
+/* ─── Tokens light ──────────────────────────────────── */
 :root {
   /* Azul primario (#2563EB y derivados) */
   --ifm-color-primary: #2563eb;
@@ -16,16 +17,25 @@
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(37, 99, 235, 0.08);
 
+  /* Colores de fondo — idénticos a la app */
+  --ifm-background-color: #f7fbff;
+
+  /* Navbar translúcida (frosted glass, igual que la app: bg-background/85 + backdrop-blur) */
+  --ifm-navbar-background-color: rgba(247, 251, 255, 0.85);
+
   /* Fuente de marca */
   --ifm-font-family-base: "Nunito", system-ui, -apple-system, sans-serif;
+
+  /* Botones */
+  --ifm-button-border-radius: 1rem; /* rounded-2xl */
 
   /* Sombra pop estilo Duolingo */
   --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.12);
   --shadow-pop-sm: 0 3px 0 0 rgb(0 0 0 / 0.1);
 }
 
+/* ─── Tokens dark ───────────────────────────────────── */
 [data-theme="dark"] {
-  /* Cian más luminoso en oscuro */
   --ifm-color-primary: #38bdf8;
   --ifm-color-primary-dark: #0ea5e9;
   --ifm-color-primary-darker: #0284c7;
@@ -35,40 +45,57 @@
   --ifm-color-primary-lightest: #e0f2fe;
   --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.1);
 
+  --ifm-background-color: #0b1220;
+  --ifm-navbar-background-color: rgba(11, 18, 32, 0.85);
+
   --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.5);
   --shadow-pop-sm: 0 3px 0 0 rgb(0 0 0 / 0.45);
 }
 
-/* Wordmark del navbar con fuente arcade (Press Start 2P) */
-.navbar__title {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.8rem;
-  letter-spacing: -0.02em;
+/* ─── Fondo con glow radial (igual que la app) ──────── */
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #e8f0fe 0%, transparent 55%),
+    radial-gradient(1000px 500px at 110% 10%, #eef0ff 0%, transparent 50%),
+    var(--ifm-background-color);
 }
 
-/* Logo en el navbar: tamaño consistente con la app */
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #0d1733 0%, transparent 55%),
+    radial-gradient(1000px 500px at 110% 10%, #141433 0%, transparent 50%),
+    var(--ifm-background-color);
+}
+
+/* ─── Navbar ────────────────────────────────────────── */
+
+/* Frosted glass — igual que la app: bg-background/85 + backdrop-blur + solo borde inferior */
+.navbar {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: none !important;
+  border-bottom: 1px solid rgb(203 213 225 / 0.7); /* slate-200/70 */
+}
+
+[data-theme="dark"] .navbar {
+  border-bottom-color: rgb(51 65 85 / 0.7); /* slate-700/70 */
+}
+
+/* Wordmark — misma tipografía que la app (Nunito black, tracking-tight) */
+.navbar__title {
+  font-family: "Nunito", system-ui, -apple-system, sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: -0.025em;
+}
+
+/* Logo: tamaño consistente con la app */
 .navbar__logo img {
   height: 2rem;
   width: auto;
 }
 
-/* Sombra pop en botones primarios */
-.button--primary {
-  box-shadow: var(--shadow-pop);
-  transition: box-shadow 0.1s ease, transform 0.1s ease;
-}
-
-.button--primary:hover {
-  box-shadow: var(--shadow-pop-sm);
-  transform: translateY(1px);
-}
-
-.button--primary:active {
-  box-shadow: none;
-  transform: translateY(4px);
-}
-
-/* Acento violeta (#7C3AED) en links de hover del navbar */
+/* Acento violeta (#7C3AED) en hover del navbar */
 .navbar__link:hover,
 .navbar__link--active {
   color: #7c3aed;
@@ -79,7 +106,662 @@
   color: #a78bfa;
 }
 
-/* Resaltar fórmulas lógicas en bloques inline */
+/* ─── "Ir a la app" — pill primario (igual que la app) ─ */
+/* chip rounded-full con border-bottom + press físico */
+a.navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
+  padding: 0.4rem 1.1rem !important;
+  border-radius: 9999px !important;
+  background-color: #2563eb !important;
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 0.8rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: none !important;
+  border-bottom: 3px solid #1e40af !important; /* blue-800 */
+  box-shadow: var(--shadow-pop-sm);
+  transition:
+    transform 0.08s ease,
+    border-bottom-width 0.08s ease,
+    filter 0.1s ease;
+}
+
+a.navbar__cta:hover {
+  color: white !important;
+  filter: brightness(1.08);
+  text-decoration: none;
+}
+
+a.navbar__cta:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px !important;
+}
+
+[data-theme="dark"] a.navbar__cta {
+  background-color: #2563eb !important;
+  border-bottom-color: #1e40af !important;
+}
+
+/* ─── GitHub icon chip ──────────────────────────────── */
+/* Chip blanco rounded-full con shadow-pop-sm, igual que GitHubLink.tsx de la app */
+a.header-github-link {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 !important;
+  margin-left: 0.35rem;
+  border-radius: 9999px !important;
+  background: white;
+  box-shadow: var(--shadow-pop-sm);
+  overflow: hidden;
+  font-size: 0; /* oculta el label "GitHub" */
+  color: transparent !important;
+  transition: transform 0.08s ease, filter 0.1s ease;
+}
+
+[data-theme="dark"] a.header-github-link {
+  background: #1e293b; /* slate-800 */
+}
+
+/* Ícono GitHub vía máscara SVG */
+a.header-github-link::after {
+  content: "";
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  background-color: #374151; /* slate-700 */
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+[data-theme="dark"] a.header-github-link::after {
+  background-color: #94a3b8; /* slate-400 */
+}
+
+a.header-github-link:hover {
+  filter: brightness(0.9);
+  text-decoration: none !important;
+}
+
+[data-theme="dark"] a.header-github-link:hover::after {
+  background-color: white;
+}
+
+a.header-github-link:active {
+  transform: translateY(2px);
+}
+
+/* ─── Footer ────────────────────────────────────────── */
+
+.footer {
+  /* Usa el fondo oscuro de la app (#0b1220), no el default de Docusaurus */
+  --ifm-footer-background-color: #0b1220;
+  border-top: 1px solid rgb(51 65 85 / 0.5);
+}
+
+.footer__logo {
+  height: 36px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.footer__title {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  color: #e2e8f0; /* slate-200 */
+}
+
+.footer__link-item {
+  display: inline-block;
+  font-weight: 600;
+  color: #94a3b8; /* slate-400 */
+  border-radius: 0.5rem;
+  padding: 0.15rem 0.4rem;
+  margin-inline: -0.4rem;
+  transition: color 0.1s ease, background 0.1s ease;
+}
+
+.footer__link-item:hover {
+  color: #38bdf8; /* cian — acento de la app en dark */
+  background: rgb(56 189 248 / 0.1);
+  text-decoration: none;
+}
+
+/* "Ir a la app" en footer — pill azul idéntico al navbar__cta */
+a.footer__cta {
+  display: inline-flex !important;
+  align-items: center;
+  background: #2563eb !important;
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 1rem !important;
+  border-radius: 9999px !important;
+  border-bottom: 3px solid #1e40af !important;
+  box-shadow: var(--shadow-pop-sm);
+  margin-inline: 0 !important;
+  transition: filter 0.1s ease, transform 0.08s ease, border-bottom-width 0.08s ease;
+}
+
+a.footer__cta:hover {
+  color: white !important;
+  background: #2563eb !important;
+  filter: brightness(1.1);
+  text-decoration: none !important;
+}
+
+a.footer__cta:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px !important;
+}
+
+/* GitHub en footer — chip con ícono (igual que header-github-link pero adaptado al footer) */
+a.footer__github-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.4rem;
+  color: #cbd5e1 !important; /* slate-300 */
+  font-weight: 700 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.15rem 0.4rem !important;
+  margin-inline: -0.4rem !important;
+  transition: color 0.1s ease, background 0.1s ease;
+}
+
+a.footer__github-link::before {
+  content: "";
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  flex-shrink: 0;
+}
+
+a.footer__github-link:hover {
+  color: white !important;
+  background: rgb(255 255 255 / 0.07) !important;
+  text-decoration: none !important;
+}
+
+.footer__copyright {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569; /* slate-600 */
+  margin-top: 1rem;
+}
+
+/* ─── Botones — look de la app (Button.tsx) ─────────── */
+/* border-b-4 + press físico + uppercase extrabold */
+
+.button {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-radius: var(--ifm-button-border-radius);
+  transition:
+    transform 0.08s ease,
+    border-bottom-width 0.08s ease,
+    filter 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.button:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.button--primary {
+  background-color: #2563eb !important; /* blue-600 — fijo en ambos temas, igual que la app */
+  color: #fff !important;
+  border-bottom-color: #1e40af !important; /* blue-800 */
+}
+
+/* Neutraliza la herencia cian de Infima en dark mode */
+[data-theme="dark"] .button--primary {
+  background-color: #2563eb !important;
+  color: #fff !important;
+  border-bottom-color: #1e40af !important;
+}
+
+.button--primary:hover {
+  filter: brightness(1.05);
+}
+
+.button--secondary {
+  border-bottom-color: var(--ifm-color-emphasis-400);
+}
+
+.button--secondary:hover {
+  filter: brightness(0.97);
+}
+
+/* ─── Cards de contenido (docs sidebar, etc.) ───────── */
+
+/* ─── Admonitions redondeadas con sombra pop ─────────── */
+.theme-admonition {
+  border-radius: 1rem;
+  box-shadow: var(--shadow-pop-sm);
+}
+
+/* ─── Código inline ─────────────────────────────────── */
 code {
   font-variant-ligatures: none;
+}
+
+/* ─── Animaciones (igual que la app) ────────────────── */
+
+@keyframes pop-in {
+  0%   { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.animate-pop-in { animation: pop-in 0.18s ease-out; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.animate-shake { animation: shake 0.35s ease-in-out; }
+
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop-in,
+  .animate-shake,
+  .animate-pulse-soft {
+    animation: none;
+  }
+}
+
+/* ─── Sidebar ───────────────────────────────────────── */
+
+/* Ítems con radio generoso, igual que las cards/botones de la app */
+.menu__link {
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: background 0.1s ease, color 0.1s ease;
+}
+
+.menu__link:hover:not(.menu__link--active) {
+  background: var(--ifm-color-emphasis-100);
+}
+
+/* Activo: fondo de acento suave + texto primario */
+.menu__link--active {
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent) !important;
+  color: var(--ifm-color-primary) !important;
+  font-weight: 800;
+}
+
+/* Categorías en sidebar: uppercase extrabold, igual que .footer__title */
+.menu__list-item-collapsible > .menu__link,
+.menu__list-item > .menu__link:is([href="#"]) {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ifm-color-content-secondary);
+}
+
+/* ─── TOC ────────────────────────────────────────────── */
+
+.table-of-contents__link {
+  font-weight: 600;
+  transition: color 0.1s ease;
+}
+
+/* Activo: primario bold + borde izquierdo de acento */
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary) !important;
+  font-weight: 800;
+  border-left: 2px solid var(--ifm-color-primary);
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
+}
+
+/* ─── Paginación ─────────────────────────────────────── */
+
+/* Botones Anterior/Siguiente — lenguaje de card de la app */
+.pagination-nav__link {
+  border: 2px solid var(--ifm-color-emphasis-200) !important;
+  border-radius: 1rem !important;
+  box-shadow: var(--shadow-pop-sm) !important;
+  transition: transform 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pagination-nav__link:hover {
+  transform: translateY(-2px);
+  border-color: var(--ifm-color-primary) !important;
+  box-shadow: 0 6px 0 0 rgb(0 0 0 / 0.12) !important;
+  text-decoration: none;
+}
+
+.pagination-nav__link:active {
+  transform: translateY(2px);
+}
+
+.pagination-nav__label {
+  font-weight: 800;
+}
+
+.pagination-nav__sublabel {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-content-secondary);
+}
+
+/* ─── Bloques de código ──────────────────────────────── */
+
+/* Bloque pre: rounded + shadow-pop-sm */
+.prism-code {
+  border-radius: 0.875rem !important;
+}
+
+div[class*="codeBlockContainer"] {
+  border-radius: 0.875rem;
+  box-shadow: var(--shadow-pop-sm);
+  overflow: hidden;
+}
+
+/* Código inline */
+code:not(pre code) {
+  border-radius: 0.375rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  font-variant-ligatures: none;
+}
+
+/* ─── Breadcrumbs ────────────────────────────────────── */
+
+.breadcrumbs__link {
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.4rem;
+  transition: background 0.1s ease, color 0.1s ease;
+}
+
+.breadcrumbs__link:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+/* ─── Tema arcade ───────────────────────────────────── */
+/* Toggle: añadir clase .theme-arcade en <html> (+ script pre-paint).
+   Re-skinea la paleta Infima a neón synthwave sin tocar componentes. */
+
+.theme-arcade {
+  /* Fondo y texto */
+  --ifm-background-color: #07020f;
+  --ifm-background-surface-color: #0d0521;
+  --ifm-navbar-background-color: rgba(7, 2, 15, 0.92);
+  --ifm-footer-background-color: #0d0521;
+  --ifm-color-content: #e8e3ff;
+  --ifm-color-content-secondary: #b7a6e0;
+  --ifm-font-color-base: #e8e3ff;
+
+  /* Primario = azul eléctrico */
+  --ifm-color-primary: #1f6fff;
+  --ifm-color-primary-dark: #1746a3;
+  --ifm-color-primary-darker: #0e2c66;
+  --ifm-color-primary-darkest: #07173d;
+  --ifm-color-primary-light: #5a9aff;
+  --ifm-color-primary-lighter: #7fb3ff;
+  --ifm-color-primary-lightest: #b3d1ff;
+
+  /* Borders/emphasis → escala púrpura oscura */
+  --ifm-color-emphasis-100: #150a3d;
+  --ifm-color-emphasis-200: #221440;
+  --ifm-color-emphasis-300: #3a2a5e;
+  --ifm-color-emphasis-400: #564878;
+  --ifm-color-emphasis-500: #6f5e99;
+  --ifm-color-emphasis-600: #8d7ab8;
+  --ifm-color-emphasis-700: #b7a6e0;
+  --ifm-color-emphasis-800: #d9ccf5;
+  --ifm-color-emphasis-900: #efeaff;
+
+  /* Links → cian neón */
+  --ifm-link-color: #00cfff;
+  --ifm-link-hover-color: #7deaff;
+
+  /* Sombra pop diagonal dura, estilo 8-bit */
+  --shadow-pop: 4px 4px 0 0 rgb(0 0 0 / 0.6), 0 0 18px rgb(255 43 214 / 0.3), 0 0 6px rgb(0 207 255 / 0.2);
+  --shadow-pop-sm: 3px 3px 0 0 rgb(0 0 0 / 0.55), 0 0 12px rgb(255 43 214 / 0.25), 0 0 4px rgb(0 207 255 / 0.18);
+
+  /* Esquinas pixel: radio 0 en todo */
+  --ifm-button-border-radius: 0;
+  --ifm-card-border-radius: 0;
+  --ifm-global-radius: 0;
+  --ifm-code-border-radius: 0;
+  --ifm-alert-border-radius: 0;
+  --ifm-pagination-nav-border-radius: 0;
+}
+
+/* Fondo grid synthwave + horizonte de glow */
+.theme-arcade body {
+  background:
+    linear-gradient(rgb(255 43 214 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 207 255 / 0.06) 1px, transparent 1px),
+    radial-gradient(900px 500px at 50% -10%, #2a0a4a 0%, transparent 60%),
+    #07020f;
+  background-size: 44px 44px, 44px 44px, auto, auto;
+  color: #e8e3ff;
+}
+
+/* Scanlines CRT — overlay fijo, no bloquea interacción */
+.theme-arcade body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0.12) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* Títulos en pixel font */
+.theme-arcade :is(h1, h2) {
+  font-family: "Press Start 2P", monospace;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.theme-arcade h1 { font-size: 1.05rem; }
+.theme-arcade h2 { font-size: 0.85rem; }
+
+/* Aplanar todas las esquinas redondeadas */
+.theme-arcade .button,
+.theme-arcade .card,
+.theme-arcade .alert,
+.theme-arcade .theme-admonition,
+.theme-arcade .pagination-nav__link,
+.theme-arcade .tabs__item,
+.theme-arcade .table-of-contents,
+.theme-arcade .menu__link,
+.theme-arcade div[class*="codeBlockContainer"],
+.theme-arcade .prism-code,
+.theme-arcade .breadcrumbs__link,
+.theme-arcade code:not(pre code) {
+  border-radius: 0 !important;
+}
+
+/* Paginación arcade: neón en hover */
+.theme-arcade .pagination-nav__link:hover {
+  border-color: #00cfff !important;
+  box-shadow:
+    4px 4px 0 0 rgb(0 0 0 / 0.6),
+    0 0 14px rgb(0 207 255 / 0.35) !important;
+}
+
+/* Activo en sidebar arcade */
+.theme-arcade .menu__link--active {
+  background: color-mix(in srgb, #00cfff 14%, transparent) !important;
+  color: #00cfff !important;
+}
+
+/* TOC activo arcade */
+.theme-arcade .table-of-contents__link--active {
+  color: #00cfff !important;
+  border-left-color: #00cfff;
+}
+
+/* Sombra neón en botones */
+.theme-arcade .button {
+  box-shadow:
+    4px 4px 0 0 rgb(0 0 0 / 0.6),
+    0 0 18px rgb(255 43 214 / 0.3),
+    0 0 6px rgb(0 207 255 / 0.2);
+}
+.theme-arcade .button:hover {
+  box-shadow:
+    4px 4px 0 0 rgb(0 0 0 / 0.6),
+    0 0 28px rgb(255 43 214 / 0.5),
+    0 0 10px rgb(0 207 255 / 0.4);
+  filter: brightness(1.12);
+}
+
+/* Navbar arcade */
+.theme-arcade .navbar {
+  border-bottom: 1px solid #3a2a5e;
+  backdrop-filter: blur(8px);
+}
+.theme-arcade .navbar__link:hover,
+.theme-arcade .navbar__link--active {
+  color: #00cfff;
+}
+
+/* Botón primario en arcade — azul eléctrico */
+.theme-arcade .button--primary {
+  background-color: #1f6fff !important;
+  color: #fff !important;
+  border-bottom-color: #1746a3 !important;
+}
+
+/* CTA pill en arcade */
+.theme-arcade a.navbar__cta {
+  background-color: #1f6fff !important;
+  border-bottom-color: #1746a3 !important;
+}
+
+/* Chip GitHub en arcade */
+.theme-arcade a.header-github-link {
+  background: #0d0521;
+  border-radius: 0 !important;
+}
+.theme-arcade a.header-github-link::after {
+  background-color: #8d7ab8;
+}
+.theme-arcade a.header-github-link:hover::after {
+  background-color: #00cfff;
+}
+
+/* Sidebar arcade */
+.theme-arcade .menu__link--active {
+  color: #00cfff;
+}
+
+/* Footer arcade */
+.theme-arcade .footer {
+  border-top: 1px solid #3a2a5e;
+  --ifm-footer-background-color: #0d0521;
+}
+.theme-arcade .footer__link-item:hover {
+  color: #00cfff;
+  background: rgb(0 207 255 / 0.08);
+}
+.theme-arcade .footer__title {
+  color: #d9ccf5; /* slate-arcade */
+}
+.theme-arcade a.footer__cta {
+  background: #1f6fff !important;
+  border-bottom-color: #1746a3 !important;
+  border-radius: 0 !important;
+}
+.theme-arcade a.footer__github-link {
+  border-radius: 0 !important;
+}
+.theme-arcade a.footer__github-link:hover {
+  color: #00cfff !important;
+  background: rgb(0 207 255 / 0.08) !important;
+}
+
+/* Wordmark arcade: pixel font solo en modo arcade */
+.theme-arcade .navbar__title {
+  font-family: "Press Start 2P", monospace;
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: -0.02em;
+}
+
+/* Hero wordmark color override en arcade */
+.theme-arcade .heroTitle {
+  color: #e8e3ff;
+}
+
+/* Botón arcade toggle (creado por arcade-toggle.js) */
+#ludema-arcade-btn {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 10000;
+  background: #221440;
+  border: 2px solid #7c3aed;
+  color: #e8e3ff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 0 0 #3a2a5e, 0 0 12px rgb(124 58 237 / 0.4);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  line-height: 1.8;
+  text-align: center;
+  user-select: none;
+}
+
+#ludema-arcade-btn:hover {
+  box-shadow: 0 4px 0 0 #3a2a5e, 0 0 20px rgb(124 58 237 / 0.7);
+  filter: brightness(1.15);
+}
+
+#ludema-arcade-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 #3a2a5e;
+}
+
+.theme-arcade #ludema-arcade-btn {
+  background: #0d0521;
+  border-color: #e93bff;
+  box-shadow: 4px 4px 0 0 rgb(0 0 0 / 0.6), 0 0 14px rgb(233 59 255 / 0.5);
+  border-radius: 0;
 }
