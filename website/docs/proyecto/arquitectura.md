@@ -6,15 +6,22 @@ title: Arquitectura general
 # Arquitectura general
 
 La app es **data-driven**: el currículo en `src/content/` es la fuente de verdad, un
-motor de lógica puro valida las respuestas, y renderers autocontenidos presentan cada
+motor de validación puro corrige las respuestas, y renderers autocontenidos presentan cada
 tipo de ejercicio. Entender esas tres costuras es suficiente para ser productivo.
+
+:::note Arquitectura multi-materia
+La jerarquía Unidad → Sección → Lección → Ejercicio es agnóstica al dominio.
+Hoy la única materia implementada es **Lógica** (`src/lib/logic/` como motor de validación).
+Nuevas materias se agregan añadiendo su currículo en `src/content/` y, si lo necesitan,
+su propio módulo de validación en `src/lib/`.
+:::
 
 ## Tres capas
 
 ```
-src/content/          ← qué se enseña (datos)
-src/lib/logic/        ← si la respuesta es correcta (motor puro)
-src/components/lesson/ ← cómo se muestra (UI + feedback)
+src/content/          ← qué se enseña (datos, por materia)
+src/lib/logic/        ← motor de validación para la materia Lógica
+src/components/lesson/ ← cómo se muestra (UI + feedback, genérico)
 ```
 
 ## Routing

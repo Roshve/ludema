@@ -7,8 +7,15 @@ title: Modelo de contenido
 
 Jerarquía: **Unidad → Sección → Lección → Ejercicios**.
 
+:::note Modelo multi-materia
+Esta jerarquía es agnóstica al dominio y está diseñada para escalar a cualquier materia.
+Hoy el currículo de **Lógica** vive en `unit1.ts` y `unit2.ts`.
+Cada materia nueva añade sus propios archivos `unitN.ts` y, si lo necesita,
+un módulo de validación en `src/lib/`.
+:::
+
 Los tipos están definidos en `src/content/types.ts` como una **unión discriminada**.
-`src/content/unit1.ts` (y `unit2.ts`) contienen el currículo completo.
+`src/content/unit1.ts` (y `unit2.ts`) contienen el currículo de **Lógica** (materia actual).
 `src/content/index.ts` ensambla las unidades, aplana las lecciones en lista ordenada
 y expone `getLesson`, `getLessonContext` (prev/next) y `allLessonIds`.
 

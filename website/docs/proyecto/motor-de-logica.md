@@ -5,6 +5,12 @@ title: Motor de lógica
 
 # Motor de lógica
 
+:::note Motor de la materia Lógica
+Este motor es el validador específico de la materia **Lógica**.
+En una plataforma multi-materia, cada dominio puede tener su propio módulo de validación
+en `src/lib/`. El reproductor de lecciones y los renderers son agnósticos al motor utilizado.
+:::
+
 El motor vive en `src/lib/logic/` y es **puro** (sin React, sin side-effects).
 Parsea fórmulas proposicionales y las evalúa para autovalidar ejercicios.
 

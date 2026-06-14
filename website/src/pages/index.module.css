@@ -1,0 +1,206 @@
+/* ── Hero ─────────────────────────────────────────── */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 1.5rem 3rem;
+  background: linear-gradient(
+    160deg,
+    var(--ifm-color-primary-lightest) 0%,
+    var(--ifm-background-color) 60%
+  );
+}
+
+[data-theme="dark"] .hero {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--ifm-color-primary-darkest) 40%, transparent) 0%,
+    var(--ifm-background-color) 60%
+  );
+}
+
+.heroLogo {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.25));
+}
+
+.heroTitle {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
+  margin: 0 0 0.75rem;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroTagline {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin: 0 0 0.75rem;
+}
+
+.heroSub {
+  max-width: 560px;
+  font-size: 1rem;
+  color: var(--ifm-color-content-secondary);
+  margin: 0 0 2rem;
+  line-height: 1.6;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ctaPrimary {
+  /* Extra pop on the primary CTA */
+  box-shadow: 0 4px 0 0 rgb(0 0 0 / 0.18);
+}
+
+/* ── Materias ─────────────────────────────────────── */
+
+.materias {
+  padding: 3rem 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.materiasTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  text-align: center;
+}
+
+.materiasSubtitle {
+  text-align: center;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 2rem;
+}
+
+.materiasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.materiaCard {
+  display: flex;
+  border-radius: 12px;
+  border: 2px solid var(--ifm-color-emphasis-200);
+  overflow: hidden;
+  box-shadow: var(--shadow-pop, 0 4px 0 0 rgb(0 0 0 / 0.12));
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+}
+
+.materiaCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 0 rgb(0 0 0 / 0.12);
+}
+
+.materiaCardSoon {
+  opacity: 0.6;
+}
+
+.materiaStripe {
+  width: 6px;
+  flex-shrink: 0;
+}
+
+.materiaBody {
+  padding: 1.25rem 1rem;
+  flex: 1;
+}
+
+.materiaName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem;
+}
+
+.materiaDesc {
+  font-size: 0.85rem;
+  color: var(--ifm-color-content-secondary);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+.materiaLink {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.materiaLink:hover {
+  text-decoration: underline;
+}
+
+.comingSoon {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ifm-color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Features ─────────────────────────────────────── */
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 3rem 1.5rem 4rem;
+  background: var(--ifm-background-surface-color);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.feature {
+  max-width: 260px;
+  text-align: center;
+}
+
+.featureEmoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.featureTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.featureDesc {
+  font-size: 0.9rem;
+  color: var(--ifm-color-content-secondary);
+  line-height: 1.5;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .heroTitle {
+    font-size: 1.2rem;
+  }
+
+  .heroCtas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroCtas > * {
+    text-align: center;
+  }
+}

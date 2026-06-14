@@ -6,7 +6,7 @@ const APP_URL = "https://roshve.github.io/ludema/";
 
 const config: Config = {
   title: "Ludema Docs",
-  tagline: "Lógica universitaria, gamificada.",
+  tagline: "Gamificá cualquier materia universitaria.",
   favicon: "img/favicon.ico",
 
   future: {
@@ -22,6 +22,28 @@ const config: Config = {
   trailingSlash: true,
 
   onBrokenLinks: "throw",
+
+  headTags: [
+    {
+      tagName: "link",
+      attributes: { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossorigin: "anonymous",
+      },
+    },
+  ],
+
+  stylesheets: [
+    {
+      href: "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&display=swap",
+      type: "text/css",
+    },
+  ],
 
   markdown: {
     hooks: {
@@ -56,7 +78,12 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "Ludema Docs",
+      title: "Ludema",
+      logo: {
+        alt: "Ludema",
+        src: "img/ludema-negro.svg",
+        srcDark: "img/ludema-blanco.svg",
+      },
       items: [
         {
           type: "docSidebar",
@@ -66,9 +93,9 @@ const config: Config = {
         },
         {
           type: "docSidebar",
-          sidebarId: "logicaSidebar",
+          sidebarId: "materiasSidebar",
           position: "left",
-          label: "Lógica",
+          label: "Materias",
         },
         {
           href: APP_URL,
@@ -90,15 +117,15 @@ const config: Config = {
           items: [
             { label: "Arquitectura", to: "/proyecto/arquitectura" },
             { label: "Contribuir", to: "/proyecto/contribuir" },
-            { label: "Motor de Lógica", to: "/proyecto/motor-de-logica" },
+            { label: "Modelo de contenido", to: "/proyecto/modelo-de-contenido" },
           ],
         },
         {
-          title: "Guía de Lógica",
+          title: "Materias",
           items: [
+            { label: "Lógica — Introducción", to: "/logica/intro" },
             { label: "Lógica Proposicional", to: "/logica/logica-proposicional" },
             { label: "Tablas de Verdad", to: "/logica/tablas-de-verdad" },
-            { label: "Leyes Lógicas", to: "/logica/leyes-logicas" },
           ],
         },
         {

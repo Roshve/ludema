@@ -7,12 +7,16 @@ slug: /proyecto/intro
 
 # Ludema — documentación del proyecto
 
-**Ludema** es una app estilo Duolingo para aprender **lógica universitaria** — tablas de
-verdad, leyes lógicas, cuantificadores, inferencia — de forma gamificada.
+**Ludema** es una plataforma estilo Duolingo para gamificar **cualquier materia universitaria** —
+corazones, XP, rachas diarias y validación automática de respuestas. Sin backend, sin cuentas:
+todo el progreso vive en `localStorage`.
 
-- Sin backend, sin cuentas: todo el progreso vive en `localStorage`.
-- Exportación estática (`next export`) desplegada en GitHub Pages.
+La primera materia disponible es **Lógica** (lógica proposicional, tablas de verdad, leyes
+lógicas, cuantificadores e inferencia). La arquitectura está diseñada para incorporar nuevas
+materias sin tocar los componentes del reproductor de lecciones.
+
 - Demo: [roshve.github.io/ludema](https://roshve.github.io/ludema)
+- Exportación estática (`next export`) desplegada en GitHub Pages.
 
 ## Stack
 
@@ -41,6 +45,6 @@ pnpm lint        # eslint
 
 ## Navegación de esta documentación
 
-- **Arquitectura** — cómo está organizado el código: contenido, motor de lógica, renderers.
+- **Arquitectura** — cómo está organizado el código: contenido, motor de validación, renderers.
 - **Contribuir** — setup, convenciones de commits, flujo de trabajo y cómo agregar ejercicios.
-- **Guía de Lógica** — material de estudio: proposiciones, tablas de verdad, leyes, cuantificadores, inferencia.
+- **Materias** — guías de estudio por materia; hoy disponible: Lógica.

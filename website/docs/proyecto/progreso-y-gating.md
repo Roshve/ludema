@@ -41,7 +41,13 @@ La lógica de desbloqueo **vive en la UI**, no en el store: `src/components/map/
 
 - Las lecciones son **lineales**: una lección se desbloquea cuando la anterior está en `completedLessons`.
 - Una sección es **"gold"** cuando todas sus lecciones están completadas.
-- **Unidad 2** está bloqueada hasta que la Unidad 1 esté completamente en gold.
+- **Unidad 2** (Lógica) está bloqueada hasta que la Unidad 1 esté completamente en gold.
+
+:::note Escalabilidad multi-materia
+El modelo de gating lineal describe la materia de **Lógica** tal como está implementada hoy.
+Al incorporar nuevas materias, este modelo puede adaptarse (ej. materias paralelas con
+progreso independiente) modificando `LearningMap.tsx` sin tocar el store.
+:::
 
 ## Modo Práctica
 

@@ -25,18 +25,21 @@ const sidebars: SidebarsConfig = {
     },
   ],
 
-  logicaSidebar: [
+  materiasSidebar: [
     {
-      type: "doc",
-      id: "logica/intro",
-      label: "Introducción",
+      type: "category",
+      label: "Lógica",
+      collapsible: false,
+      items: [
+        { type: "doc", id: "logica/intro", label: "Introducción" },
+        "logica/logica-proposicional",
+        "logica/tablas-de-verdad",
+        "logica/leyes-logicas",
+        "logica/cuantificadores",
+        "logica/inferencia-y-contraejemplos",
+        "logica/cheatsheet",
+      ],
     },
-    "logica/logica-proposicional",
-    "logica/tablas-de-verdad",
-    "logica/leyes-logicas",
-    "logica/cuantificadores",
-    "logica/inferencia-y-contraejemplos",
-    "logica/cheatsheet",
   ],
 };
 

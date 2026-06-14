@@ -63,11 +63,14 @@ docs: agregar sección de cuantificadores al guide de u1-b
 
 ## Agregar contenido
 
-El currículo es data-driven. Solo editás `src/content/unit1.ts` (o un `unitN.ts`).
+El currículo es data-driven. Para la materia **Lógica**, editás `src/content/unit1.ts`
+(o un `unitN.ts` nuevo). Para una **materia nueva**, creás sus propios archivos `unitN.ts`
+y los registrás en `src/content/index.ts` — el reproductor de lecciones no necesita cambios.
+
 Consultá la sección [Modelo de contenido](/proyecto/modelo-de-contenido) para la
 estructura completa y los tipos de ejercicio disponibles.
 
-Para validar fórmulas con el motor antes de commitear:
+Para validar fórmulas de Lógica con el motor antes de commitear:
 ```bash
 pnpm dlx tsx --tsconfig ./tsconfig.json mi-script-de-prueba.ts
 ```

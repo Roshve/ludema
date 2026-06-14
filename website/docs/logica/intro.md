@@ -5,7 +5,11 @@ sidebar_label: Introducción
 slug: /logica/intro
 ---
 
-# Guía de Lógica Universitaria
+# Guía de Lógica
+
+> Esta es la guía de la materia **Lógica** — la primera materia de Ludema.
+> Cada materia tiene su propio currículo gamificado; la arquitectura está diseñada
+> para incorporar nuevas materias sin cambios en el reproductor de lecciones.
 
 Esta guía acompaña la app Ludema como material de referencia y repaso. Está basada en
 los contenidos de lógica proposicional y de predicados de cursos universitarios de primer año

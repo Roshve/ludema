@@ -8,7 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-**Ludema** is a Duolingo-style webapp for learning **logic** (university-level: propositional logic, truth tables, laws, quantifiers, inference). It is **frontend-only**: no backend, no accounts. The app is a **static export** (`output: "export"` → `out/`) and all user progress lives in `localStorage`.
+**Ludema** is a Duolingo-style platform for **gamifying any university subject** — hearts, XP, daily streaks, and automatic answer validation. It is **frontend-only**: no backend, no accounts. The app is a **static export** (`output: "export"` → `out/`) and all user progress lives in `localStorage`.
+
+**Currently implemented subject: Logic** (`unit1.ts`, `unit2.ts`; propositional logic engine in `src/lib/logic/`). The content hierarchy (Unit → Section → Lesson → Exercise) and the lesson player are domain-agnostic — new subjects are added by creating new `unitN.ts` files and, if needed, a dedicated validation engine in `src/lib/`.
 
 ## Commands
 

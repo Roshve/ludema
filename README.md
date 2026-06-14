@@ -1,6 +1,6 @@
 # Ludema
 
-**Ludema** es una app estilo Duolingo para aprender **lógica universitaria** — tablas de verdad, leyes lógicas, cuantificadores, inferencia — de forma gamificada. Sin backend, sin cuentas: todo el progreso vive en `localStorage`.
+**Ludema** es una plataforma estilo Duolingo para gamificar **cualquier materia universitaria** — corazones, XP, rachas diarias y validación automática de respuestas. Sin backend, sin cuentas: todo el progreso vive en `localStorage`. La primera materia disponible es **Lógica** (proposicional, tablas de verdad, cuantificadores, inferencia); la arquitectura está diseñada para incorporar nuevas materias.
 
 🔗 **Demo:** [roshve.github.io/ludema](https://roshve.github.io/ludema)
 
@@ -48,9 +48,9 @@ pnpm dev
 
 El proyecto es **data-driven** y tiene tres seams principales:
 
-1. **Contenido** (`src/content/`) — jerarquía Unidad → Sección → Lección → Ejercicio. Para agregar lecciones solo se edita `unit1.ts` (o un nuevo `unitN.ts`), sin tocar componentes.
-2. **Motor de lógica** (`src/lib/logic/`) — parser + evaluador puro para fórmulas proposicionales. Alimenta la validación automática de ejercicios.
-3. **Renderers** (`src/components/lesson/`) — cada tipo de ejercicio tiene su propio componente; `LessonPlayer.tsx` orquesta el flujo corazones/XP/completado.
+1. **Contenido** (`src/content/`) — jerarquía Unidad → Sección → Lección → Ejercicio, agnóstica al dominio. Hoy contiene el currículo de **Lógica** (`unit1.ts`, `unit2.ts`). Para agregar lecciones solo se edita `unitN.ts`, sin tocar componentes.
+2. **Motor de validación** (`src/lib/logic/`) — parser + evaluador puro para fórmulas proposicionales (motor de la materia Lógica). Nuevas materias pueden añadir su propio módulo en `src/lib/`.
+3. **Renderers** (`src/components/lesson/`) — cada tipo de ejercicio tiene su propio componente; `LessonPlayer.tsx` orquesta el flujo corazones/XP/completado y es agnóstico a la materia.
 
 📖 La documentación de arquitectura completa está en [`CLAUDE.md`](CLAUDE.md) y [`AGENTS.md`](AGENTS.md).
 

@@ -15,6 +15,13 @@
   --ifm-color-primary-lightest: #6f97f3;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(37, 99, 235, 0.08);
+
+  /* Fuente de marca */
+  --ifm-font-family-base: "Nunito", system-ui, -apple-system, sans-serif;
+
+  /* Sombra pop estilo Duolingo */
+  --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.12);
+  --shadow-pop-sm: 0 3px 0 0 rgb(0 0 0 / 0.1);
 }
 
 [data-theme="dark"] {
@@ -27,11 +34,49 @@
   --ifm-color-primary-lighter: #bae6fd;
   --ifm-color-primary-lightest: #e0f2fe;
   --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.1);
+
+  --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.5);
+  --shadow-pop-sm: 0 3px 0 0 rgb(0 0 0 / 0.45);
 }
 
-/* Fuente: Google Fonts no disponible sin config extra; usamos la del sistema */
-:root {
-  --ifm-font-family-base: "Nunito", system-ui, -apple-system, sans-serif;
+/* Wordmark del navbar con fuente arcade (Press Start 2P) */
+.navbar__title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.8rem;
+  letter-spacing: -0.02em;
+}
+
+/* Logo en el navbar: tamaño consistente con la app */
+.navbar__logo img {
+  height: 2rem;
+  width: auto;
+}
+
+/* Sombra pop en botones primarios */
+.button--primary {
+  box-shadow: var(--shadow-pop);
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+
+.button--primary:hover {
+  box-shadow: var(--shadow-pop-sm);
+  transform: translateY(1px);
+}
+
+.button--primary:active {
+  box-shadow: none;
+  transform: translateY(4px);
+}
+
+/* Acento violeta (#7C3AED) en links de hover del navbar */
+.navbar__link:hover,
+.navbar__link--active {
+  color: #7c3aed;
+}
+
+[data-theme="dark"] .navbar__link:hover,
+[data-theme="dark"] .navbar__link--active {
+  color: #a78bfa;
 }
 
 /* Resaltar fórmulas lógicas en bloques inline */

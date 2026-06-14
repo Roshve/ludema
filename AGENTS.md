@@ -22,7 +22,7 @@ Detecta tres capas:
 
 - **Estructura (zod):** campos requeridos, tipos, `correctIndex` en rango, arrays no vacíos, `accent` válido.
 - **Unicidad de IDs:** colisiones que el compilador no ve (el `Map` de `index.ts` sobreescribe en silencio).
-- **Semántica con motor (proposicional):** fórmulas que no parsean, `counterexample` de argumento válido, pasos de `simplify-steps` no equivalentes, `build-expression.answer` fuera del `bank`.
+- **Semántica con motor (proposicional):** fórmulas que no parsean, `counterexample` de argumento válido, pasos de `simplify-steps` no equivalentes, `build-expression.answer` fuera del `bank`. (Este motor valida la materia de **Lógica**; otras materias usarán su propio módulo de validación en `src/lib/`.)
 
 > Ejercicios de cuantificadores (∀/∃), notación de conjuntos o constantes V/F no son validados por el motor (fuera de dominio). El validador los detecta y omite silenciosamente esos campos.
 
