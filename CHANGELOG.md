@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/Roshve/ludema/compare/ludema-v0.4.0...ludema-v0.5.0) (2026-06-14)
+
+
+### Features
+
+* add content validation harness (phase 1) ([5f1facf](https://github.com/Roshve/ludema/commit/5f1facfd16d164cccbc30cce5e1e6ba2ecaa1b7b))
+
 ## [0.4.0](https://github.com/Roshve/ludema/compare/ludema-v0.3.0...ludema-v0.4.0) (2026-06-14)
 
 
