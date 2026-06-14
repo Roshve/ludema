@@ -1,0 +1,14 @@
+# Build outputs
+out/
+.next/
+website/build/
+website/.docusaurus/
+
+# Lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Auto-generated
+next-env.d.ts
+tsconfig.tsbuildinfo

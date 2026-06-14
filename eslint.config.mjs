@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Docusaurus — ignorar archivos generados y build output del sitio de docs
+    "website/.docusaurus/**",
+    "website/build/**",
   ]),
 ]);
 

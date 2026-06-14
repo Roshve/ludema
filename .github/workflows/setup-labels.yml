@@ -21,6 +21,7 @@ jobs:
               --method PATCH \
               -f color="$2" -f description="$3"
           }
-          create_label "contenido"   "BFD4F2" "Error de contenido"
-          create_label "bug"         "D73A4A" "Bug técnico"
-          create_label "enhancement" "A2EEEF" "Sugerencia / mejora"
+          create_label "contenido"    "BFD4F2" "Error de contenido"
+          create_label "bug"          "D73A4A" "Bug técnico"
+          create_label "enhancement"  "A2EEEF" "Sugerencia / mejora"
+          create_label "dependencias" "0075CA" "Actualización de dependencias (Dependabot)"

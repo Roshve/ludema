@@ -32,6 +32,7 @@ export function Classify({
 
   // Temporizador (solo si la fórmula define timeLimit).
   const reqRef = useRef(requestCheck);
+  // eslint-disable-next-line react-hooks/refs -- patrón intencional: sincroniza la ref en render para que el callback del timeout siempre llame a la versión actual de requestCheck
   reqRef.current = requestCheck;
   useEffect(() => {
     if (!exercise.timeLimit || checked) return;

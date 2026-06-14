@@ -26,6 +26,7 @@ export function useStudyTimer(): { flush: () => void } {
   // ms acumulados desde el último flush.
   const accMs = useRef(0);
   // Inicio del segmento activo en curso. null = pestaña oculta o ya flusheado.
+  // eslint-disable-next-line react-hooks/purity -- Date.now() en el valor inicial de useRef solo se ejecuta al montar; es el comportamiento deseado para iniciar el segmento desde el momento del mount
   const segmentStart = useRef<number | null>(Date.now());
 
   /** Cierra el segmento abierto sumando al acumulador. */

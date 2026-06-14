@@ -69,6 +69,7 @@ export function LessonPlayer({
 
   // Ref para que onAnswer (memoizado) lea el valor actual de `checked`.
   const checkedRef = useRef(checked);
+  // eslint-disable-next-line react-hooks/refs -- patrón intencional: sincroniza la ref en render para que onAnswer (memoizado) siempre lea el valor actual sin re-crearse
   checkedRef.current = checked;
   const onAnswer = useCallback((a: AnswerState) => {
     // Ignora reportes una vez comprobado.

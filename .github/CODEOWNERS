@@ -1,0 +1,15 @@
+# CODEOWNERS — Revisión automática en PRs
+# Sintaxis: <patrón>   <@usuario o @org/equipo>
+# GitHub asigna al owner para pedir review cuando el PR toca esos archivos.
+
+# Owner por defecto para todo el repositorio.
+*                       @Roshve
+
+# Motor de lógica: revisión extra cuidadosa (afecta la evaluación de respuestas).
+src/lib/logic/          @Roshve
+
+# Contenido del currículo: cambios de IDs son permanentes (borran progreso de usuarios).
+src/content/            @Roshve
+
+# Workflows de CI/CD y configuración de release.
+.github/                @Roshve

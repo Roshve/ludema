@@ -54,13 +54,17 @@ export function ReportDialog({ open, onClose, context }: ReportDialogProps) {
     }
   }, [open]);
 
-  // Resetear estado interno al abrir.
+  // Resetear estado interno al abrir. El setState sincrónico es intencional:
+  // queremos que el reset ocurra en la misma pasada de efecto que detecta open=true,
+  // evitando un render adicional con valores stale visibles.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (open) {
       setCategory("contenido");
       setDescription("");
     }
   }, [open]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function handleSubmit() {
     if (!description.trim()) return;

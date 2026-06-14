@@ -185,6 +185,7 @@ export function PomodoroTimer() {
     advancePhase(phase);
   }
 
+  // eslint-disable-next-line react-hooks/refs -- totalRef se actualiza en cada efecto; leerlo aquí (render) es intencional para derivar `progress` sin estado adicional
   const progress = 1 - remaining / totalRef.current;
 
   return (
@@ -263,6 +264,7 @@ export function PomodoroTimer() {
 
         {/* Indicador de ciclo */}
         <div className="mt-8 flex gap-2">
+          {/* eslint-disable-next-line react-hooks/refs -- focusDoneRef se lee dentro del map callback (render); es la fuente de verdad del ciclo y evita un estado derivado redundante */}
           {Array.from({ length: CYCLES_BEFORE_LONG }).map((_, i) => (
             <span
               key={i}

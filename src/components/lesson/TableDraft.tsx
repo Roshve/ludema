@@ -174,6 +174,7 @@ export function TableDraft() {
 
   // Una sola llamada a makeInitial: los IDs de columna deben ser los mismos
   // en cols[] y en las claves de rows[].cells.
+  // eslint-disable-next-line react-hooks/refs -- uid() accede a seqRef.current dentro del inicializador lazy de useState, que solo corre una vez (no en re-renders)
   const [initial] = useState(() => makeInitial(uid));
   const [cols, setCols] = useState<ColDef[]>(initial.cols);
   const [rows, setRows] = useState<RowDef[]>(initial.rows);

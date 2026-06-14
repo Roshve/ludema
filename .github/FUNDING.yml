@@ -1,0 +1,8 @@
+# Opciones de financiamiento para Ludema.
+# Descomentar el canal deseado cuando esté disponible.
+# Ver: https://docs.github.com/es/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+
+# github: [Roshve]         # GitHub Sponsors
+# ko_fi: usuario            # Ko-fi
+# open_collective: ludema   # Open Collective
+# custom: ['https://...']   # URL propia de donación

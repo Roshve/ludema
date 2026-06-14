@@ -20,17 +20,19 @@ pnpm dev   # http://localhost:3000
 
 ---
 
-## El gate: `pnpm build`
+## El gate: lint → test → build
 
-No hay test runner. El único gate que debe pasar antes de abrir un PR es:
+Antes de abrir un PR, los tres comandos deben pasar sin errores:
 
 ```bash
-pnpm build
+pnpm lint        # ESLint (sin errores)
+pnpm test        # Vitest (tests del motor de lógica)
+pnpm build       # type-check de TypeScript + static export a out/
 ```
 
-Esto corre type-check de TypeScript y genera el static export en `out/`. Si el build falla, el CI también falla.
+El CI corre los tres en ese orden. Si alguno falla, el PR no puede mergearse.
 
-> `pnpm lint` tiene 3 errores preexistentes conocidos que no son regresiones. No uses lint como criterio de éxito.
+> **Formato:** podés correr `pnpm format` para que Prettier arregle el estilo automáticamente, o `pnpm format:check` para solo verificar.
 
 ---
 
@@ -118,7 +120,15 @@ src/content/
 
 ### Validar con el motor de lógica
 
-Para ejercicios de tipo motor, verificá tu fórmula antes de commitear:
+Para ejercicios de tipo motor, corré los tests automáticos primero:
+
+```bash
+pnpm test
+```
+
+Los tests en `src/lib/logic/__tests__/` cubren el parser, evaluador, tabla de verdad,
+`classify` y `findCounterexample`. Si querés probar una fórmula específica de forma
+ad-hoc, podés usar:
 
 ```bash
 pnpm dlx tsx --tsconfig ./tsconfig.json <tu-script-de-prueba>.ts
@@ -166,6 +176,4 @@ El botón de reporte in-app (⚙️ → "Reportar o sugerir") genera issues con 
 ## Consideraciones futuras
 
 - **Branch protection:** configurar en GitHub Settings → Branches para requerir que el CI pase y haya al menos 1 review antes de mergear a `main`. El modelo de release-please ya es compatible (el release ocurre vía PR, no por push directo).
-- **Commit hooks:** si el equipo crece, se puede agregar `husky` + `commitlint` para validar commits localmente antes de pushear.
 - **CI en el release-PR:** por limitación de GitHub Actions, el `GITHUB_TOKEN` no dispara otros workflows en PRs creados por bots. Si se quiere que el build corra también sobre el release-PR, configurar un PAT como `secrets.RELEASE_TOKEN` y pasarlo como `token:` en `release.yml`.
-- **CODE_OF_CONDUCT y SECURITY:** útiles cuando el proyecto sea más público.

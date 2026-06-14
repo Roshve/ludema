@@ -1,0 +1,43 @@
+name: PR Title
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validate-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Tipos permitidos (deben coincidir con CONTRIBUTING.md y commitlint.config.js)
+          types: |
+            feat
+            fix
+            perf
+            docs
+            style
+            refactor
+            chore
+            build
+            ci
+            test
+            revert
+          # El scope es opcional
+          requireScope: false
+          # El subject debe estar en minúsculas
+          subjectPattern: ^[a-záéíóúüñ].*$
+          subjectPatternError: |
+            El título del PR "{{subject}}" no cumple el formato de Conventional Commits.
+            Debe comenzar con minúscula, por ejemplo:
+              feat: agregar ejercicio de tabla de verdad
+              fix: corregir validación de fórmula con paréntesis
+          # Permitir PRs de release-please (titulo tipo "chore(main): release X.Y.Z")
+          ignoreLabels: |
+            autorelease: pending
+            autorelease: tagged

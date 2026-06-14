@@ -13,12 +13,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm dev         # dev server at http://localhost:3000
-pnpm build       # type-check + static export to out/ (also the only "test" gate)
-pnpm lint        # eslint
+pnpm dev          # dev server at http://localhost:3000
+pnpm lint         # eslint (must pass clean — no known preexisting errors)
+pnpm test         # vitest — unit tests for src/lib/logic/
+pnpm build        # type-check + static export to out/
+pnpm format       # prettier auto-fix
+pnpm format:check # prettier check only
 ```
 
-There is **no test runner configured**. Pure logic (`src/lib/logic/`) and content are verified with throwaway scripts run via `pnpm dlx tsx --tsconfig ./tsconfig.json <file>.ts` (the `@/*` alias resolves). When changing the engine or adding exercises, validate by scripting against `truthColumn`, `classify`, and `findCounterexample`. `pnpm build` is the gate that must pass.
+**Gate before PR:** `pnpm lint && pnpm test && pnpm build` — all three must pass. `pnpm test` covers `src/lib/logic/__tests__/` (parser, evaluate, classify, counterexample, subexpressions). For ad-hoc formula validation, throwaway scripts still work: `pnpm dlx tsx --tsconfig ./tsconfig.json <file>.ts` (the `@/*` alias resolves). When changing the engine or adding exercises, validate by scripting against `truthColumn`, `classify`, and `findCounterexample`.
 
 ## Architecture
 

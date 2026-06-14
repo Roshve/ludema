@@ -1,0 +1,42 @@
+version: 2
+
+updates:
+  # Dependencias npm de la app Next.js (raíz).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencias"
+    groups:
+      # Agrupa todas las devDependencies en un solo PR para reducir ruido.
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Dependencias npm del sitio de documentación (Docusaurus).
+  - package-ecosystem: "npm"
+    directory: "/website"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencias"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Actions de GitHub (ci.yml, deploy.yml, release.yml, etc.).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencias"
