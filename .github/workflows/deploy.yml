@@ -39,7 +39,7 @@ jobs:
           pnpm run build
       - name: Merge docs into Pages output
         run: cp -r website/build out/docs
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
