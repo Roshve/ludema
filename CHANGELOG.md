@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/Roshve/ludema/compare/ludema-v0.3.0...ludema-v0.4.0) (2026-06-14)
+
+
+### Features
+
+* reforzar ambiente colaborativo ([8c5bf13](https://github.com/Roshve/ludema/commit/8c5bf137bd464085918b18cbe802985fa084ee07))
+
 ## [0.3.0](https://github.com/Roshve/ludema/compare/ludema-v0.2.0...ludema-v0.3.0) (2026-06-14)
 
 
