@@ -16,7 +16,9 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "check": "pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.9",
@@ -45,7 +47,9 @@
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "zod": "^4.4.3"
   }
 }
