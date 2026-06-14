@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /ludema
@@ -35,7 +35,7 @@ jobs:
       - name: Build docs (Docusaurus)
         working-directory: website
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install --frozen-lockfile --ignore-scripts
           pnpm run build
       - name: Merge docs into Pages output
         run: cp -r website/build out/docs
