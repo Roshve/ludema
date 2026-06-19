@@ -52,7 +52,7 @@ El proyecto es **data-driven** y tiene tres seams principales:
 2. **Motor de validación** (`src/lib/logic/`) — parser + evaluador puro para fórmulas proposicionales (motor de la materia Lógica). Nuevas materias pueden añadir su propio módulo en `src/lib/`.
 3. **Renderers** (`src/components/lesson/`) — cada tipo de ejercicio tiene su propio componente; `LessonPlayer.tsx` orquesta el flujo corazones/XP/completado y es agnóstico a la materia.
 
-📖 La documentación de arquitectura completa está en [`CLAUDE.md`](CLAUDE.md) y [`AGENTS.md`](AGENTS.md).
+📖 La documentación de arquitectura completa está en [`ARCHITECTURE.md`](ARCHITECTURE.md) (mapa de referencia), [`CLAUDE.md`](CLAUDE.md) (guía para Claude Code) y [`AGENTS.md`](AGENTS.md) (harness de validación).
 
 ---
 

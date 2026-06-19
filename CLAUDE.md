@@ -12,6 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Currently implemented subject: Logic** (`unit1.ts`, `unit2.ts`; propositional logic engine in `src/lib/logic/`). The content hierarchy (Unit → Section → Lesson → Exercise) and the lesson player are domain-agnostic — new subjects are added by creating new `unitN.ts` files and, if needed, a dedicated validation engine in `src/lib/`.
 
+> For a full architecture map (directory tree, data flow, routing table, how to extend): see [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
 ## Commands
 
 ```bash
@@ -30,7 +32,7 @@ pnpm format:check # prettier check only
 The app is **data-driven**: the curriculum in `src/content/` is the source of truth, a small **pure logic engine** validates answers, and **self-contained renderers** present each exercise type. Understanding these three seams is enough to be productive.
 
 ### 1. Content model — `src/content/`
-Hierarchy **Unit → Section → Lesson → Exercise**. `types.ts` defines a **discriminated union** of 7 exercise types (`type` discriminant). `unit1.ts` holds the full Unit 1 curriculum; `index.ts` assembles `curriculum`, flattens lessons into an ordered list, and exposes `getLesson`, `getLessonContext` (prev/next), and `allLessonIds`.
+Hierarchy **Unit → Section → Lesson → Exercise**. `types.ts` defines a **discriminated union** of 9 exercise types (`type` discriminant). `unit1.ts` holds the full Unit 1 curriculum; `index.ts` assembles `curriculum`, flattens lessons into an ordered list, and exposes `getLesson`, `getLessonContext` (prev/next), and `allLessonIds`.
 - **To add lessons/exercises**: edit `unit1.ts` (or add a `unitN.ts` and register it in `index.ts`). No code changes needed for existing exercise types.
 
 ### 2. Logic engine — `src/lib/logic/` (pure, no React)
