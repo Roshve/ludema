@@ -1,6 +1,6 @@
 {
   "name": "ludema",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Plataforma estilo Duolingo para gamificar materias universitarias — corazones, XP, rachas y validación automática de respuestas. Frontend-only. Primera materia: Lógica.",
   "private": true,
   "license": "MIT",

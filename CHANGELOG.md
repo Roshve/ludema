@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/Roshve/ludema/compare/ludema-v0.6.0...ludema-v0.7.0) (2026-06-20)
+
+
+### Features
+
+* add Architecture.md and link with claude.md and readme.md ([7fc6dbc](https://github.com/Roshve/ludema/commit/7fc6dbcc02d8d540f5886196e1efa614b5cb1b88))
+* codegraph init ([d5f0115](https://github.com/Roshve/ludema/commit/d5f011548ec5779a77f5a92c2a6e5d8561477008))
+* **content:** introduce multi-subject architecture (Materia + Carrera) ([6f3c303](https://github.com/Roshve/ludema/commit/6f3c303a6f4a5cc42b636ba251dc843bdf149a60))
+* seguimiento ([5f01096](https://github.com/Roshve/ludema/commit/5f010960407cae52c99174efc2ccae3c378046cc))
+
 ## [0.6.0](https://github.com/Roshve/ludema/compare/ludema-v0.5.0...ludema-v0.6.0) (2026-06-14)
 
 
