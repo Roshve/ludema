@@ -1,15 +1,15 @@
 "use client";
 
 import { MotionConfig } from "motion/react";
-import { SUBJECTS } from "@/content/subjects";
+import { CARRERAS, getMateria } from "@/content";
 import { ThemeMenu } from "@/components/hud/ThemeMenu";
 import { GitHubLink } from "@/components/ui/GitHubLink";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SubjectCard } from "./SubjectCard";
 import { APP_VERSION } from "@/lib/version";
 
-// Portada: elige la materia ("juego") que quieres aprender. El Hud completo
-// (corazones/racha/nivel) vive dentro de cada materia, aquí solo el tema.
+// Portada: muestra Carrera → Año → Materias.
+// El Hud completo (corazones/racha/nivel) vive dentro de cada materia.
 export function HomeLanding() {
   return (
     <MotionConfig reducedMotion="user">
@@ -35,16 +35,37 @@ export function HomeLanding() {
             Aprende jugando
           </h1>
           <p className="mt-1 text-sm font-bold text-slate-500 dark:text-slate-400">
-            Elige la materia que quieres dominar:
+            Elegí la materia que querés dominar:
           </p>
         </div>
 
-        {/* Grilla de materias */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          {SUBJECTS.map((subject) => (
-            <SubjectCard key={subject.slug} subject={subject} />
-          ))}
-        </div>
+        {/* Carreras → Años → Materias */}
+        {CARRERAS.map((carrera) => (
+          <div key={carrera.id} className="mb-8">
+            <h2 className="mb-4 text-lg font-black text-slate-700 dark:text-slate-200">
+              {carrera.nombre}
+            </h2>
+
+            {carrera.anios.map((anio) => {
+              const materias = anio.materiaIds
+                .map((id) => getMateria(id))
+                .filter((m) => m !== undefined);
+
+              return (
+                <div key={anio.anio} className="mb-6">
+                  <h3 className="mb-3 text-xs font-extrabold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                    Año {anio.anio}
+                  </h3>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {materias.map((materia) => (
+                      <SubjectCard key={materia.id} subject={materia} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
 
         <footer className="mt-12 text-center text-xs font-bold text-slate-400 dark:text-slate-500">
           Ludema v{APP_VERSION}

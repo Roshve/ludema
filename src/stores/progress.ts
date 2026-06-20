@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { curriculum, allLessons } from "@/content";
+import { allLessons } from "@/content";
 import {
   ACHIEVEMENTS,
   type AchievementStats,
@@ -248,6 +248,7 @@ export const useProgress = create<ProgressState>()(
     }),
     {
       name: "ludema-progress",
+      version: 1,
       storage: createJSONStorage(() =>
         typeof window !== "undefined"
           ? window.localStorage
@@ -260,6 +261,33 @@ export const useProgress = create<ProgressState>()(
       ),
       partialize: ({ hasHydrated, ...rest }) => rest,
       onRehydrateStorage: () => (state) => state?.setHydrated(),
+      /**
+       * Migración de versión 0 → 1:
+       * Los IDs de lecciones y ejercicios pasan de no-prefijados (ej. "u1-a-l1")
+       * a prefijados por materia (ej. "logica-u1-a-l1"). Todo el progreso
+       * previo pertenece a Lógica (única materia que existía antes).
+       */
+      migrate(persisted: unknown, fromVersion: number) {
+        if (fromVersion < 1) {
+          const s = persisted as Record<string, unknown>;
+          // Prefijar claves de completedLessons.
+          if (s.completedLessons && typeof s.completedLessons === "object") {
+            const old = s.completedLessons as Record<string, unknown>;
+            const next: Record<string, unknown> = {};
+            for (const [k, v] of Object.entries(old)) {
+              next[`logica-${k}`] = v;
+            }
+            s.completedLessons = next;
+          }
+          // Prefijar ids en missedExercises.
+          if (Array.isArray(s.missedExercises)) {
+            s.missedExercises = (s.missedExercises as string[]).map(
+              (id) => `logica-${id}`,
+            );
+          }
+        }
+        return persisted as ProgressState;
+      },
     },
   ),
 );
@@ -277,7 +305,15 @@ export function buildAchievementStats(s: AchievementInput): AchievementStats {
   const lessonsCount = lessonsCompletedCount(completedLessons);
   const level = levelFromXp(xp);
 
-  const allSections = curriculum.flatMap((u) => (u.available ? u.sections : []));
+  // Secciones únicas del índice global (IDs ya prefijados).
+  const sectionsSeen = new Set<string>();
+  const allSections: typeof allLessons[0]["section"][] = [];
+  for (const c of allLessons) {
+    if (!sectionsSeen.has(c.section.id)) {
+      sectionsSeen.add(c.section.id);
+      allSections.push(c.section);
+    }
+  }
 
   const isSectionComplete = (sectionId: string): boolean => {
     const section = allSections.find((sec) => sec.id === sectionId);
@@ -289,7 +325,8 @@ export function buildAchievementStats(s: AchievementInput): AchievementStats {
     sec.lessons.every((l) => Boolean(completedLessons[l.id])),
   ).length;
 
-  const unit1 = curriculum.find((u) => u.id === "u1");
+  // Unidad 1 de Lógica (ID prefijado "logica-u1").
+  const unit1 = allLessons.find((c) => c.unit.id === "logica-u1")?.unit;
   const unit1Gold = unit1
     ? unit1.sections.every((sec) =>
         sec.lessons.every((l) => Boolean(completedLessons[l.id])),

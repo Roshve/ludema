@@ -23,40 +23,39 @@ carreras comparten una materia, comparten el mismo progreso.
 
 ### Tipos y estructura de contenido
 
-- [ ] Definir tipos nuevos en `src/content/types.ts`:
+- [x] Definir tipos nuevos en `src/content/types.ts`:
   - `Materia { id, slug, title, tagline, accent, icon, units: Unit[] }`
-  - `Año { año: number; materiaIds: string[] }`
-  - `Carrera { id, slug, nombre, años: Año[] }`
-- [ ] Crear `src/content/materias/` — un módulo por materia:
+  - `Anio { anio: number; materiaIds: string[] }` (ASCII)
+  - `Carrera { id, slug, nombre, anios: Anio[] }`
+- [x] Crear `src/content/materias/` — un módulo por materia:
   - `src/content/materias/logica.ts` — reagrupa `unit1`/`unit2` bajo la materia Lógica.
   - (Materias futuras siguen el mismo patrón.)
-- [ ] Crear `src/content/carreras.ts` — declara las carreras con referencia a `materiaId`.
+- [x] Crear `src/content/carreras.ts` — declara las carreras con referencia a `materiaId`.
   Las materias compartidas entre carreras usan el mismo `materiaId`, no se duplican.
-- [ ] Garantizar unicidad global de IDs de lección: prefijados por materia
-  (ej. `logica-u1-a-l1`) o derivados en `buildIndex()`. Actualizar todos los IDs
-  existentes de `u1`/`u2`.
-- [ ] En `src/stores/progress.ts`: versionar el persist con `migrate` para mover
+- [x] Garantizar unicidad global de IDs de lección: derivados en `buildIndex()` con prefijo de materia
+  (ej. `logica-u1-a-l1`). Source (`unit*.ts`) conserva IDs cortos; runtime los prefija.
+- [x] En `src/stores/progress.ts`: versionar el persist con `migrate` (v0→v1) para mover
   `completedLessons` del formato viejo (sin prefijo de materia) al nuevo.
 
 ### `index.ts` — API del currículo
 
-- [ ] Reemplazar `curriculum: Unit[]` por `MATERIAS: Materia[]` + `CARRERAS: Carrera[]`.
-- [ ] Exponer: `getMateria(slug)`, `getCarrera(slug)`, `curriculumDeMateria(slug)`.
-- [ ] `allLessonIds` y `allGuideSectionIds` recorren **todas** las materias disponibles.
-- [ ] Actualizar `generateStaticParams` en `app/lesson/[lessonId]` y
-  `app/guide/[sectionId]` para usar los nuevos índices.
+- [x] Exponer `MATERIAS: Materia[]` + `CARRERAS: Carrera[]`.
+- [x] Exponer: `getMateria(slug)`, `getCarrera(slug)`, `curriculumDeMateria(slug)`.
+- [x] `allLessonIds` y `allGuideSectionIds` recorren **todas** las materias disponibles.
+- [x] `generateStaticParams` en `app/lesson/[lessonId]` y `app/guide/[sectionId]`
+  ya usan los nuevos índices (los IDs son ahora prefijados).
 
 ### Ruteo
 
-- [ ] Nueva ruta `/materia/[slug]/page.tsx` — mapa de la materia (reusa `LearningMap`).
-- [ ] `HomeLanding` muestra carreras → años → materias (en lugar del catálogo plano).
-- [ ] Deprecar `/logica` → redirect a `/materia/logica` o reescribir como alias.
-- [ ] `subjects.ts` queda como compatibilidad temporal o se elimina.
+- [x] Nueva ruta `/materia/[slug]/page.tsx` — mapa de la materia (reusa `LearningMap`).
+- [x] `HomeLanding` muestra carreras → años → materias (en lugar del catálogo plano).
+- [x] `/logica` → redirect client-side a `/materia/logica`.
+- [x] `subjects.ts` eliminado (funcionalidad absorbida por `Materia`).
 
 ### Tooling
 
-- [ ] `scripts/validate-content.ts` recorre `MATERIAS` en lugar de `curriculum`.
-- [ ] `scripts/eval-content.ts` y `src/content/eval/` idem.
+- [x] `validate:content` recorre `curriculum` (que ahora = todas las materias disponibles).
+- [x] `eval:content` acepta slug de materia (`--unit logica`) y compat con IDs de unidad.
 
 **Criterio de aceptación:**
 `pnpm check` verde; portada lista carreras→años→materias; progreso compartido

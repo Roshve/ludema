@@ -3,28 +3,27 @@
 import Link from "next/link";
 import { Lock } from "lucide-react";
 import { motion } from "motion/react";
-import type { Subject } from "@/content/subjects";
-import { subjectHref } from "@/content/subjects";
+import type { Materia } from "@/content/types";
 import { allLessons } from "@/content";
 import { useProgress } from "@/stores/progress";
 import { useHydrated } from "@/hooks/useHydrated";
 import { ACCENT } from "@/lib/accent";
 import { cn } from "@/lib/utils";
 
-export function SubjectCard({ subject }: { subject: Subject }) {
+export function SubjectCard({ subject }: { subject: Materia }) {
   const a = ACCENT[subject.accent];
   const Icon = subject.icon;
   const hydrated = useHydrated();
   const completed = useProgress((s) => s.completedLessons);
 
-  // Por ahora todo el progreso pertenece a Lógica (única materia jugable).
-  const total = allLessons.length;
-  const done =
-    hydrated && subject.slug === "logica"
-      ? allLessons.filter((c) => completed[c.lesson.id]).length
-      : 0;
+  // Progreso de esta materia: lecciones completadas / total.
+  const materiaLessons = allLessons.filter((c) => c.materia.slug === subject.slug);
+  const total = materiaLessons.length;
+  const done = hydrated
+    ? materiaLessons.filter((c) => completed[c.lesson.id]).length
+    : 0;
 
-  // ── Tarjeta bloqueada: mismo patrón que la Unidad 2 del mapa ──────────────
+  // ── Tarjeta bloqueada: mismo patrón que unidades bloqueadas en el mapa ─────
   if (!subject.available) {
     return (
       <div className="animate-pop-in rounded-3xl border-2 border-dashed border-slate-300 bg-white/60 p-5 opacity-80 dark:border-slate-600 dark:bg-slate-800/60">
@@ -50,7 +49,7 @@ export function SubjectCard({ subject }: { subject: Subject }) {
   // ── Tarjeta jugable ────────────────────────────────────────────────────────
   return (
     <Link
-      href={subjectHref(subject)}
+      href={`/materia/${subject.slug}`}
       className={cn(
         "group block animate-pop-in rounded-3xl border-2 border-b-4 bg-white p-5 shadow-pop transition hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 dark:bg-slate-800",
         a.border,
@@ -76,7 +75,7 @@ export function SubjectCard({ subject }: { subject: Subject }) {
         <motion.div
           className={cn("h-full rounded-full", a.bg)}
           initial={false}
-          animate={{ width: `${(done / total) * 100}%` }}
+          animate={{ width: total > 0 ? `${(done / total) * 100}%` : "0%" }}
           transition={{ type: "spring", stiffness: 140, damping: 22 }}
         />
       </div>

@@ -1,5 +1,7 @@
 // Modelo de contenido de Ludema.
-// Jerarquía: Unidad → Sección → Lección → Ejercicios.
+// Jerarquía (portada): Carrera → Año → Materia → Unidad → Sección → Lección → Ejercicios.
+
+import type { LucideIcon } from "lucide-react";
 
 export type ExerciseBase = {
   id: string;
@@ -155,4 +157,37 @@ export type Unit = {
   /** Unidades futuras pueden venir bloqueadas / "próximamente". */
   available: boolean;
   sections: Section[];
+};
+
+// ── Modelo multi-materia: Carrera → Año → Materia ─────────────────────────────
+
+/**
+ * Una materia ("juego") — entidad reusable con slug y progreso propios.
+ * Dos carreras que comparten una materia comparten el mismo progreso.
+ * `id` y `slug` son iguales (se usa slug en la ruta `/materia/<slug>`).
+ */
+export type Materia = {
+  id: string;
+  slug: string;
+  title: string;
+  tagline: string;
+  /** Mismo tipo que Section["accent"]; evita importar accent.ts (sería circular). */
+  accent: Section["accent"];
+  icon: LucideIcon;
+  /** false → tarjeta "Próximamente"; units puede ser vacío. */
+  available: boolean;
+  units: Unit[];
+};
+
+/** Año dentro de una carrera: lista de materiaIds que le pertenecen. */
+// Nota: usamos `anio` (ASCII) por consistencia con tooling;
+// la presentación puede mostrar "Año".
+export type Anio = { anio: number; materiaIds: string[] };
+
+/** Carrera universitaria. Agrupa años → materias en la portada. */
+export type Carrera = {
+  id: string;
+  slug: string;
+  nombre: string;
+  anios: Anio[];
 };

@@ -66,6 +66,8 @@ export function LessonPlayer({
   const exercise = queue[index];
   const isConcept = exercise.type === "concept";
   const ctx = getLessonContext(lesson.id);
+  // URL del mapa de la materia; "/" como fallback en sesiones de práctica.
+  const mapHref = ctx ? `/materia/${ctx.materia.slug}` : "/";
 
   // Ref para que onAnswer (memoizado) lea el valor actual de `checked`.
   const checkedRef = useRef(checked);
@@ -155,7 +157,7 @@ export function LessonPlayer({
           <Button onClick={restart}>Recargar y reintentar</Button>
         }
         secondary={
-          <Link href="/logica">
+          <Link href={mapHref}>
             <Button variant="neutral">Volver al mapa</Button>
           </Link>
         }
@@ -183,7 +185,7 @@ export function LessonPlayer({
               <Button>Siguiente lección</Button>
             </Link>
           ) : (
-            <Link href="/logica">
+            <Link href={mapHref}>
               <Button>Volver al mapa</Button>
             </Link>
           )
@@ -194,7 +196,7 @@ export function LessonPlayer({
               Repetir práctica
             </Button>
           ) : (
-            <Link href="/logica">
+            <Link href={mapHref}>
               <Button variant="neutral">Ir al mapa</Button>
             </Link>
           )
@@ -212,7 +214,7 @@ export function LessonPlayer({
       {/* Cabecera: cerrar + progreso + corazones */}
       <header className="flex items-center gap-3 py-4">
         <Link
-          href="/logica"
+          href={mapHref}
           aria-label="Salir de la lección"
           className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         >

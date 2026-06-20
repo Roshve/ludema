@@ -62,12 +62,35 @@ async function loadUnits(unit?: string): Promise<{ units: Unit[]; suiteName: str
   }
 
   // Importación dinámica para no cargar el currículo cuando se evalúa solo el golden.
-  const { curriculum } = await import("../src/content/index.js");
+  const { MATERIAS, curriculumDeMateria, curriculum } = await import(
+    "../src/content/index.js"
+  );
 
-  const target = curriculum.find((u) => u.id === unit);
+  // Intento 1: --unit como slug/id de materia (ej. "logica") → todas sus unidades.
+  const materia = MATERIAS.find(
+    (m: { slug: string; id: string; available: boolean }) =>
+      (m.slug === unit || m.id === unit) && m.available,
+  );
+  if (materia) {
+    return { units: curriculumDeMateria(materia.slug), suiteName: unit };
+  }
+
+  // Intento 2: --unit como id de unidad (prefijado "logica-u1" o legacy "u1").
+  const target =
+    curriculum.find((u: Unit) => u.id === unit) ??
+    // Compat: busca por sufijo para IDs legado sin prefijo (ej. "u1" → "logica-u1").
+    curriculum.find((u: Unit) => u.id.endsWith(`-${unit}`));
+
   if (!target) {
-    const ids = curriculum.map((u) => u.id).join(", ");
-    console.error(c.red(`\n✗ Unidad "${unit}" no encontrada. Disponibles: ${ids}\n`));
+    const ids = [
+      ...MATERIAS.filter((m: { available: boolean }) => m.available).map(
+        (m: { slug: string }) => m.slug,
+      ),
+      ...curriculum.map((u: Unit) => u.id),
+    ].join(", ");
+    console.error(
+      c.red(`\n✗ "${unit}" no encontrado. Disponibles: ${ids}\n`),
+    );
     process.exit(1);
   }
 

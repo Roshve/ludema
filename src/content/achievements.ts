@@ -150,7 +150,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       "Completaste la sección de tablas de verdad. V, F, V, F… ya lo soñás.",
     icon: Table2,
     accent: "cyan",
-    unlocked: (s) => s.isSectionComplete("u1-b"),
+    unlocked: (s) => s.isSectionComplete("logica-u1-b"),
   },
   {
     id: "leyes",
@@ -158,7 +158,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     description: "Dominaste las equivalencias. De Morgan te debe un favor.",
     icon: Scale,
     accent: "violet",
-    unlocked: (s) => s.isSectionComplete("u1-c"),
+    unlocked: (s) => s.isSectionComplete("logica-u1-c"),
   },
   {
     id: "cuantificadores",
@@ -166,7 +166,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     description: "Terminaste cuantificadores. ∀ meme ∃ un momento de brillo.",
     icon: Search,
     accent: "indigo",
-    unlocked: (s) => s.isSectionComplete("u1-d"),
+    unlocked: (s) => s.isSectionComplete("logica-u1-d"),
   },
   {
     id: "razonamientos",
@@ -175,7 +175,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       "Superaste el jefe final: inferencia y falacias. Incuestionable.",
     icon: Lightbulb,
     accent: "fuchsia",
-    unlocked: (s) => s.isSectionComplete("u1-e"),
+    unlocked: (s) => s.isSectionComplete("logica-u1-e"),
   },
   {
     id: "examen",
@@ -183,7 +183,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     description: "Completaste los simulacros de parcial. UTN.BA tiembla.",
     icon: FileText,
     accent: "blue",
-    unlocked: (s) => s.isSectionComplete("u1-f"),
+    unlocked: (s) => s.isSectionComplete("logica-u1-f"),
   },
   {
     id: "conjuntos",
@@ -192,7 +192,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       "Terminaste conjuntos básicos. René Descartes ∈ tus influencias.",
     icon: Boxes,
     accent: "blue",
-    unlocked: (s) => s.isSectionComplete("u2-a"),
+    unlocked: (s) => s.isSectionComplete("logica-u2-a"),
   },
   // ── Secciones doradas ────────────────────────────────────────────────────
   {

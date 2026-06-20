@@ -1,27 +1,84 @@
-import type { Lesson, Section, Unit } from "./types";
-import { unit1 } from "./unit1";
-import { unit2 } from "./unit2";
+import type { Lesson, Section, Unit, Materia, Carrera } from "./types";
+import { MATERIAS } from "./materias";
+import { CARRERAS as CARRERAS_DATA } from "./carreras";
 
-export const curriculum: Unit[] = [unit1, unit2];
+// Re-exports públicos para consumidores.
+export { MATERIAS, CARRERAS_DATA as CARRERAS };
+export type { Materia, Carrera };
+
+// ── Normalización (prefijo de materia) ───────────────────────────────────────
+
+/**
+ * Clona una materia profundamente y prefija todos los IDs de
+ * unidades/secciones/lecciones/ejercicios con `${materia.id}-`.
+ *
+ * El source (unit*.ts) mantiene IDs cortos (ej. "u1-a-l1"); el runtime
+ * opera siempre sobre los IDs prefijados (ej. "logica-u1-a-l1"), lo que
+ * garantiza unicidad global cuando hay varias materias.
+ */
+function prefixMateria(m: Materia): Materia {
+  const p = `${m.id}-`;
+  const units: Unit[] = m.units.map((u) => ({
+    ...u,
+    id: p + u.id,
+    sections: u.sections.map((s) => ({
+      ...s,
+      id: p + s.id,
+      lessons: s.lessons.map((l) => ({
+        ...l,
+        id: p + l.id,
+        exercises: l.exercises.map((e) => ({ ...e, id: p + e.id })),
+      })),
+    })),
+  }));
+  return { ...m, units };
+}
+
+// Mapa slug → Materia normalizada (solo materias disponibles).
+const PREFIXED = new Map<string, Materia>(
+  MATERIAS.filter((m) => m.available).map((m) => [m.slug, prefixMateria(m)]),
+);
+
+// ── API de materias y carreras ────────────────────────────────────────────────
+
+/** Devuelve la materia raw (con IDs sin prefijo) por slug/id; útil para display. */
+export function getMateria(slug: string): Materia | undefined {
+  return MATERIAS.find((m) => m.slug === slug || m.id === slug);
+}
+
+/** Devuelve las unidades normalizadas (IDs prefijados) de una materia. */
+export function curriculumDeMateria(slug: string): Unit[] {
+  return PREFIXED.get(slug)?.units ?? [];
+}
+
+export function getCarrera(slug: string): Carrera | undefined {
+  return CARRERAS_DATA.find((c) => c.slug === slug || c.id === slug);
+}
+
+// ── Índice global de lecciones ───────────────────────────────────────────────
 
 export type LessonContext = {
-  unit: Unit;
-  section: Section;
-  lesson: Lesson;
-  /** Posición global de la lección dentro de todo el currículo. */
+  /** Materia raw (para display: title, slug, accent). */
+  materia: Materia;
+  unit: Unit;       // IDs prefijados
+  section: Section; // IDs prefijados
+  lesson: Lesson;   // IDs prefijados
   globalIndex: number;
   prevLessonId: string | null;
   nextLessonId: string | null;
 };
 
-// Lista ordenada de todas las lecciones jugables, con su contexto.
 function buildIndex(): LessonContext[] {
-  const flat: { unit: Unit; section: Section; lesson: Lesson }[] = [];
-  for (const unit of curriculum) {
-    if (!unit.available) continue;
-    for (const section of unit.sections) {
-      for (const lesson of section.lessons) {
-        flat.push({ unit, section, lesson });
+  const flat: { materia: Materia; unit: Unit; section: Section; lesson: Lesson }[] = [];
+  for (const rawMateria of MATERIAS) {
+    if (!rawMateria.available) continue;
+    const prefixed = PREFIXED.get(rawMateria.slug)!;
+    for (const unit of prefixed.units) {
+      if (!unit.available) continue;
+      for (const section of unit.sections) {
+        for (const lesson of section.lessons) {
+          flat.push({ materia: rawMateria, unit, section, lesson });
+        }
       }
     }
   }
@@ -48,24 +105,34 @@ export function getLesson(id: string): Lesson | undefined {
 
 export const allLessonIds = LESSON_INDEX.map((c) => c.lesson.id);
 
-// XP otorgada al completar una lección (10 por ejercicio evaluable; las
-// tarjetas de concepto no cuentan).
+// XP por lección: 10 por ejercicio evaluable (tarjetas de concepto excluidas).
 export function lessonXp(lesson: Lesson): number {
   return lesson.exercises.filter((e) => e.type !== "concept").length * 10;
 }
 
-// ── Secciones (para las mini-guías) ─────────────────────────────────────────
+// ── Secciones (para las mini-guías en /guide/[sectionId]) ────────────────────
 
-const ALL_SECTIONS = curriculum
-  .filter((u) => u.available)
-  .flatMap((u) => u.sections);
+// Secciones únicas del índice global, con IDs prefijados.
+const SECTION_SEEN = new Set<string>();
+const ALL_SECTIONS: Section[] = [];
+for (const c of LESSON_INDEX) {
+  if (!SECTION_SEEN.has(c.section.id)) {
+    SECTION_SEEN.add(c.section.id);
+    ALL_SECTIONS.push(c.section);
+  }
+}
 const SECTION_BY_ID = new Map(ALL_SECTIONS.map((s) => [s.id, s]));
 
 export function getSection(id: string): Section | undefined {
   return SECTION_BY_ID.get(id);
 }
 
-// Ids de secciones que tienen guía (para generateStaticParams del /guide).
-export const allGuideSectionIds = ALL_SECTIONS.filter((s) => s.guide).map(
-  (s) => s.id,
-);
+// IDs de secciones con guía (para generateStaticParams de /guide/[sectionId]).
+export const allGuideSectionIds = ALL_SECTIONS.filter((s) => s.guide).map((s) => s.id);
+
+// ── Compat: curriculum ────────────────────────────────────────────────────────
+// Todas las unidades normalizadas de todas las materias disponibles.
+// Usado por validate.ts (validateCurriculum) y buildAchievementStats en progress.ts.
+export const curriculum: Unit[] = MATERIAS
+  .filter((m) => m.available)
+  .flatMap((m) => PREFIXED.get(m.slug)!.units);

@@ -1,9 +1,10 @@
+// Ruta legacy /logica — redirige a /materia/logica.
+// Se mantiene por compatibilidad con links externos y bookmarks.
 import type { Metadata } from "next";
-import { LearningMap } from "@/components/map/LearningMap";
+import { Redirect } from "@/components/ui/Redirect";
 
-// Con el template del layout rinde "Lógica y Estructuras Discretas · Ludema".
 export const metadata: Metadata = { title: "Lógica y Estructuras Discretas" };
 
 export default function LogicaPage() {
-  return <LearningMap />;
+  return <Redirect to="/materia/logica" />;
 }

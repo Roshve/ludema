@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **Antes de cualquier tarea de implementación del roadmap: leer [`STATE.md`](STATE.md).**
+> Es la fuente de verdad del progreso. Actualizar al completar cada fase o tarea significativa.
+
 @AGENTS.md
 
 > The import above is load-bearing: this is **Next.js 16** with breaking changes vs. older training data (`params` is a `Promise`, dynamic routes need `generateStaticParams`, Turbopack build). Consult `node_modules/next/dist/docs/01-app/` before writing routing/data code.
